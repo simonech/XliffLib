@@ -1,0 +1,17 @@
+<xml>
+<xliff version="1.2">
+  <file original="original.txt" source-language="en" target-language="it" datatype="plaintext">
+
+    <header>
+    </header>
+
+    <body>
+
+        <trans-unit id="1"> 
+          <source>Hello Word!</source>
+        </trans-unit>
+
+    </body>
+
+  </file>
+</xliff>

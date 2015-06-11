@@ -151,6 +151,8 @@ ClientBin/
 *.publishsettings
 node_modules/
 
+*.*.boltdata
+
 # RIA/Silverlight projects
 Generated_Code/
 
@@ -185,8 +187,7 @@ FakesAssemblies/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
-
+Icon
 # Thumbnails
 ._*
 
