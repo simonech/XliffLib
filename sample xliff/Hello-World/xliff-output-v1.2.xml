@@ -1,5 +1,5 @@
 <xml>
-<xliff version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="original.txt" source-language="en" target-language="it" datatype="plaintext">
 
     <header>
@@ -7,7 +7,7 @@
 
     <body>
 
-        <trans-unit id="1"> 
+        <trans-unit id="1">
           <source>Hello Word!</source>
         </trans-unit>
 
