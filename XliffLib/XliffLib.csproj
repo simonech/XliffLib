@@ -42,6 +42,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Writers\BaseXliffWriter.cs" />
     <Compile Include="Writers\XliffWriterV12.cs" />
+    <Compile Include="Writers\XliffWriterV20.cs" />
     <Compile Include="XliffDocument.cs" />
     <Compile Include="XliffFile.cs" />
   </ItemGroup>
