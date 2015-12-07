@@ -28,10 +28,5 @@ namespace XliffLib.Writers
             XliffDoc = root;
         }
 
-        private void ValidateXliff(XliffDocument xliff)
-        {
-            if (xliff == null) throw new ArgumentNullException("xliff");
-            if (xliff.Files.Count == 0) throw new ArgumentException("xliff", "The Xliff document must have at least 1 file");
-        }
     }
 }

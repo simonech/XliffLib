@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace XliffLib
 {
+    /// <summary>
+    /// Logical structure of the Xliff document
+    /// </summary>
     public class XliffDocument
     {
 
