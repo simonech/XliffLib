@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Schema;
+using XliffLib.Utils;
 
 namespace XliffLib.Writers
 {

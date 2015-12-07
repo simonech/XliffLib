@@ -4,14 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Schema;
+using XliffLib.Utils;
 
 namespace XliffLib.Writers
 {
     public class XliffWriterV12: BaseXliffWriter
     {
         private static XNamespace xliffNS="urn:oasis:names:tc:xliff:document:1.2";
-
 
         /// <summary>
         /// Creates the XML document with the representation of the XLIFF

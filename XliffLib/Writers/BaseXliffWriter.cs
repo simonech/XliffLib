@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace XliffLib.Writers
 {
@@ -33,7 +34,7 @@ namespace XliffLib.Writers
         internal void ValidateXliff(XliffDocument xliff)
         {
             if (xliff == null) throw new ArgumentNullException("xliff");
-            if (xliff.Files.Count == 0) throw new ArgumentException("xliff", "The Xliff document must have at least 1 file");
+            //if (xliff.Files.Count == 0) throw new ArgumentException("xliff", "The Xliff document must have at least 1 file");
         }
     }
 }
