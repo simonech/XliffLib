@@ -17,7 +17,7 @@ namespace XliffLib.Readers
         public XliffReaderV12(): base()
         {
             schema = new XmlSchemaSet();
-            schema.Add(null, XmlReader.Create(new StringReader(EmbeddedFilesReader.ReadString("XliffLib.XsdSchemas.xliff-core-1.2-strict.xsd"))));
+            schema.Add("urn:oasis:names:tc:xliff:document:1.2", XmlReader.Create(new StringReader(EmbeddedFilesReader.ReadString("XliffLib.XsdSchemas.xliff-core-1.2-strict.xsd"))));
         }
 
         internal override XmlSchemaSet XsdSchema
