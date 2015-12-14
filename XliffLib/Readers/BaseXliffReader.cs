@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,18 @@ namespace XliffLib.Readers
             IsValid = false;
         }
 
-        public void Read(string filePath)
+
+        public void Parse(string xmlFile)
+        {
+            Read(new StringReader(xmlFile));
+        }
+
+        public void Read(string filename)
+        {
+            Read(new StreamReader(filename));
+        }
+
+        public void Read(TextReader input)
         {
 
             XmlReaderSettings settings = new XmlReaderSettings();
@@ -37,7 +49,7 @@ namespace XliffLib.Readers
             settings.ValidationType = ValidationType.Schema;
             settings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
 
-            using (XmlReader vreader = XmlReader.Create(filePath, settings))
+            using (XmlReader vreader = XmlReader.Create(input, settings))
             {
                 try
                 {
