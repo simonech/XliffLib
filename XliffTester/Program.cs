@@ -26,7 +26,7 @@ namespace XliffTester
 
             Console.WriteLine("Validating v2.0 file");
             XliffReaderV20 reader2 = new XliffReaderV20();
-            reader2.Read(@"C:\Projects\XliffLib\sample xliff\Hello-World\xliff-output-v2.0.xml");
+            reader2.Read(@"C:\Projects\XliffLib\sample xliff\Hello-World\xliff-output-v2.0.xml"); 
 
             if (!reader2.IsValid)
             {
