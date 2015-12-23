@@ -26,7 +26,7 @@ namespace XliffLib.Readers
         public BaseXliffReader()
         {
             ValidationErrors = new List<ValidationError>();
-            IsValid = false;
+            IsValid = true;
         }
 
 

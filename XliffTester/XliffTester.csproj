@@ -55,6 +55,16 @@
       <Name>XliffLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\sample xliff\Hello-World\xliff-output-v1.2.xml">
+      <Link>Samples\xliff-output-v1.2.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\sample xliff\Hello-World\xliff-output-v2.0.xml">
+      <Link>Samples\xliff-output-v2.0.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
