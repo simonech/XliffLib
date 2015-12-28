@@ -18,6 +18,7 @@ namespace XliffLib.Readers
         {
             schema = new XmlSchemaSet();
             schema.Add(null, XmlReader.Create(new StringReader(EmbeddedFilesReader.ReadString("XliffLib.XsdSchemas.xliff-core-2.0.xsd"))));
+            schema.Add("http://www.w3.org/XML/1998/namespace", XmlReader.Create(new StringReader(EmbeddedFilesReader.ReadString("XliffLib.XsdSchemas.xml.xsd"))));
         }
 
         internal override XmlSchemaSet XsdSchema
