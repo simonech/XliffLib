@@ -2,6 +2,10 @@
 {
     public class XliffSegments
     {
+        public XliffSegments()
+        {
+            Id = string.Empty;
+        }
         public XliffSegments(string id)
         {
             Id = id;
