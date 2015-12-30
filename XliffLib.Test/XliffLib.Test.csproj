@@ -54,6 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Extractor\TextExtractorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reader\XliffReaderV20Test.cs" />
     <Compile Include="Reader\XliffReaderV12Test.cs" />
@@ -66,9 +67,7 @@
       <Name>XliffLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extractor\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="TestFiles\Reader\v12\ValidXliffFile.xlf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

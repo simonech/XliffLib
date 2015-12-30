@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extractors\BaseExtractor.cs" />
+    <Compile Include="Extractors\ExtractorResult.cs" />
     <Compile Include="Extractors\TextExtractor.cs" />
     <Compile Include="Model\XliffSegments.cs" />
     <Compile Include="Model\XliffUnit.cs" />
