@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml.Linq;
 using XliffLib.Writers;
+using XliffLib.Model;
 
 namespace XliffLib.Test
 {

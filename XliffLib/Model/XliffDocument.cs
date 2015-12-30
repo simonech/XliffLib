@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XliffLib
+namespace XliffLib.Model
 {
     /// <summary>
     /// Logical structure of the Xliff document

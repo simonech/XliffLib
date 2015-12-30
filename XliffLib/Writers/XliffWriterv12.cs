@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using XliffLib.Model;
 using XliffLib.Utils;
 
 namespace XliffLib.Writers

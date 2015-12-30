@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace XliffLib
+namespace XliffLib.Extractors
 {
-    public class XliffFile
+    public class TextExtractor: BaseExtractor
     {
     }
 }

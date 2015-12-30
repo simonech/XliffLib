@@ -39,6 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extractors\BaseExtractor.cs" />
+    <Compile Include="Extractors\TextExtractor.cs" />
+    <Compile Include="Model\XliffSegments.cs" />
+    <Compile Include="Model\XliffUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readers\BaseXliffReader.cs" />
     <Compile Include="Readers\ValidationError.cs" />
@@ -48,8 +52,8 @@
     <Compile Include="Writers\BaseXliffWriter.cs" />
     <Compile Include="Writers\XliffWriterV12.cs" />
     <Compile Include="Writers\XliffWriterV20.cs" />
-    <Compile Include="XliffDocument.cs" />
-    <Compile Include="XliffFile.cs" />
+    <Compile Include="Model\XliffDocument.cs" />
+    <Compile Include="Model\XliffFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XsdSchemas\xliff-core-1.2-strict.xsd">
