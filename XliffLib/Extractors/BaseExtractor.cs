@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace XliffLib.Extractors
 {
-    public class BaseExtractor
+    abstract public class BaseExtractor
     {
+        abstract public ExtractorResult Extract(string fileContent);
     }
 }

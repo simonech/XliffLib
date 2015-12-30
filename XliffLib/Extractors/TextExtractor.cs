@@ -12,7 +12,7 @@ namespace XliffLib.Extractors
         private const string unitIdentifierFormat = "%%{0}%%";
         private readonly char[] segmentSeparators = { '.','!','?'};
 
-        public ExtractorResult Extract(string fileContent)
+        public override ExtractorResult Extract(string fileContent)
         {
             ExtractorResult result = new ExtractorResult();
 

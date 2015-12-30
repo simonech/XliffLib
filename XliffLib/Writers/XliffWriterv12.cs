@@ -29,6 +29,26 @@ namespace XliffLib.Writers
             xliffRoot.Add(new XAttribute("version", "1.2"));
             root.Add(xliffRoot);
             XliffDoc = root;
+
+            foreach (var file in xliff.Files)
+            {
+                var xliffFile = new XElement(xliffNS + "file");
+                foreach (var unit in file.Units)
+                {
+                    foreach (var segment in unit.Segments)
+                    {
+                        var transUnit = new XElement(xliffNS + "trans-unit");
+                        transUnit.Add(new XAttribute("id", unit.Id));
+
+                        var source = new XElement(xliffNS + "source");
+                        source.Value = segment.Source;
+                        transUnit.Add(source);
+
+                        xliffFile.Add(transUnit);
+                    }
+                }
+                xliffRoot.Add(xliffFile);
+            }
         }
 
     }

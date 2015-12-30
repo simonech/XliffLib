@@ -29,6 +29,15 @@ namespace XliffLib.Writers
         }
 
         /// <summary>
+        /// Saves the Xliff to  file
+        /// </summary>
+        /// <param name="filename">name of the file</param>
+        public void Save(string filename)
+        {
+            XliffDoc.Save(filename);
+        }
+
+        /// <summary>
         /// Checks that the xliff file provide is valid
         /// </summary>
         /// <param name="xliff">the logical Xliff file</param>
