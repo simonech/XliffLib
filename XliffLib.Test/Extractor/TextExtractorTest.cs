@@ -49,7 +49,7 @@ namespace XliffLib.Test.Extractor
         }
 
         [TestMethod]
-        public void MultiLineDocProducesCorrectSegmentsContent()
+        public void MultiSegmentDocProducesCorrectSegmentsContent()
         {
             TextExtractor extractor = new TextExtractor();
             ExtractorResult result = extractor.Extract("First Sentence. Second Sentence.");
@@ -58,10 +58,19 @@ namespace XliffLib.Test.Extractor
         }
 
         [TestMethod]
-        public void MultiLineDocWithUnterminatedLastLineProducesCorrectSegmentsContent()
+        public void MultiSegmentDocWithUnterminatedLastLineProducesCorrectSegmentsContent()
         {
             TextExtractor extractor = new TextExtractor();
             ExtractorResult result = extractor.Extract("First Sentence. Second Sentence");
+            Assert.AreEqual("First Sentence.", result.File.Units[0].Segments[0].Source);
+            Assert.AreEqual("Second Sentence", result.File.Units[0].Segments[1].Source);
+        }
+
+        [TestMethod]
+        public void MultiLineDocProducesCorrectSegmentsContent()
+        {
+            TextExtractor extractor = new TextExtractor();
+            ExtractorResult result = extractor.Extract("First Sentence\r\nSecond Sentence");
             Assert.AreEqual("First Sentence.", result.File.Units[0].Segments[0].Source);
             Assert.AreEqual("Second Sentence", result.File.Units[0].Segments[1].Source);
         }
