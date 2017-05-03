@@ -25,10 +25,6 @@ namespace XliffTester
             XliffDocument doc = new XliffDocument();
             doc.Files.Add(result.File);
 
-            XliffWriterV12 writer = new XliffWriterV12();
-            writer.Create(doc);
-            writer.Save(Path.Combine(directory, "Samples", "original-v12.xml"));
-
             XliffWriterV20 writer2 = new XliffWriterV20();
             writer2.Create(doc);
             writer2.Save(Path.Combine(directory, "Samples", "original-v20.xml"));

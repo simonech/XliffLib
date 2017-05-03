@@ -51,26 +51,11 @@
     <Compile Include="Readers\BaseXliffReader.cs" />
     <Compile Include="Readers\ValidationError.cs" />
     <Compile Include="Readers\XliffReaderV20.cs" />
-    <Compile Include="Readers\XliffReaderV12.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="Writers\BaseXliffWriter.cs" />
-    <Compile Include="Writers\XliffWriterV12.cs" />
     <Compile Include="Writers\XliffWriterV20.cs" />
     <Compile Include="Model\XliffDocument.cs" />
     <Compile Include="Model\XliffFile.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XsdSchemas\xliff-core-1.2-strict.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XsdSchemas\xliff-core-2.0.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XsdSchemas\xml.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
