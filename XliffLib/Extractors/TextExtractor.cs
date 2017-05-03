@@ -19,7 +19,7 @@ namespace XliffLib.Extractors
             result.Skeleton = string.Format(unitIdentifierFormat, 1);
             Property unit = new Property("1");
             
-            result.File.ContentItems.Add(unit);
+            result.File.Properties.Add(unit);
             return result;
         }
 

@@ -2,7 +2,7 @@
 
 namespace XliffLib.Model
 {
-    public class Property : IContentItem
+    public class Property
     {
         public Property(string id)
         {
@@ -10,5 +10,6 @@ namespace XliffLib.Model
         }
         public string Id { get; private set; }
         public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

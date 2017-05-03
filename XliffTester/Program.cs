@@ -26,7 +26,7 @@ namespace XliffTester
             doc.Documents.Add(result.File);
 
             XliffWriterV20 writer2 = new XliffWriterV20();
-            writer2.Create(doc);
+            writer2.Create(doc,"en-us");
             writer2.Save(Path.Combine(directory, "Samples", "original-v20.xml"));
 
             File.WriteAllText(Path.Combine(directory, "Samples", "skeleton.txt"), result.Skeleton);

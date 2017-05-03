@@ -7,35 +7,61 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using XliffLib.Model;
 using XliffLib.Utils;
+using Localization.Xliff.OM.Core;
 
 namespace XliffLib.Writers
 {
     public class XliffWriterV20: BaseXliffWriter
     {
-        private static XNamespace xliffNS = "urn:oasis:names:tc:xliff:document:2.0";
 
-        public void Create(Bundle xliff)
+        public void Create(Bundle xliff, string sourceLanguage)
         {
-            ValidateXliff(xliff);
-            XDeclaration declaration = new XDeclaration("1.0", "utf-8", "");
-            XDocument root = new XDocument(declaration);
-            var xliffRoot = new XElement(xliffNS + "xliff");
-            xliffRoot.Add(new XAttribute("version", "2.0"));
-            root.Add(xliffRoot);
-            XliffDoc = root;
+            XliffDocument document = new XliffDocument(sourceLanguage);
 
+
+            int fileNum = 0;
+            int groupNum = 0;
+            int unitNum = 0;
             foreach (var file in xliff.Documents)
             {
-                var xliffFile = new XElement(xliffNS + "file");
-                foreach (var unit in file.ContentItems)
-                {
-                    var transUnit = new XElement(xliffNS + "unit");
-                    transUnit.Add(new XAttribute("id", unit.Id));
+                string fileId = "f" + (++fileNum);
+                File xliffFile = new File(fileId);
 
-                    xliffFile.Add(transUnit);
+                foreach (var group in file.PropertyGroups)
+                {
+                    xliffFile.Containers.Add(ProcessPropertyGroup(group, ref groupNum, ref unitNum));
                 }
-                xliffRoot.Add(xliffFile);
+                foreach (var property in file.Properties)
+                {
+                    Unit xliffUnit = ProcessProperty(ref unitNum);
+                    xliffFile.Containers.Add(xliffUnit);
+                }
+                document.Files.Add(xliffFile);
             }
+        }
+
+        private static Unit ProcessProperty(ref int unitNum)
+        {
+            string unitId = "u" + (++unitNum);
+            Unit xliffUnit = new Unit(unitId);
+            return xliffUnit;
+        }
+
+        private Group ProcessPropertyGroup(PropertyGroup propertyGroup, ref int groupNum, ref int unitNum)
+        {
+            string id = "g" + (++groupNum);
+            Group xliffGroup = new Group(id);
+            foreach (var group in propertyGroup.PropertyGroups)
+            {
+                xliffGroup.Containers.Add(ProcessPropertyGroup(group, ref groupNum, ref unitNum));
+            }
+            foreach (var property in propertyGroup.Properties)
+            {
+                Unit xliffUnit = ProcessProperty(ref unitNum);
+
+                xliffGroup.Containers.Add(xliffUnit);
+            }
+            return xliffGroup;
         }
     }
 }

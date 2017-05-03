@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace XliffLib.Model
 {
-    public class PropertyGroup: IContentItem
+    public class PropertyGroup
     {
         public PropertyGroup(string id)
         {
-            ContentItems = new List<IContentItem>();
+            PropertyGroups = new List<PropertyGroup>();
+            Properties = new List<Property>();
             Id = id;
         }
-        public IList<IContentItem> ContentItems { get; set; }
+        public IList<PropertyGroup> PropertyGroups { get; private set; }
+        public IList<Property> Properties { get; private set; }
         public string Id { get; private set; }
         public string Name { get; set; }
     }

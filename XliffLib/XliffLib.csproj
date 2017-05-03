@@ -47,7 +47,6 @@
     <Compile Include="Extractors\TextExtractor.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\Document.cs" />
-    <Compile Include="Model\IContentItem.cs" />
     <Compile Include="Model\Property.cs" />
     <Compile Include="Model\PropertyGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

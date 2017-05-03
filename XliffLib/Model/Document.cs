@@ -9,8 +9,10 @@ namespace XliffLib.Model
     {
         public Document()
         {
-            ContentItems = new List<IContentItem>();
+            PropertyGroups = new List<PropertyGroup>();
+            Properties = new List<Property>();
         }
-        public IList<IContentItem> ContentItems { get; private set; }
+        public IList<PropertyGroup> PropertyGroups { get; private set; }
+        public IList<Property> Properties { get; private set; }
     }
 }
