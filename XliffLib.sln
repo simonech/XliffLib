@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib", "XliffLib\XliffLib.csproj", "{11D055EC-AA34-4065-B87A-5EEC76C6A07A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib.Test", "XliffLib.Test\XliffLib.Test.csproj", "{D6480AC6-8461-423E-83F4-A5E68C902C9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffTester", "XliffTester\XliffTester.csproj", "{83FF3EBA-6663-4912-8992-CC0003D9896E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xliff.NUnit", "Xliff.NUnit\Xliff.NUnit.csproj", "{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
