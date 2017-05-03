@@ -9,14 +9,13 @@ namespace XliffLib.Model
     /// <summary>
     /// Logical structure of the Xliff document
     /// </summary>
-    public class XliffDocument
+    public class Bundle
     {
-
-        public XliffDocument()
+        public Bundle()
         {
-            Files = new List<XliffFile>();
+            Documents = new List<Document>();
         }
 
-        public IList<XliffFile> Files { get; set; }
+        public IList<Document> Documents { get; private set; }
     }
 }

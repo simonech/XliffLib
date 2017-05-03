@@ -6,9 +6,9 @@ namespace XliffLib.Extractors
     {
         public ExtractorResult()
         {
-            File = new XliffFile();
+            File = new Document();
         }
         public string Skeleton { get; set; }
-        public XliffFile File { get; set; }
+        public Document File { get; set; }
     }
 }

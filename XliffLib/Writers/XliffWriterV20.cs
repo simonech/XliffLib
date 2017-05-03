@@ -14,7 +14,7 @@ namespace XliffLib.Writers
     {
         private static XNamespace xliffNS = "urn:oasis:names:tc:xliff:document:2.0";
 
-        public void Create(XliffDocument xliff)
+        public void Create(Bundle xliff)
         {
             ValidateXliff(xliff);
             XDeclaration declaration = new XDeclaration("1.0", "utf-8", "");
@@ -24,25 +24,14 @@ namespace XliffLib.Writers
             root.Add(xliffRoot);
             XliffDoc = root;
 
-            foreach (var file in xliff.Files)
+            foreach (var file in xliff.Documents)
             {
                 var xliffFile = new XElement(xliffNS + "file");
-                foreach (var unit in file.Units)
+                foreach (var unit in file.ContentItems)
                 {
                     var transUnit = new XElement(xliffNS + "unit");
                     transUnit.Add(new XAttribute("id", unit.Id));
 
-                    foreach (var segment in unit.Segments)
-                    {
-                        var xliffSegment = new XElement(xliffNS + "segment");
-                        xliffSegment.Add(new XAttribute("id", unit.Id));
-
-                        var source = new XElement(xliffNS + "source");
-                        source.Value = segment.Source;
-                        xliffSegment.Add(source);
-
-                        transUnit.Add(xliffSegment);
-                    }
                     xliffFile.Add(transUnit);
                 }
                 xliffRoot.Add(xliffFile);

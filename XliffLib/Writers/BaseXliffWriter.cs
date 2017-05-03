@@ -41,7 +41,7 @@ namespace XliffLib.Writers
         /// Checks that the xliff file provide is valid
         /// </summary>
         /// <param name="xliff">the logical Xliff file</param>
-        internal void ValidateXliff(XliffDocument xliff)
+        internal void ValidateXliff(Bundle xliff)
         {
             if (xliff == null) throw new ArgumentNullException("xliff");
             //if (xliff.Files.Count == 0) throw new ArgumentException("xliff", "The Xliff document must have at least 1 file");

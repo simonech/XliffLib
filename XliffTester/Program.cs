@@ -22,8 +22,8 @@ namespace XliffTester
             TextExtractor extractor = new TextExtractor();
             var result = extractor.Extract(content);
 
-            XliffDocument doc = new XliffDocument();
-            doc.Files.Add(result.File);
+            Bundle doc = new Bundle();
+            doc.Documents.Add(result.File);
 
             XliffWriterV20 writer2 = new XliffWriterV20();
             writer2.Create(doc);

@@ -17,17 +17,9 @@ namespace XliffLib.Extractors
             ExtractorResult result = new ExtractorResult();
 
             result.Skeleton = string.Format(unitIdentifierFormat, 1);
-            XliffUnit unit = new XliffUnit("1");
-            string unitContent = fileContent;
-            List<string> segments = SplitInSegments(fileContent);
-            int segmentCount = 0;
-            foreach (var segment in segments)
-            {
-                segmentCount++;
-                unit.Segments.Add(new XliffSegments(segmentCount.ToString()) { Source = segment });
-            }
+            Property unit = new Property("1");
             
-            result.File.Units.Add(unit);
+            result.File.ContentItems.Add(unit);
             return result;
         }
 
