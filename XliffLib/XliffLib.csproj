@@ -56,7 +56,6 @@
     <Compile Include="Readers\XliffReaderV20.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="Utils\ListExtensions.cs" />
-    <Compile Include="Writers\BaseXliffWriter.cs" />
     <Compile Include="Writers\XliffWriterV20.cs" />
   </ItemGroup>
   <ItemGroup>

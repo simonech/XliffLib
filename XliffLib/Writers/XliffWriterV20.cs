@@ -11,9 +11,8 @@ using Localization.Xliff.OM.Core;
 
 namespace XliffLib.Writers
 {
-    public class XliffWriterV20: BaseXliffWriter
+    public class XliffWriterV20
     {
-
         public XliffDocument Create(Bundle xliff, string sourceLanguage)
         {
             XliffDocument document = new XliffDocument(sourceLanguage);
