@@ -7,23 +7,11 @@ using XliffLib.Model;
 
 namespace XliffLib.Extractors
 {
-    public class TextExtractor : BaseExtractor
+    public class BasicSegmenter
     {
-        private const string unitIdentifierFormat = "%%{0}%%";
         private readonly char[] segmentSeparators = { '.','!','?'};
 
-        public override ExtractorResult Extract(string fileContent)
-        {
-            ExtractorResult result = new ExtractorResult();
-
-            result.Skeleton = string.Format(unitIdentifierFormat, 1);
-            Property unit = new Property("1");
-            
-            result.File.Properties.Add(unit);
-            return result;
-        }
-
-        private List<string> SplitInSegments(string unitText)
+        public List<string> SplitInSegments(string unitText)
         {
             List<string> result = new List<string>();
             int i = 0;
