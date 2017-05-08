@@ -9,9 +9,9 @@ using XliffLib.Model;
 using XliffLib.Utils;
 using Localization.Xliff.OM.Core;
 
-namespace XliffLib.Writers
+namespace XliffLib
 {
-    public class XliffWriterV20
+    public class Extractor
     {
         public XliffDocument Create(Bundle xliff, string sourceLanguage)
         {

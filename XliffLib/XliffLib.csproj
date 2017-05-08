@@ -42,9 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extractors\BaseExtractor.cs" />
-    <Compile Include="Extractors\ExtractorResult.cs" />
-    <Compile Include="Extractors\TextExtractor.cs" />
+    <Compile Include="BasicSegmenter.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\IPropertyContainer.cs" />
@@ -56,7 +54,7 @@
     <Compile Include="Readers\XliffReaderV20.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="Utils\ListExtensions.cs" />
-    <Compile Include="Writers\XliffWriterV20.cs" />
+    <Compile Include="Extractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

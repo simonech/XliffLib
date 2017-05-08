@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XliffLib.Model;
-using XliffLib.Writers;
+using XliffLib;
 
 namespace Xliff.NUnit
 {
@@ -20,7 +20,7 @@ namespace Xliff.NUnit
             Document doc = new Document();
             bundle.Documents.Add(doc);
 
-            XliffWriterV20 writer = new XliffWriterV20();
+            Extractor writer = new Extractor();
             var xliffModel = writer.Create(bundle, "en-US");
 
             int actual = xliffModel.Files.Count;
@@ -36,7 +36,7 @@ namespace Xliff.NUnit
             doc.Properties.Add(prop);
             bundle.Documents.Add(doc);
 
-            XliffWriterV20 writer = new XliffWriterV20();
+            Extractor writer = new Extractor();
             var xliffModel = writer.Create(bundle, "en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
@@ -55,7 +55,7 @@ namespace Xliff.NUnit
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-            XliffWriterV20 writer = new XliffWriterV20();
+            Extractor writer = new Extractor();
             var xliffModel = writer.Create(bundle, "en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
@@ -74,7 +74,7 @@ namespace Xliff.NUnit
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-            XliffWriterV20 writer = new XliffWriterV20();
+            Extractor writer = new Extractor();
             var xliffModel = writer.Create(bundle, "en-US");
 
             var xliffGroup = xliffModel.Files[0].Containers[0] as Group;
@@ -97,7 +97,7 @@ namespace Xliff.NUnit
             doc.PropertyGroups.Add(group2);
             bundle.Documents.Add(doc);
 
-            XliffWriterV20 writer = new XliffWriterV20();
+            Extractor writer = new Extractor();
             var xliffModel = writer.Create(bundle, "en-US");
 
             var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;

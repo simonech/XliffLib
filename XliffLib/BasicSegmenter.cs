@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XliffLib.Model;
 
-namespace XliffLib.Extractors
+namespace XliffLib
 {
     public class BasicSegmenter
     {
