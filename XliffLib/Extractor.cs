@@ -13,7 +13,7 @@ namespace XliffLib
 {
     public class Extractor
     {
-        public XliffDocument Create(Bundle xliff, string sourceLanguage)
+        public XliffDocument Extract(Bundle xliff, string sourceLanguage)
         {
             XliffDocument document = new XliffDocument(sourceLanguage);
 

@@ -21,7 +21,7 @@ namespace Xliff.NUnit
             bundle.Documents.Add(doc);
 
             Extractor extractor = new Extractor();
-            var xliffModel = extractor.Create(bundle, "en-US");
+            var xliffModel = extractor.Extract(bundle, "en-US");
 
             int actual = xliffModel.Files.Count;
             Assert.AreEqual(1, actual);
@@ -37,7 +37,7 @@ namespace Xliff.NUnit
             bundle.Documents.Add(doc);
 
             Extractor extractor = new Extractor();
-            var xliffModel = extractor.Create(bundle, "en-US");
+            var xliffModel = extractor.Extract(bundle, "en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -56,7 +56,7 @@ namespace Xliff.NUnit
             bundle.Documents.Add(doc);
 
             Extractor extractor = new Extractor();
-            var xliffModel = extractor.Create(bundle, "en-US");
+            var xliffModel = extractor.Extract(bundle, "en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -75,7 +75,7 @@ namespace Xliff.NUnit
             bundle.Documents.Add(doc);
 
             Extractor extractor = new Extractor();
-            var xliffModel = extractor.Create(bundle, "en-US");
+            var xliffModel = extractor.Extract(bundle, "en-US");
 
             var xliffGroup = xliffModel.Files[0].Containers[0] as Group;
             string actual = xliffGroup.Containers[0].Id;
@@ -98,7 +98,7 @@ namespace Xliff.NUnit
             bundle.Documents.Add(doc);
 
             Extractor extractor = new Extractor();
-            var xliffModel = extractor.Create(bundle, "en-US");
+            var xliffModel = extractor.Extract(bundle, "en-US");
 
             var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
             string actual = xliffGroup1.Containers[0].Id;
