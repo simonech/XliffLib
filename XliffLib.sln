@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib", "XliffLib\XliffL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib.Test", "XliffLib.Test\XliffLib.Test.csproj", "{D6480AC6-8461-423E-83F4-A5E68C902C9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffTester", "XliffTester\XliffTester.csproj", "{83FF3EBA-6663-4912-8992-CC0003D9896E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib.NUnit", "XliffLib.NUnit\XliffLib.NUnit.csproj", "{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xliff.NUnit", "Xliff.NUnit\Xliff.NUnit.csproj", "{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "XliffTester", "XliffTester\XliffTester.csproj", "{69E22ED7-D782-454F-B1EA-3C51DDE225ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{D6480AC6-8461-423E-83F4-A5E68C902C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6480AC6-8461-423E-83F4-A5E68C902C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6480AC6-8461-423E-83F4-A5E68C902C9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

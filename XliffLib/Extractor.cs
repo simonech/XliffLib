@@ -18,7 +18,7 @@ namespace XliffLib
             XliffDocument document = new XliffDocument(sourceLanguage);
 
             int fileNum = 0;
-            int groupNum = 0;
+            int groupNum = 0; 
             int unitNum = 0;
             foreach (var doc in xliff.Documents)
             {

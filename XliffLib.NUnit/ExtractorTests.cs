@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using XliffLib.Model;
 using XliffLib;
 
-namespace Xliff.NUnit
+namespace XliffLib.NUnit
 {
     [TestFixture]
-    public class WriterTests
+    public class ExtractorTests
     {
         [Test]
         public void BundleWithOneDocumentWritesToXliffDocumentWithOneFile()
