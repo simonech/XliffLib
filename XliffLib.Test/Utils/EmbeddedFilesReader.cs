@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XliffLib.Utils
+namespace XliffLib.Test.Utils
 {
     public static class EmbeddedFilesReader
     {

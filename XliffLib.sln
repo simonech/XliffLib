@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib", "XliffLib\XliffL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib.Test", "XliffLib.Test\XliffLib.Test.csproj", "{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "XliffTester", "XliffTester\XliffTester.csproj", "{54B7B32C-7F58-466F-9FB6-497391107AE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffTester", "XliffTester\XliffTester.csproj", "{83FF3EBA-6663-4912-8992-CC0003D9896E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83FF3EBA-6663-4912-8992-CC0003D9896E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
