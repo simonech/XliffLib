@@ -82,31 +82,62 @@ namespace XliffLib.Test
             Assert.AreEqual("u1", actual);
         }
 
-        [Test]
-        public void PropertiesInsideDifferentGroupsGetsDifferentIds()
-        {
-            Bundle bundle = new Bundle();
-            Document doc = new Document();
-            PropertyGroup group1 = new PropertyGroup("content");
-            Property prop1 = new Property("title");
-            group1.Properties.Add(prop1);
+		[Test]
+		public void PropertiesInsideDifferentGroupsGetsDifferentIds()
+		{
+			Bundle bundle = new Bundle();
+			Document doc = new Document();
+			PropertyGroup group1 = new PropertyGroup("content");
+			Property prop1 = new Property("title");
+			group1.Properties.Add(prop1);
+			doc.PropertyGroups.Add(group1);
+			PropertyGroup group2 = new PropertyGroup("content");
+			Property prop2 = new Property("title");
+			group2.Properties.Add(prop2);
+			doc.PropertyGroups.Add(group2);
+			bundle.Documents.Add(doc);
+
+			Extractor extractor = new Extractor();
+			var xliffModel = extractor.Extract(bundle, "en-US");
+
+			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
+            var unit1 = xliffGroup1.Containers[0] as Unit;
+			Assert.AreEqual("u1", unit1.Id);
+            Assert.AreEqual("#/f=f1/g=g1/u=u1", unit1.SelectorPath);
+
+			var xliffGroup2 = xliffModel.Files[0].Containers[1] as Group;
+            var unit2 = xliffGroup2.Containers[0] as Unit;
+			Assert.AreEqual("u2", unit2.Id);
+            Assert.AreEqual("#/f=f1/g=g2/u=u2", unit2.SelectorPath);
+		}
+
+		[Test]
+		public void NestedGroupsAreCorrectlyRepresented()
+		{
+			Bundle bundle = new Bundle();
+			Document doc = new Document();
+			PropertyGroup group1 = new PropertyGroup("content");
+			PropertyGroup group2 = new PropertyGroup("nestedContent");
+			Property prop2 = new Property("title");
+			group2.Properties.Add(prop2);
+			group1.PropertyGroups.Add(group2);
             doc.PropertyGroups.Add(group1);
-            PropertyGroup group2 = new PropertyGroup("content");
-            Property prop2 = new Property("title");
-            group2.Properties.Add(prop2);
-            doc.PropertyGroups.Add(group2);
             bundle.Documents.Add(doc);
 
-            Extractor extractor = new Extractor();
-            var xliffModel = extractor.Extract(bundle, "en-US");
+			Extractor extractor = new Extractor();
+			var xliffModel = extractor.Extract(bundle, "en-US");
 
-            var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
-            string actual = xliffGroup1.Containers[0].Id;
-            Assert.AreEqual("u1", actual);
+			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
+			string actual = xliffGroup1.Id;
+			Assert.AreEqual("g1", actual);
 
-            var xliffGroup2 = xliffModel.Files[0].Containers[1] as Group;
-            string actual2 = xliffGroup2.Containers[0].Id;
-            Assert.AreEqual("u2", actual2);
-        }
+			var xliffGroup2 = xliffGroup1.Containers[0] as Group;
+			string actual2 = xliffGroup2.Id;
+			Assert.AreEqual("g2", actual2);
+
+            var unit = xliffGroup2.Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+            Assert.AreEqual("#/f=f1/g=g1/g=g2/u=u1",unit.SelectorPath);
+		}
     }
 }
