@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using XliffLib.Model;
 using XliffLib;
 
-namespace XliffLib.NUnit
+namespace XliffLib.Test
 {
     [TestFixture]
     public class ExtractorTests

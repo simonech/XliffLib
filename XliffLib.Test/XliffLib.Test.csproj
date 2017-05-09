@@ -7,8 +7,8 @@
     <ProjectGuid>{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xliff.NUnit</RootNamespace>
-    <AssemblyName>Xliff.NUnit</AssemblyName>
+    <RootNamespace>XliffLib.Test</RootNamespace>
+    <AssemblyName>XliffLib.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
