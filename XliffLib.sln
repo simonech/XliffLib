@@ -5,11 +5,9 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib", "XliffLib\XliffLib.csproj", "{11D055EC-AA34-4065-B87A-5EEC76C6A07A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib.Test", "XliffLib.Test\XliffLib.Test.csproj", "{D6480AC6-8461-423E-83F4-A5E68C902C9A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XliffLib.NUnit", "XliffLib.NUnit\XliffLib.NUnit.csproj", "{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "XliffTester", "XliffTester\XliffTester.csproj", "{69E22ED7-D782-454F-B1EA-3C51DDE225ED}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "XliffTester", "XliffTester\XliffTester.csproj", "{54B7B32C-7F58-466F-9FB6-497391107AE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +19,14 @@ Global
 		{11D055EC-AA34-4065-B87A-5EEC76C6A07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11D055EC-AA34-4065-B87A-5EEC76C6A07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11D055EC-AA34-4065-B87A-5EEC76C6A07A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6480AC6-8461-423E-83F4-A5E68C902C9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6480AC6-8461-423E-83F4-A5E68C902C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6480AC6-8461-423E-83F4-A5E68C902C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6480AC6-8461-423E-83F4-A5E68C902C9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FED9D0C-7BAC-444E-90B9-9CA573ACDEB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69E22ED7-D782-454F-B1EA-3C51DDE225ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54B7B32C-7F58-466F-9FB6-497391107AE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
