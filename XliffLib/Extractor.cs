@@ -23,7 +23,10 @@ namespace XliffLib
 			{
 				XliffWriter writer;
 
-				writer = new XliffWriter();
+                var settings = new XliffWriterSettings();
+                settings.Indent = true;
+
+				writer = new XliffWriter(settings);
 				writer.Serialize(stream, document);
                 stream.Position = 0;
 				var sr = new IO.StreamReader(stream);
@@ -52,10 +55,17 @@ namespace XliffLib
             return document;
         }
 
-        static Unit ProcessProperty(ref int unitNum)
+        static Unit ProcessProperty(Property property, ref int unitNum)
         {
             string unitId = "u" + (++unitNum);
             Unit xliffUnit = new Unit(unitId);
+            xliffUnit.Name = property.Name;
+
+            Segment segment = new Segment("s1");
+            segment.Source = new Source(property.Value);
+
+
+            xliffUnit.Resources.Add(segment);
             return xliffUnit;
         }
 
@@ -66,12 +76,13 @@ namespace XliffLib
             {
                 string id = "g" + (++groupNum);
                 Group xliffGroup = new Group(id);
+                xliffGroup.Name = group.Name;
                 containers.Add(xliffGroup);
                 xliffGroup.Containers.AddAll(ProcessPropertyContainers(group, ref groupNum, ref unitNum));
             }
             foreach (var property in propertyContainer.Properties)
             {
-                Unit xliffUnit = ProcessProperty(ref unitNum);
+                Unit xliffUnit = ProcessProperty(property, ref unitNum);
 
                 containers.Add(xliffUnit);
             }
