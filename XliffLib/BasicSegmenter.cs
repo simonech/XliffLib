@@ -5,33 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using XliffLib.Model;
 
-namespace XliffLib.Extractors
+namespace XliffLib
 {
-    public class TextExtractor : BaseExtractor
+    public class BasicSegmenter
     {
-        private const string unitIdentifierFormat = "%%{0}%%";
         private readonly char[] segmentSeparators = { '.','!','?'};
 
-        public override ExtractorResult Extract(string fileContent)
-        {
-            ExtractorResult result = new ExtractorResult();
-
-            result.Skeleton = string.Format(unitIdentifierFormat, 1);
-            XliffUnit unit = new XliffUnit("1");
-            string unitContent = fileContent;
-            List<string> segments = SplitInSegments(fileContent);
-            int segmentCount = 0;
-            foreach (var segment in segments)
-            {
-                segmentCount++;
-                unit.Segments.Add(new XliffSegments(segmentCount.ToString()) { Source = segment });
-            }
-            
-            result.File.Units.Add(unit);
-            return result;
-        }
-
-        private List<string> SplitInSegments(string unitText)
+        public List<string> SplitInSegments(string unitText)
         {
             List<string> result = new List<string>();
             int i = 0;

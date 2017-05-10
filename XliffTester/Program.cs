@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XliffLib.Extractors;
+using Localization.Xliff.OM.Core;
+using XliffLib;
 using XliffLib.Model;
-using XliffLib.Readers;
-using XliffLib.Writers;
+using Localization.Xliff.OM.Exceptions;
 
 namespace XliffTester
 {
@@ -17,40 +17,46 @@ namespace XliffTester
         {
             string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var directory = System.IO.Path.GetDirectoryName(path);
-            string content = File.ReadAllText(Path.Combine(directory, "Samples", "original.txt"));
+            string content = System.IO.File.ReadAllText(Path.Combine(directory, "Samples", "original.txt"));
 
-            TextExtractor extractor = new TextExtractor();
-            var result = extractor.Extract(content);
 
-            XliffDocument doc = new XliffDocument();
-            doc.Files.Add(result.File);
+            var bundle = new Bundle();
+            var doc = new Document();
+            bundle.Documents.Add(doc);
+            Property property = new Property("original");
+            property.Value = content;
+            Property property1 = new Property("original1");
+            property1.Value = content;
+            doc.Properties.Add(property);
+            doc.Properties.Add(property1);
 
-            XliffWriterV12 writer = new XliffWriterV12();
-            writer.Create(doc);
-            writer.Save(Path.Combine(directory, "Samples", "original-v12.xml"));
+            Extractor extractor = new Extractor();
 
-            XliffWriterV20 writer2 = new XliffWriterV20();
-            writer2.Create(doc);
-            writer2.Save(Path.Combine(directory, "Samples", "original-v20.xml"));
+            XliffDocument xliff = extractor.Extract(bundle, "en-GB");
 
-            File.WriteAllText(Path.Combine(directory, "Samples", "skeleton.txt"), result.Skeleton);
 
-            //DisplayValidationErrors(reader3);
+            try
+            {
+                var result = extractor.Write(xliff,true);
+                Console.WriteLine(result);
+            }
+			catch (ValidationException e)
+			{
+				Console.WriteLine("ValidationException Details:");
+                Console.WriteLine(e.Message);
+				if (e.Data != null)
+				{
+					foreach (object key in e.Data.Keys)
+					{
+						Console.WriteLine("  '{0}': '{1}'", key, e.Data[key]);
+					}
+				}
+			}
+
 
             Console.ReadLine();
         }
 
-        private static void DisplayValidationErrors(BaseXliffReader reader)
-        {
-            if (!reader.IsValid)
-            {
-                foreach (var error in reader.ValidationErrors)
-                {
-                    Console.WriteLine("[{0} - {1} ({2},{3})] {4}", error.Type, error.Severity, error.LineNumber, error.ColNumber, error.ErrorMessage);
-                }
-            }
-            else
-                Console.WriteLine("All good!");
-        }
+
     }
 }
