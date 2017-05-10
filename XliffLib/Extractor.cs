@@ -16,7 +16,7 @@ namespace XliffLib
     public class Extractor
     {
 
-        public string Write(XliffDocument document)
+        public string Write(XliffDocument document, bool indent = false)
         {
             string result = String.Empty;
             using (IO.Stream stream = new IO.MemoryStream())
@@ -24,7 +24,7 @@ namespace XliffLib
 				XliffWriter writer;
 
                 var settings = new XliffWriterSettings();
-                settings.Indent = true;
+                settings.Indent = indent;
 
 				writer = new XliffWriter(settings);
 				writer.Serialize(stream, document);
