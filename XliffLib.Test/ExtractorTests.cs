@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using XliffLib.Model;
 using XliffLib;
+using XliffLib.Test.Utils;
+using XliffLib.Utils;
 
 namespace XliffLib.Test
 {
@@ -30,11 +32,7 @@ namespace XliffLib.Test
         [Test]
         public void FileWithOnePropertyWritesToXliffFileWithOneUnit()
         {
-            Bundle bundle = new Bundle();
-            Document doc = new Document();
-            Property prop = new Property("title");
-            doc.Properties.Add(prop);
-            bundle.Documents.Add(doc);
+            var bundle = EmbeddedFilesReader.ReadString("XliffLib.Test.TestFiles.OnePropertyInRoot.json").ToBundle();
 
             Extractor extractor = new Extractor();
             var xliffModel = extractor.Extract(bundle, "en-US");

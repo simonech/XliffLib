@@ -1,0 +1,13 @@
+﻿{
+  'documents': [
+    {
+      'propertyGroups': [],
+      'properties': [
+        {
+          'name': 'title',
+          'value': 'content'
+        }
+      ]
+    }
+  ]
+}
