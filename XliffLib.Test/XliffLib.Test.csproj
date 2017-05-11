@@ -50,6 +50,7 @@
     <Compile Include="ExtractorTests.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="JsonTests.cs" />
+    <Compile Include="HtmlExtractionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
