@@ -8,15 +8,14 @@ namespace XliffLib.Model
 {
     public class PropertyGroup: IPropertyContainer
     {
-        public PropertyGroup(string id)
+        public PropertyGroup(string name)
         {
             PropertyGroups = new List<PropertyGroup>();
             Properties = new List<Property>();
-            Id = id;
+            Name = name;
         }
         public IList<PropertyGroup> PropertyGroups { get; private set; }
         public IList<Property> Properties { get; private set; }
-        public string Id { get; private set; }
         public string Name { get; set; }
     }
 }

@@ -4,11 +4,10 @@ namespace XliffLib.Model
 {
     public class Property
     {
-        public Property(string id)
+        public Property(string name)
         {
-            Id = id;
+            Name = name;
         }
-        public string Id { get; private set; }
         public string Name { get; set; }
         public string Value { get; set; }
     }

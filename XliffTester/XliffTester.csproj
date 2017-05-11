@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="XLIFF 2.0 Class Guide.chm" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

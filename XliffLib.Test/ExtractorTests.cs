@@ -139,5 +139,39 @@ namespace XliffLib.Test
             Assert.IsNotNull(unit);
             Assert.AreEqual("#/f=f1/g=g1/g=g2/u=u1",unit.SelectorPath);
 		}
+
+        [Test]
+        public void XliffGroupKeepsNameOfPropertyGroup()
+        {
+			Bundle bundle = new Bundle();
+			Document doc = new Document();
+			PropertyGroup group = new PropertyGroup("content");
+            doc.PropertyGroups.Add(group);
+            bundle.Documents.Add(doc);
+
+			Extractor extractor = new Extractor();
+			var xliffModel = extractor.Extract(bundle, "en-US");
+
+			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
+			string actual = xliffGroup1.Name;
+			Assert.AreEqual("content", actual);
+        }
+
+		[Test]
+		public void XliffUnitKeepsNameOfProperty()
+		{
+			Bundle bundle = new Bundle();
+			Document doc = new Document();
+			Property prop = new Property("content");
+			doc.Properties.Add(prop);
+			bundle.Documents.Add(doc);
+
+			Extractor extractor = new Extractor();
+			var xliffModel = extractor.Extract(bundle, "en-US");
+
+			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Unit;
+			string actual = xliffGroup1.Name;
+			Assert.AreEqual("content", actual);
+		}
     }
 }
