@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0" startMode="core">
+    <mode name="core">
+        <namespace ns="urn:oasis:names:tc:xliff:document:2.0">
+            <validate schema="xliff_core_2.0.xsd" useMode="modules"/>
+            <validate schema="xliff_core_2.1.sch" useMode="attach-all"/>
+            <validate schema="matches.sch" useMode="attach-all"/>
+            <validate schema="glossary.sch" useMode="attach-all"/>
+            <validate schema="fs.sch" useMode="attach-all"/>
+            <validate schema="resource_data.sch" useMode="attach-all"/>
+            <validate schema="size_restriction.sch" useMode="attach-all"/>
+            <!-- <validate schema="change_tracking.sch" useMode="attach-all"/>  -->
+            <validate schema="metadata.sch" useMode="attach-all"/>
+            <validate schema="validation.sch" useMode="attach-all"/>
+            <validate schema="its.sch" useMode="attach-all"/>
+        </namespace>
+    </mode>
+    <mode name="modules">
+        <namespace ns="urn:oasis:names:tc:xliff:matches:2.0">
+            <validate schema="matches.xsd"/>
+        </namespace>
+        <namespace ns="urn:oasis:names:tc:xliff:glossary:2.0">
+            <validate schema="glossary.xsd"/>
+        </namespace>
+        <namespace ns="urn:oasis:names:tc:xliff:metadata:2.0">
+            <validate schema="metadata.xsd"/>
+        </namespace>
+        <namespace ns="urn:oasis:names:tc:xliff:fs:2.0" match="attributes">
+            <validate schema="fs.xsd"/>
+        </namespace>
+        <namespace ns="urn:oasis:names:tc:xliff:resourcedata:2.0">
+            <validate schema="resource_data.xsd"/>
+        </namespace>
+        <namespace ns="urn:oasis:names:tc:xliff:sizerestriction:2.0">
+            <validate schema="size_restriction.xsd"/>
+        </namespace>
+        <!--<namespace ns="urn:oasis:names:tc:xliff:changetracking:2.1">
+            <validate schema="change_tracking.xsd"/>
+        </namespace>-->
+        <namespace ns="urn:oasis:names:tc:xliff:validation:2.0">
+            <validate schema="validation.xsd"/>
+        </namespace>
+        <namespace ns="urn:oasis:names:tc:xliff:itsm:2.1" match="attributes">
+            <validate schema="itsm.xsd"/>
+        </namespace>
+        <namespace ns="http://www.w3.org/2005/11/its">
+            <validate schema="its.xsd"/>
+        </namespace>
+        <anyNamespace>
+            <allow/>
+        </anyNamespace>
+    </mode>
+    <mode name="attach-all">
+        <anyNamespace>
+            <attach/>
+        </anyNamespace>
+    </mode>    
+</rules>
