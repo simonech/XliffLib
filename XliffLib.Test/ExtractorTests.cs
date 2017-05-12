@@ -48,7 +48,7 @@ namespace XliffLib.Test
             Bundle bundle = new Bundle();
             Document doc = new Document();
             PropertyGroup group = new PropertyGroup("content");
-            Property prop = new Property("title");
+            Property prop = new Property("title","my content");
             group.Properties.Add(prop);
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
@@ -67,7 +67,7 @@ namespace XliffLib.Test
             Bundle bundle = new Bundle();
             Document doc = new Document();
             PropertyGroup group = new PropertyGroup("content");
-            Property prop = new Property("title");
+            Property prop = new Property("title", "my content");
             group.Properties.Add(prop);
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
@@ -86,11 +86,11 @@ namespace XliffLib.Test
 			Bundle bundle = new Bundle();
 			Document doc = new Document();
 			PropertyGroup group1 = new PropertyGroup("content");
-			Property prop1 = new Property("title");
+			Property prop1 = new Property("title", "my content");
 			group1.Properties.Add(prop1);
 			doc.PropertyGroups.Add(group1);
 			PropertyGroup group2 = new PropertyGroup("content");
-			Property prop2 = new Property("title");
+			Property prop2 = new Property("title", "my content");
 			group2.Properties.Add(prop2);
 			doc.PropertyGroups.Add(group2);
 			bundle.Documents.Add(doc);
@@ -116,7 +116,7 @@ namespace XliffLib.Test
 			Document doc = new Document();
 			PropertyGroup group1 = new PropertyGroup("content");
 			PropertyGroup group2 = new PropertyGroup("nestedContent");
-			Property prop2 = new Property("title");
+			Property prop2 = new Property("title", "my content");
 			group2.Properties.Add(prop2);
 			group1.PropertyGroups.Add(group2);
             doc.PropertyGroups.Add(group1);
@@ -160,16 +160,52 @@ namespace XliffLib.Test
 		{
 			Bundle bundle = new Bundle();
 			Document doc = new Document();
-			Property prop = new Property("content");
+			Property prop = new Property("content", "my content");
 			doc.Properties.Add(prop);
 			bundle.Documents.Add(doc);
 
 			Extractor extractor = new Extractor();
 			var xliffModel = extractor.Extract(bundle, "en-US");
 
-			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Unit;
-			string actual = xliffGroup1.Name;
+			var unit = xliffModel.Files[0].Containers[0] as Unit;
+			string actual = unit.Name;
 			Assert.AreEqual("content", actual);
+		}
+
+		[Test]
+		public void TextValuesAreEncodedAsSimpleText()
+		{
+			Bundle bundle = new Bundle();
+			Document doc = new Document();
+			Property prop = new Property("content", "content");
+			doc.Properties.Add(prop);
+			bundle.Documents.Add(doc);
+
+			Extractor extractor = new Extractor();
+			var xliffModel = extractor.Extract(bundle, "en-US");
+
+			var unit = xliffModel.Files[0].Containers[0] as Unit;
+            var segment = unit.Resources[0] as Segment;
+            var actual = segment.Source.Text[0] as PlainText;
+			Assert.IsNotNull(actual);
+		}
+
+		[Test]
+		public void HtmlValuesAreEncodedIntoCData()
+		{
+			Bundle bundle = new Bundle();
+			Document doc = new Document();
+			Property prop = new Property("content", "<p>content</p>");
+			doc.Properties.Add(prop);
+			bundle.Documents.Add(doc);
+
+			Extractor extractor = new Extractor();
+			var xliffModel = extractor.Extract(bundle, "en-US");
+
+			var unit = xliffModel.Files[0].Containers[0] as Unit;
+			var segment = unit.Resources[0] as Segment;
+			var actual = segment.Source.Text[0] as CDataTag;
+			Assert.IsNotNull(actual);
 		}
     }
 }

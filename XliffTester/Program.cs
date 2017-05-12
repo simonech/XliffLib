@@ -23,10 +23,8 @@ namespace XliffTester
             var bundle = new Bundle();
             var doc = new Document();
             bundle.Documents.Add(doc);
-            Property property = new Property("original");
-            property.Value = content;
-            Property property1 = new Property("original1");
-            property1.Value = content;
+            Property property = new Property("original", content);
+            Property property1 = new Property("original1", content);
             doc.Properties.Add(property);
             doc.Properties.Add(property1);
 
