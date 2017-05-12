@@ -61,8 +61,15 @@ namespace XliffLib
             Unit xliffUnit = new Unit(unitId);
             xliffUnit.Name = property.Name;
 
-            Segment segment = new Segment("s1");
-            segment.Source = new Source(property.Value);
+            Segment segment = new Segment();
+            if(property.Value.IsHtml())
+            {
+                var source = new Source();
+                source.Text.Add(new CDataTag(property.Value));
+                segment.Source = source;
+            }
+            else
+                segment.Source = new Source(property.Value);
 
 
             xliffUnit.Resources.Add(segment);
