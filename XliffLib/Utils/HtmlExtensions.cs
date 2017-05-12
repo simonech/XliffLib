@@ -17,6 +17,17 @@ namespace XliffLib.Utils
             return !doc.DocumentNode.ChildNodes.All(n=>IsTextOrXliff(n));
         }
 
+        public static String[] SplitByParagraphs(this string htmlText){
+            return htmlText.SplitByTags("p");
+        }
+
+        public static String[] SplitByTags(this string htmlText, params string[] tags)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(htmlText);
+            return doc.DocumentNode.ChildNodes.Where(e => tags.Contains(e.Name)).Select(e => e.OuterHtml).ToArray();
+        }
+
         private static bool IsTextOrXliff(HtmlNode n)
         {
             if (n.NodeType == HtmlNodeType.Text) return true;
