@@ -24,11 +24,10 @@ namespace XliffTester
             var doc = new Document();
             bundle.Documents.Add(doc);
             Property property = new Property("original", content);
-            Property property1 = new Property("original1", content);
             doc.Properties.Add(property);
-            doc.Properties.Add(property1);
 
-            Extractor extractor = new SimpleExtractor();
+            //Extractor extractor = new SimpleExtractor();
+            Extractor extractor = new DefaultExtractor();
             XliffDocument xliff = extractor.Extract(bundle, "en-GB");
 
 

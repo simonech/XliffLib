@@ -28,6 +28,13 @@ namespace XliffLib.Utils
             return doc.DocumentNode.ChildNodes.Where(e => tags.Contains(e.Name)).Select(e => e.OuterHtml).ToArray();
         }
 
+        public static string RemoveContainingTag(this string htmlText)
+        {
+			HtmlDocument doc = new HtmlDocument();
+			doc.LoadHtml(htmlText);
+            return doc.DocumentNode.ChildNodes[0].InnerHtml;
+        }
+
         private static bool IsTextOrXliff(HtmlNode n)
         {
             if (n.NodeType == HtmlNodeType.Text) return true;

@@ -4,6 +4,8 @@ namespace XliffLib
 {
     public interface IProcessingStep
     {
-        XliffDocument Execute(XliffDocument document);
+        int Order { get; }
+        XliffDocument ExecuteExtraction(XliffDocument document);
+		XliffDocument ExecuteMerge(XliffDocument document);
     }
 }

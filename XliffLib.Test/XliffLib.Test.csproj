@@ -51,6 +51,7 @@
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="JsonTests.cs" />
     <Compile Include="HtmlExtractionTests.cs" />
+    <Compile Include="CDataSplitterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

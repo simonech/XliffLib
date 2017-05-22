@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Localization.Xliff.OM.Core;
 using IO=System.IO;
 using Localization.Xliff.OM.Serialization;
+using System.Linq;
 
 namespace XliffLib
 {
@@ -50,9 +51,12 @@ namespace XliffLib
         {
             SourceExtractor.Input = sourceDocument;
             XliffDocument document = SourceExtractor.Extract(sourceLanguage);
+
+            ProcessingSteps.OrderBy(s => s.Order);
+
             foreach (var step in ProcessingSteps)
             {
-                document = step.Execute(document);
+                document = step.ExecuteExtraction(document);
             }
 
             return document;

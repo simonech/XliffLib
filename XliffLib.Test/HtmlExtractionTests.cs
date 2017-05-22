@@ -37,6 +37,12 @@ namespace XliffLib.Test
 		{
 			return text.SplitByTags("ul","p");
 		}
+
+		[Test(), TestCaseSource(typeof(DataSamples), "RemoveContainingHtmlTag")]
+		public string RemoveContainingHtmlTagAreCorrect(string text)
+		{
+			return text.RemoveContainingTag();
+		}
     }
 
 	public class DataSamples
@@ -96,6 +102,16 @@ namespace XliffLib.Test
 			get
 			{
 				yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>", "<ul><li>Item1</li><li>Item2</li></ul>" ,"<p>Para2</p>" });
+			}
+		}
+
+		public static IEnumerable RemoveContainingHtmlTag
+		{
+			get
+			{
+				yield return new TestCaseData("<p>Item</p>").Returns("Item");
+				yield return new TestCaseData("<li>Item1</li>").Returns("Item1");
+                yield return new TestCaseData("<p>This is text with some <b>formatting</b> inside</p>").Returns("This is text with some <b>formatting</b> inside");
 			}
 		}
 	}
