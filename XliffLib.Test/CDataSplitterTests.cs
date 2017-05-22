@@ -113,7 +113,6 @@ namespace XliffLib.Test
 
 			XliffDocument document = LoadXliff(xliff);
 
-
 			CDataSplitter splitter = new CDataSplitter();
 
 			var newDocument = splitter.ExecuteExtraction(document);

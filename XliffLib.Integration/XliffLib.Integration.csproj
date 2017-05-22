@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4DE6D4A1-05EA-48D4-80FA-CAB23D07B89D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>XliffLib.Integration</RootNamespace>
+    <AssemblyName>XliffLib.Integration</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Xliff.OM">
+      <HintPath>..\packages\Xliff.OM.1.0.2.0\lib\portable-net45+sl50+win+wpa81+wp80\Xliff.OM.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SimpleExtractorTests.cs" />
+    <Compile Include="Utils\EmbeddedFilesReader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="XLIFF 2.0 Class Guide.chm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestFiles\" />
+    <Folder Include="Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XliffLib\XliffLib.csproj">
+      <Project>{11D055EC-AA34-4065-B87A-5EEC76C6A07A}</Project>
+      <Name>XliffLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\OnePropertyInRoot.json" />
+    <EmbeddedResource Include="TestFiles\OnePropertyInRoot.xlf" />
+    <EmbeddedResource Include="TestFiles\OneNestedProperty.xlf" />
+    <EmbeddedResource Include="TestFiles\OneNestedProperty.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -47,6 +47,7 @@ namespace XliffLib
             return result;
         }
 
+
         public XliffDocument Extract(object sourceDocument, string sourceLanguage)
         {
             SourceExtractor.Input = sourceDocument;
