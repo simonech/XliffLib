@@ -28,8 +28,7 @@ namespace XliffTester
             doc.Properties.Add(property);
             doc.Properties.Add(property1);
 
-            Extractor extractor = new Extractor();
-
+            Extractor extractor = new SimpleExtractor();
             XliffDocument xliff = extractor.Extract(bundle, "en-GB");
 
 

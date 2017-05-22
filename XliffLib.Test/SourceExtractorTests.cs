@@ -13,8 +13,16 @@ using XliffLib.Utils;
 namespace XliffLib.Test
 {
     [TestFixture]
-    public class ExtractorTests
+    public class SourceExtractorTests
     {
+
+		[Test]
+		public void NotPassingABundleMakesException()
+		{
+            ISourceExtractor extractor = new SourceExtractorFromBundle();
+            Assert.Throws<ArgumentNullException>(() => extractor.Input = "a string");
+		}
+
         [Test]
         public void BundleWithOneDocumentWritesToXliffDocumentWithOneFile()
         {
@@ -22,8 +30,8 @@ namespace XliffLib.Test
             Document doc = new Document();
             bundle.Documents.Add(doc);
 
-            Extractor extractor = new Extractor();
-            var xliffModel = extractor.Extract(bundle, "en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
             int actual = xliffModel.Files.Count;
             Assert.AreEqual(1, actual);
@@ -34,8 +42,8 @@ namespace XliffLib.Test
         {
             var bundle = EmbeddedFilesReader.ReadString("XliffLib.Test.TestFiles.OnePropertyInRoot.json").ToBundle();
 
-            Extractor extractor = new Extractor();
-            var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -53,8 +61,8 @@ namespace XliffLib.Test
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-            Extractor extractor = new Extractor();
-            var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -72,8 +80,8 @@ namespace XliffLib.Test
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-            Extractor extractor = new Extractor();
-            var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
             var xliffGroup = xliffModel.Files[0].Containers[0] as Group;
             string actual = xliffGroup.Containers[0].Id;
@@ -95,8 +103,8 @@ namespace XliffLib.Test
 			doc.PropertyGroups.Add(group2);
 			bundle.Documents.Add(doc);
 
-			Extractor extractor = new Extractor();
-			var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
 			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
             var unit1 = xliffGroup1.Containers[0] as Unit;
@@ -122,8 +130,8 @@ namespace XliffLib.Test
             doc.PropertyGroups.Add(group1);
             bundle.Documents.Add(doc);
 
-			Extractor extractor = new Extractor();
-			var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
 			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
 			string actual = xliffGroup1.Id;
@@ -147,8 +155,8 @@ namespace XliffLib.Test
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-			Extractor extractor = new Extractor();
-			var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
 			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
 			string actual = xliffGroup1.Name;
@@ -164,8 +172,8 @@ namespace XliffLib.Test
 			doc.Properties.Add(prop);
 			bundle.Documents.Add(doc);
 
-			Extractor extractor = new Extractor();
-			var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
 			var unit = xliffModel.Files[0].Containers[0] as Unit;
 			string actual = unit.Name;
@@ -181,8 +189,8 @@ namespace XliffLib.Test
 			doc.Properties.Add(prop);
 			bundle.Documents.Add(doc);
 
-			Extractor extractor = new Extractor();
-			var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
 			var unit = xliffModel.Files[0].Containers[0] as Unit;
             var segment = unit.Resources[0] as Segment;
@@ -199,8 +207,8 @@ namespace XliffLib.Test
 			doc.Properties.Add(prop);
 			bundle.Documents.Add(doc);
 
-			Extractor extractor = new Extractor();
-			var xliffModel = extractor.Extract(bundle, "en-US");
+			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+			var xliffModel = extractor.Extract("en-US");
 
 			var unit = xliffModel.Files[0].Containers[0] as Unit;
 			var segment = unit.Resources[0] as Segment;

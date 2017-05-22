@@ -59,6 +59,10 @@
     <Compile Include="Extractor.cs" />
     <Compile Include="Utils\JsonExtensions.cs" />
     <Compile Include="Utils\HtmlExtensions.cs" />
+    <Compile Include="SimpleExtractor.cs" />
+    <Compile Include="SourceExtractorFromBundle.cs" />
+    <Compile Include="IProcessingStep.cs" />
+    <Compile Include="ISourceExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
