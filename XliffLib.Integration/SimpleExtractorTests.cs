@@ -14,14 +14,17 @@ namespace XliffLib.Integration
         public void CanExtractSimpleFile(string filename)
         {
 			var bundle = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles."+filename +".json").ToBundle();
-            var xliff = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".xlf").Replace("  ", " ");
+            var xliff = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".xlf");
 
 			SimpleExtractor extractor = new SimpleExtractor();
 			var xliffModel = extractor.Extract(bundle,"en-US");
 
             var xliffString = extractor.Write(xliffModel,true);
 
-            Assert.AreEqual(xliff,xliffString);
+            string cleanedExpected = System.Text.RegularExpressions.Regex.Replace(xliff, @"\s+", " ");
+            string cleanedResult = System.Text.RegularExpressions.Regex.Replace(xliffString, @"\s+", " ");
+
+            Assert.AreEqual(cleanedExpected,cleanedResult);
         }
     }
 
