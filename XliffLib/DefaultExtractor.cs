@@ -1,9 +1,9 @@
 ﻿using System;
 namespace XliffLib
 {
-    public class DefaultExtractor: Extractor
+    public class DefaultExtractor : Extractor
     {
-        public DefaultExtractor(): base(new SourceExtractorFromBundle())
+        public DefaultExtractor() : base(new SourceExtractorFromBundle())
         {
             ProcessingSteps.Add(new CDataSplitter());
         }

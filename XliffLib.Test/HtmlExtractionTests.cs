@@ -8,7 +8,7 @@ namespace XliffLib.Test
     [TestFixture()]
     public class HtmlExtractionTests
     {
-        [Test(),TestCaseSource(typeof(DataSamples), "HtmlIdentification")]
+        [Test(), TestCaseSource(typeof(DataSamples), "HtmlIdentification")]
         public bool CanIdentifyHtmlInStrings(string text)
         {
             return text.IsHtml();
@@ -35,7 +35,7 @@ namespace XliffLib.Test
         [Test(), TestCaseSource(typeof(DataSamples), "SplitMultipleTags")]
         public string[] SplitMultipleTagsAreCorrect(string text)
         {
-            return text.SplitByTags("ul","p");
+            return text.SplitByTags("ul", "p");
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "RemoveContainingHtmlTag")]
@@ -83,9 +83,9 @@ namespace XliffLib.Test
         {
             get
             {
-                yield return new TestCaseData("<p>Item</p>").Returns(new string[] {"<p>Item</p>"});
-                yield return new TestCaseData("<p>Item1</p><p>Item2</p><p>Item3</p>").Returns(new string[] { "<p>Item1</p>" ,"<p>Item2</p>" ,"<p>Item3</p>" });
-                yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li><li>Item3</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>","<p>Para2</p>" });
+                yield return new TestCaseData("<p>Item</p>").Returns(new string[] { "<p>Item</p>" });
+                yield return new TestCaseData("<p>Item1</p><p>Item2</p><p>Item3</p>").Returns(new string[] { "<p>Item1</p>", "<p>Item2</p>", "<p>Item3</p>" });
+                yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li><li>Item3</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>", "<p>Para2</p>" });
             }
         }
 
@@ -101,7 +101,7 @@ namespace XliffLib.Test
         {
             get
             {
-                yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>", "<ul><li>Item1</li><li>Item2</li></ul>" ,"<p>Para2</p>" });
+                yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>", "<ul><li>Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
             }
         }
 

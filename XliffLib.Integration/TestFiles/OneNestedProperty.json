@@ -1,16 +1,16 @@
 ﻿{
   'documents': [
     {
-        'propertyGroups': [
+      'propertyGroups': [
+        {
+          'name': 'metadata',
+          'properties': [
             {
-                'name': 'metadata',
-                'properties': [
-                    {
-                        'name': 'title',
-                        'value': 'content'
-                    }
-                ]
+              'name': 'title',
+              'value': 'content'
             }
+          ]
+        }
       ],
       'properties': [
         {

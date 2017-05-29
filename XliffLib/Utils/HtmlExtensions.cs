@@ -10,16 +10,17 @@ namespace XliffLib.Utils
         private static string[] INLINECODE = {
             "cp","ph","pc","sc","ec","mrk","sm","em"
         };
-#pragma warning restore IDE1006 // Naming Styles
+
 
         public static bool IsHtml(this string text)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(text);
-            return !doc.DocumentNode.ChildNodes.All(n=>IsTextOrXliff(n));
+            return !doc.DocumentNode.ChildNodes.All(n => IsTextOrXliff(n));
         }
 
-        public static String[] SplitByParagraphs(this string htmlText){
+        public static String[] SplitByParagraphs(this string htmlText)
+        {
             return htmlText.SplitByTags("p");
         }
 
@@ -40,7 +41,7 @@ namespace XliffLib.Utils
         private static bool IsTextOrXliff(HtmlNode n)
         {
             if (n.NodeType == HtmlNodeType.Text) return true;
-            if(n.NodeType==HtmlNodeType.Element)
+            if (n.NodeType == HtmlNodeType.Element)
             {
                 if (INLINECODE.Contains(n.Name))
                     return true;

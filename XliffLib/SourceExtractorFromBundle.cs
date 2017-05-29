@@ -6,7 +6,7 @@ using XliffLib.Utils;
 
 namespace XliffLib
 {
-    public class SourceExtractorFromBundle: ISourceExtractor
+    public class SourceExtractorFromBundle : ISourceExtractor
     {
 
         public SourceExtractorFromBundle()
@@ -20,10 +20,12 @@ namespace XliffLib
 
         public object Input
         {
-            get {
+            get
+            {
                 return Xliff;
             }
-            set {
+            set
+            {
 
                 var xliff = value as Bundle;
 
@@ -42,7 +44,8 @@ namespace XliffLib
             set;
         }
 
-        public XliffDocument Extract(string sourceLanguage){
+        public XliffDocument Extract(string sourceLanguage)
+        {
             return Extract(Xliff, sourceLanguage);
         }
 

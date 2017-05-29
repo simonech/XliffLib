@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace XliffLib
 {
-    public class CDataSplitter: IProcessingStep
+    public class CDataSplitter : IProcessingStep
     {
         public CDataSplitter()
         {
@@ -32,7 +32,7 @@ namespace XliffLib
                         if (paragraphs.Count() > 1)
                         {
                             //TODO: Copy name and other attributes
-                            var newGroup = new Group(unit.Id+"-g");
+                            var newGroup = new Group(unit.Id + "-g");
 
                             var i = 0;
                             foreach (var para in paragraphs)
@@ -52,7 +52,7 @@ namespace XliffLib
                             }
 
                             var parentFile = unit.Parent as File;
-                            if(parentFile!=null)
+                            if (parentFile != null)
                             {
                                 parentFile.Containers.Add(newGroup);
                                 parentFile.Containers.Remove(unit);

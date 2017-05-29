@@ -33,7 +33,7 @@ namespace XliffTester
 
             try
             {
-                var result = extractor.Write(xliff,true);
+                var result = extractor.Write(xliff, true);
                 Console.WriteLine(result);
             }
             catch (ValidationException e)

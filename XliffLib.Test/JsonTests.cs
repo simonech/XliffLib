@@ -13,13 +13,13 @@ namespace XliffLib.Test
         {
             var bundle = new Bundle();
             var doc = new Document();
-            var prop = new Property("title","my title");
+            var prop = new Property("title", "my title");
             doc.Properties.Add(prop);
             bundle.Documents.Add(doc);
 
             var actual = bundle.ToJson();
 
-            Assert.AreEqual("{\"documents\":[{\"propertyGroups\":[],\"properties\":[{\"name\":\"title\",\"value\":\"my title\"}]}]}",actual);
+            Assert.AreEqual("{\"documents\":[{\"propertyGroups\":[],\"properties\":[{\"name\":\"title\",\"value\":\"my title\"}]}]}", actual);
         }
 
         [Test]

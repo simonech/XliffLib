@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XliffLib.Model
 {
-    public class PropertyGroup: IPropertyContainer
+    public class PropertyGroup : IPropertyContainer
     {
         public PropertyGroup(string name)
         {

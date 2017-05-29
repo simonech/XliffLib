@@ -56,7 +56,7 @@ namespace XliffLib.Test
             var bundle = new Bundle();
             var doc = new Document();
             var group = new PropertyGroup("content");
-            var prop = new Property("title","my content");
+            var prop = new Property("title", "my content");
             group.Properties.Add(prop);
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
@@ -68,7 +68,7 @@ namespace XliffLib.Test
             Assert.AreEqual(1, actual);
             Assert.IsAssignableFrom<Group>(xliffModel.Files[0].Containers[0]);
         }
-        
+
         [Test]
         public void PropertyInsideFirstLevelGroupGetsRightId()
         {
@@ -143,7 +143,7 @@ namespace XliffLib.Test
 
             var unit = xliffGroup2.Containers[0] as Unit;
             Assert.IsNotNull(unit);
-            Assert.AreEqual("#/f=f1/g=g1/g=g2/u=u1",unit.SelectorPath);
+            Assert.AreEqual("#/f=f1/g=g1/g=g2/u=u1", unit.SelectorPath);
         }
 
         [Test]

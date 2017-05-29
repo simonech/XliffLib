@@ -9,7 +9,7 @@ namespace XliffLib
 {
     public class BasicSegmenter
     {
-        private readonly char[] segmentSeparators = { '.','!','?'};
+        private readonly char[] segmentSeparators = { '.', '!', '?' };
 
         public List<string> SplitInSegments(string unitText)
         {
@@ -19,9 +19,10 @@ namespace XliffLib
             do
             {
                 var current = unitText.IndexOfAny(segmentSeparators, i) + 1;
-                if (current == 0) {
+                if (current == 0)
+                {
                     var text = unitText.Substring(i);
-                    if (!String.IsNullOrWhiteSpace(text))
+                    if (!string.IsNullOrWhiteSpace(text))
                     {
                         result.Add(text.Trim());
                     }

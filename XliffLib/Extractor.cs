@@ -30,7 +30,7 @@ namespace XliffLib
 
         public string Write(XliffDocument document, bool indent = false)
         {
-            var result = String.Empty;
+            var result = string.Empty;
             using (IO.Stream stream = new IO.MemoryStream())
             {
                 XliffWriter writer;

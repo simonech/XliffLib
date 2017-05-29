@@ -17,11 +17,11 @@ namespace XliffLib.Utils
 
             return JsonConvert.SerializeObject(bundle, new JsonSerializerSettings
             {
-                 ContractResolver=contractResolver
+                ContractResolver = contractResolver
             });
         }
 
-        public static Bundle ToBundle(this string jsonString )
+        public static Bundle ToBundle(this string jsonString)
         {
             return JsonConvert.DeserializeObject<Bundle>(jsonString);
         }

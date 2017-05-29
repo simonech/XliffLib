@@ -5,7 +5,7 @@ using System.Text;
 
 namespace XliffLib.Model
 {
-    public class Document: IPropertyContainer
+    public class Document : IPropertyContainer
     {
         public Document()
         {
