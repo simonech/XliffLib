@@ -6,13 +6,15 @@ namespace XliffLib.Utils
 {
     public static class HtmlExtensions
     {
+#pragma warning disable IDE1006 // Naming Styles
         private static string[] INLINECODE = {
             "cp","ph","pc","sc","ec","mrk","sm","em"
         };
+#pragma warning restore IDE1006 // Naming Styles
 
         public static bool IsHtml(this string text)
         {
-            HtmlDocument doc = new HtmlDocument();
+            var doc = new HtmlDocument();
             doc.LoadHtml(text);
             return !doc.DocumentNode.ChildNodes.All(n=>IsTextOrXliff(n));
         }
@@ -23,15 +25,15 @@ namespace XliffLib.Utils
 
         public static String[] SplitByTags(this string htmlText, params string[] tags)
         {
-            HtmlDocument doc = new HtmlDocument();
+            var doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             return doc.DocumentNode.ChildNodes.Where(e => tags.Contains(e.Name)).Select(e => e.OuterHtml).ToArray();
         }
 
         public static string RemoveContainingTag(this string htmlText)
         {
-			HtmlDocument doc = new HtmlDocument();
-			doc.LoadHtml(htmlText);
+            var doc = new HtmlDocument();
+            doc.LoadHtml(htmlText);
             return doc.DocumentNode.ChildNodes[0].InnerHtml;
         }
 

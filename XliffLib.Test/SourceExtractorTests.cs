@@ -16,24 +16,24 @@ namespace XliffLib.Test
     public class SourceExtractorTests
     {
 
-		[Test]
-		public void NotPassingABundleMakesException()
-		{
+        [Test]
+        public void NotPassingABundleMakesException()
+        {
             ISourceExtractor extractor = new SourceExtractorFromBundle();
             Assert.Throws<ArgumentNullException>(() => extractor.Input = "a string");
-		}
+        }
 
         [Test]
         public void BundleWithOneDocumentWritesToXliffDocumentWithOneFile()
         {
-            Bundle bundle = new Bundle();
-            Document doc = new Document();
+            var bundle = new Bundle();
+            var doc = new Document();
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
             var xliffModel = extractor.Extract("en-US");
 
-            int actual = xliffModel.Files.Count;
+            var actual = xliffModel.Files.Count;
             Assert.AreEqual(1, actual);
         }
 
@@ -42,8 +42,8 @@ namespace XliffLib.Test
         {
             var bundle = EmbeddedFilesReader.ReadString("XliffLib.Test.TestFiles.OnePropertyInRoot.json").ToBundle();
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -53,16 +53,16 @@ namespace XliffLib.Test
         [Test]
         public void FileWithOnePropertyGroupWritesToXliffFileWithOneGroup()
         {
-            Bundle bundle = new Bundle();
-            Document doc = new Document();
-            PropertyGroup group = new PropertyGroup("content");
-            Property prop = new Property("title","my content");
+            var bundle = new Bundle();
+            var doc = new Document();
+            var group = new PropertyGroup("content");
+            var prop = new Property("title","my content");
             group.Properties.Add(prop);
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -72,148 +72,148 @@ namespace XliffLib.Test
         [Test]
         public void PropertyInsideFirstLevelGroupGetsRightId()
         {
-            Bundle bundle = new Bundle();
-            Document doc = new Document();
-            PropertyGroup group = new PropertyGroup("content");
-            Property prop = new Property("title", "my content");
+            var bundle = new Bundle();
+            var doc = new Document();
+            var group = new PropertyGroup("content");
+            var prop = new Property("title", "my content");
             group.Properties.Add(prop);
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
             var xliffGroup = xliffModel.Files[0].Containers[0] as Group;
-            string actual = xliffGroup.Containers[0].Id;
+            var actual = xliffGroup.Containers[0].Id;
             Assert.AreEqual("u1", actual);
         }
 
-		[Test]
-		public void PropertiesInsideDifferentGroupsGetsDifferentIds()
-		{
-			Bundle bundle = new Bundle();
-			Document doc = new Document();
-			PropertyGroup group1 = new PropertyGroup("content");
-			Property prop1 = new Property("title", "my content");
-			group1.Properties.Add(prop1);
-			doc.PropertyGroups.Add(group1);
-			PropertyGroup group2 = new PropertyGroup("content");
-			Property prop2 = new Property("title", "my content");
-			group2.Properties.Add(prop2);
-			doc.PropertyGroups.Add(group2);
-			bundle.Documents.Add(doc);
+        [Test]
+        public void PropertiesInsideDifferentGroupsGetsDifferentIds()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            var group1 = new PropertyGroup("content");
+            var prop1 = new Property("title", "my content");
+            group1.Properties.Add(prop1);
+            doc.PropertyGroups.Add(group1);
+            var group2 = new PropertyGroup("content");
+            var prop2 = new Property("title", "my content");
+            group2.Properties.Add(prop2);
+            doc.PropertyGroups.Add(group2);
+            bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
-			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
+            var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
             var unit1 = xliffGroup1.Containers[0] as Unit;
-			Assert.AreEqual("u1", unit1.Id);
+            Assert.AreEqual("u1", unit1.Id);
             Assert.AreEqual("#/f=f1/g=g1/u=u1", unit1.SelectorPath);
 
-			var xliffGroup2 = xliffModel.Files[0].Containers[1] as Group;
+            var xliffGroup2 = xliffModel.Files[0].Containers[1] as Group;
             var unit2 = xliffGroup2.Containers[0] as Unit;
-			Assert.AreEqual("u2", unit2.Id);
+            Assert.AreEqual("u2", unit2.Id);
             Assert.AreEqual("#/f=f1/g=g2/u=u2", unit2.SelectorPath);
-		}
+        }
 
-		[Test]
-		public void NestedGroupsAreCorrectlyRepresented()
-		{
-			Bundle bundle = new Bundle();
-			Document doc = new Document();
-			PropertyGroup group1 = new PropertyGroup("content");
-			PropertyGroup group2 = new PropertyGroup("nestedContent");
-			Property prop2 = new Property("title", "my content");
-			group2.Properties.Add(prop2);
-			group1.PropertyGroups.Add(group2);
+        [Test]
+        public void NestedGroupsAreCorrectlyRepresented()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            var group1 = new PropertyGroup("content");
+            var group2 = new PropertyGroup("nestedContent");
+            var prop2 = new Property("title", "my content");
+            group2.Properties.Add(prop2);
+            group1.PropertyGroups.Add(group2);
             doc.PropertyGroups.Add(group1);
             bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
-			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
-			string actual = xliffGroup1.Id;
-			Assert.AreEqual("g1", actual);
+            var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
+            var actual = xliffGroup1.Id;
+            Assert.AreEqual("g1", actual);
 
-			var xliffGroup2 = xliffGroup1.Containers[0] as Group;
-			string actual2 = xliffGroup2.Id;
-			Assert.AreEqual("g2", actual2);
+            var xliffGroup2 = xliffGroup1.Containers[0] as Group;
+            var actual2 = xliffGroup2.Id;
+            Assert.AreEqual("g2", actual2);
 
             var unit = xliffGroup2.Containers[0] as Unit;
             Assert.IsNotNull(unit);
             Assert.AreEqual("#/f=f1/g=g1/g=g2/u=u1",unit.SelectorPath);
-		}
+        }
 
         [Test]
         public void XliffGroupKeepsNameOfPropertyGroup()
         {
-			Bundle bundle = new Bundle();
-			Document doc = new Document();
-			PropertyGroup group = new PropertyGroup("content");
+            var bundle = new Bundle();
+            var doc = new Document();
+            var group = new PropertyGroup("content");
             doc.PropertyGroups.Add(group);
             bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
-			var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
-			string actual = xliffGroup1.Name;
-			Assert.AreEqual("content", actual);
+            var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
+            var actual = xliffGroup1.Name;
+            Assert.AreEqual("content", actual);
         }
 
-		[Test]
-		public void XliffUnitKeepsNameOfProperty()
-		{
-			Bundle bundle = new Bundle();
-			Document doc = new Document();
-			Property prop = new Property("content", "my content");
-			doc.Properties.Add(prop);
-			bundle.Documents.Add(doc);
+        [Test]
+        public void XliffUnitKeepsNameOfProperty()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            var prop = new Property("content", "my content");
+            doc.Properties.Add(prop);
+            bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
-			var unit = xliffModel.Files[0].Containers[0] as Unit;
-			string actual = unit.Name;
-			Assert.AreEqual("content", actual);
-		}
+            var unit = xliffModel.Files[0].Containers[0] as Unit;
+            var actual = unit.Name;
+            Assert.AreEqual("content", actual);
+        }
 
-		[Test]
-		public void TextValuesAreEncodedAsSimpleText()
-		{
-			Bundle bundle = new Bundle();
-			Document doc = new Document();
-			Property prop = new Property("content", "content");
-			doc.Properties.Add(prop);
-			bundle.Documents.Add(doc);
+        [Test]
+        public void TextValuesAreEncodedAsSimpleText()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            var prop = new Property("content", "content");
+            doc.Properties.Add(prop);
+            bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
-			var unit = xliffModel.Files[0].Containers[0] as Unit;
+            var unit = xliffModel.Files[0].Containers[0] as Unit;
             var segment = unit.Resources[0] as Segment;
             var actual = segment.Source.Text[0] as PlainText;
-			Assert.IsNotNull(actual);
-		}
+            Assert.IsNotNull(actual);
+        }
 
-		[Test]
-		public void HtmlValuesAreEncodedIntoCData()
-		{
-			Bundle bundle = new Bundle();
-			Document doc = new Document();
-			Property prop = new Property("content", "<p>content</p>");
-			doc.Properties.Add(prop);
-			bundle.Documents.Add(doc);
+        [Test]
+        public void HtmlValuesAreEncodedIntoCData()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            var prop = new Property("content", "<p>content</p>");
+            doc.Properties.Add(prop);
+            bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US");
 
-			var unit = xliffModel.Files[0].Containers[0] as Unit;
-			var segment = unit.Resources[0] as Segment;
-			var actual = segment.Source.Text[0] as CDataTag;
-			Assert.IsNotNull(actual);
-		}
+            var unit = xliffModel.Files[0].Containers[0] as Unit;
+            var segment = unit.Resources[0] as Segment;
+            var actual = segment.Source.Text[0] as CDataTag;
+            Assert.IsNotNull(actual);
+        }
     }
 }

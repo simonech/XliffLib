@@ -15,15 +15,15 @@ namespace XliffTester
     {
         static void Main(string[] args)
         {
-            string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var directory = System.IO.Path.GetDirectoryName(path);
-            string content = System.IO.File.ReadAllText(Path.Combine(directory, "Samples", "original.txt"));
+            var content = System.IO.File.ReadAllText(Path.Combine(directory, "Samples", "original.txt"));
 
 
             var bundle = new Bundle();
             var doc = new Document();
             bundle.Documents.Add(doc);
-            Property property = new Property("original", content);
+            var property = new Property("original", content);
             doc.Properties.Add(property);
 
             //Extractor extractor = new SimpleExtractor();
@@ -36,18 +36,18 @@ namespace XliffTester
                 var result = extractor.Write(xliff,true);
                 Console.WriteLine(result);
             }
-			catch (ValidationException e)
-			{
-				Console.WriteLine("ValidationException Details:");
+            catch (ValidationException e)
+            {
+                Console.WriteLine("ValidationException Details:");
                 Console.WriteLine(e.Message);
-				if (e.Data != null)
-				{
-					foreach (object key in e.Data.Keys)
-					{
-						Console.WriteLine("  '{0}': '{1}'", key, e.Data[key]);
-					}
-				}
-			}
+                if (e.Data != null)
+                {
+                    foreach (var key in e.Data.Keys)
+                    {
+                        Console.WriteLine("  '{0}': '{1}'", key, e.Data[key]);
+                    }
+                }
+            }
 
 
             Console.ReadLine();

@@ -13,10 +13,10 @@ namespace XliffLib.Integration.Utils
         public static string ReadString(string resourceName)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string result = string.Empty;
+            var result = string.Empty;
 
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
+            using (var reader = new StreamReader(stream))
             {
                 result = reader.ReadToEnd();
             }

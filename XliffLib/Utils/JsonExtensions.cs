@@ -10,7 +10,7 @@ namespace XliffLib.Utils
         public static string ToJson(this Bundle bundle)
         {
 
-			DefaultContractResolver contractResolver = new DefaultContractResolver
+            var contractResolver = new DefaultContractResolver
             {
                 NamingStrategy = new CamelCaseNamingStrategy()
             };
@@ -21,9 +21,9 @@ namespace XliffLib.Utils
             });
         }
 
-		public static Bundle ToBundle(this string jsonString )
-		{
-			return JsonConvert.DeserializeObject<Bundle>(jsonString);
-		}
+        public static Bundle ToBundle(this string jsonString )
+        {
+            return JsonConvert.DeserializeObject<Bundle>(jsonString);
+        }
     }
 }

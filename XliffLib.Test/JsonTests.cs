@@ -11,13 +11,13 @@ namespace XliffLib.Test
         [Test]
         public void CanSerializeToJson()
         {
-			Bundle bundle = new Bundle();
-			Document doc = new Document();
-			Property prop = new Property("title","my title");
-			doc.Properties.Add(prop);
-			bundle.Documents.Add(doc);
+            var bundle = new Bundle();
+            var doc = new Document();
+            var prop = new Property("title","my title");
+            doc.Properties.Add(prop);
+            bundle.Documents.Add(doc);
 
-            string actual = bundle.ToJson();
+            var actual = bundle.ToJson();
 
             Assert.AreEqual("{\"documents\":[{\"propertyGroups\":[],\"properties\":[{\"name\":\"title\",\"value\":\"my title\"}]}]}",actual);
         }
@@ -25,7 +25,7 @@ namespace XliffLib.Test
         [Test]
         public void CanGetBundleFromJsonString()
         {
-            string json = @"{
+            var json = @"{
                 'documents':[
                     {
                     'propertyGroups': [],
@@ -39,7 +39,7 @@ namespace XliffLib.Test
                 ]
             }";
 
-            Bundle actual = json.ToBundle();
+            var actual = json.ToBundle();
 
             Assert.IsNotNull(actual);
 

@@ -6,6 +6,6 @@ namespace XliffLib
     {
         int Order { get; }
         XliffDocument ExecuteExtraction(XliffDocument document);
-		XliffDocument ExecuteMerge(XliffDocument document);
+        XliffDocument ExecuteMerge(XliffDocument document);
     }
 }

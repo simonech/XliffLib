@@ -13,14 +13,14 @@ namespace XliffLib
 
         public List<string> SplitInSegments(string unitText)
         {
-            List<string> result = new List<string>();
-            int i = 0;
-            bool keepOn = true;
+            var result = new List<string>();
+            var i = 0;
+            var keepOn = true;
             do
             {
                 var current = unitText.IndexOfAny(segmentSeparators, i) + 1;
                 if (current == 0) {
-                    string text = unitText.Substring(i);
+                    var text = unitText.Substring(i);
                     if (!String.IsNullOrWhiteSpace(text))
                     {
                         result.Add(text.Trim());
