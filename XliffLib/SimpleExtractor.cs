@@ -1,6 +1,4 @@
-﻿
-using System;
-namespace XliffLib
+﻿namespace XliffLib
 {
     public class SimpleExtractor: Extractor
     {

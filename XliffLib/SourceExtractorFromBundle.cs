@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Localization.Xliff.OM.Core;
 using XliffLib.Model;
 using XliffLib.Utils;
-using System;
 
 namespace XliffLib
 {

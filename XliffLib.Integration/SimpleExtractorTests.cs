@@ -13,18 +13,18 @@ namespace XliffLib.Integration
         [Test(), TestCaseSource(typeof(DataSamples), "FileNames")]
         public void CanExtractSimpleFile(string filename)
         {
-            var bundle = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles."+filename +".json").ToBundle();
+            var bundle = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".json").ToBundle();
             var xliff = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".xlf");
 
             var extractor = new SimpleExtractor();
-            var xliffModel = extractor.Extract(bundle,"en-US");
+            var xliffModel = extractor.Extract(bundle, "en-US");
 
-            var xliffString = extractor.Write(xliffModel,true);
+            var xliffString = extractor.Write(xliffModel, true);
 
             var cleanedExpected = System.Text.RegularExpressions.Regex.Replace(xliff, @"\s+", " ");
             var cleanedResult = System.Text.RegularExpressions.Regex.Replace(xliffString, @"\s+", " ");
 
-            Assert.AreEqual(cleanedExpected,cleanedResult);
+            Assert.AreEqual(cleanedExpected, cleanedResult);
         }
     }
 
