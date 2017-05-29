@@ -7,8 +7,9 @@ using System.Linq;
 
 namespace XliffLib
 {
-    public class Extractor
+    public abstract class Extractor
     {
+        //TODO: Change to a custom collection
 		public IList<IProcessingStep> ProcessingSteps
 		{
 			get;

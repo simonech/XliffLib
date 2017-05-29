@@ -31,6 +31,7 @@ namespace XliffLib
 						var paragraphs = html.SplitByParagraphs();
 						if (paragraphs.Count() > 1)
 						{
+                            //TODO: Copy name and other attributes
 							Group newGroup = new Group(unit.Id+"-g");
 
                             int i = 0;
