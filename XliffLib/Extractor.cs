@@ -44,7 +44,6 @@ namespace XliffLib
                 var sr = new IO.StreamReader(stream);
                 result = sr.ReadToEnd();
             }
-
             return result;
         }
 
@@ -53,8 +52,6 @@ namespace XliffLib
         {
             SourceExtractor.Input = sourceDocument;
             XliffDocument document = SourceExtractor.Extract(sourceLanguage);
-
-            ProcessingSteps.OrderBy(s => s.Order);
 
             foreach (var step in ProcessingSteps)
             {

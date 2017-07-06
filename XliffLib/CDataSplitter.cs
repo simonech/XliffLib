@@ -12,8 +12,6 @@ namespace XliffLib
         {
         }
 
-        public int Order { get => 1; }
-
         public XliffDocument ExecuteExtraction(XliffDocument document)
         {
 
