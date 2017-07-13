@@ -57,8 +57,8 @@ namespace XliffLib.Test
             var doc = new Document();
             var group = new PropertyGroup("content");
             var prop = new Property("title", "my content");
-            group.Properties.Add(prop);
-            doc.PropertyGroups.Add(group);
+            group.Containers.Add(prop);
+            doc.Containers.Add(group);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
@@ -76,8 +76,8 @@ namespace XliffLib.Test
             var doc = new Document();
             var group = new PropertyGroup("content");
             var prop = new Property("title", "my content");
-            group.Properties.Add(prop);
-            doc.PropertyGroups.Add(group);
+            group.Containers.Add(prop);
+            doc.Containers.Add(group);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
@@ -95,12 +95,12 @@ namespace XliffLib.Test
             var doc = new Document();
             var group1 = new PropertyGroup("content");
             var prop1 = new Property("title", "my content");
-            group1.Properties.Add(prop1);
-            doc.PropertyGroups.Add(group1);
+            group1.Containers.Add(prop1);
+            doc.Containers.Add(group1);
             var group2 = new PropertyGroup("content");
             var prop2 = new Property("title", "my content");
-            group2.Properties.Add(prop2);
-            doc.PropertyGroups.Add(group2);
+            group2.Containers.Add(prop2);
+            doc.Containers.Add(group2);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
@@ -125,9 +125,9 @@ namespace XliffLib.Test
             var group1 = new PropertyGroup("content");
             var group2 = new PropertyGroup("nestedContent");
             var prop2 = new Property("title", "my content");
-            group2.Properties.Add(prop2);
-            group1.PropertyGroups.Add(group2);
-            doc.PropertyGroups.Add(group1);
+            group2.Containers.Add(prop2);
+            group1.Containers.Add(group2);
+            doc.Containers.Add(group1);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
@@ -152,7 +152,7 @@ namespace XliffLib.Test
             var bundle = new Bundle();
             var doc = new Document();
             var group = new PropertyGroup("content");
-            doc.PropertyGroups.Add(group);
+            doc.Containers.Add(group);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
@@ -169,7 +169,7 @@ namespace XliffLib.Test
             var bundle = new Bundle();
             var doc = new Document();
             var prop = new Property("content", "my content");
-            doc.Properties.Add(prop);
+            doc.Containers.Add(prop);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
@@ -186,7 +186,7 @@ namespace XliffLib.Test
             var bundle = new Bundle();
             var doc = new Document();
             var prop = new Property("content", "content");
-            doc.Properties.Add(prop);
+            doc.Containers.Add(prop);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
@@ -204,7 +204,7 @@ namespace XliffLib.Test
             var bundle = new Bundle();
             var doc = new Document();
             var prop = new Property("content", "<p>content</p>");
-            doc.Properties.Add(prop);
+            doc.Containers.Add(prop);
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);

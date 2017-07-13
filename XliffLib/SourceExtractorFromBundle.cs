@@ -53,61 +53,29 @@ namespace XliffLib
         {
             var document = new XliffDocument(sourceLanguage);
 
-            var fileNum = 0;
-            var groupNum = 0;
-            var unitNum = 0;
+            var idCounter = new IdCounter();
             foreach (var doc in xliff.Documents)
             {
-                var fileId = "f" + (++fileNum);
+                var fileId = "f" + (idCounter.GetNextFileId());
                 var xliffFile = new File(fileId);
 
-                var containers = ProcessPropertyContainers(doc, ref groupNum, ref unitNum);
+                var containers = ProcessPropertyContainers(doc.Containers, idCounter);
                 xliffFile.Containers.AddAll(containers);
                 document.Files.Add(xliffFile);
             }
             return document;
         }
 
-        static Unit ProcessProperty(Property property, ref int unitNum)
-        {
-            var unitId = "u" + (++unitNum);
-            var xliffUnit = new Unit(unitId);
-            xliffUnit.Name = property.Name;
-
-            var segment = new Segment();
-            if (property.Value.IsHtml())
-            {
-                var source = new Source();
-                source.Text.Add(new CDataTag(property.Value));
-                segment.Source = source;
-            }
-            else
-                segment.Source = new Source(property.Value);
-
-
-            xliffUnit.Resources.Add(segment);
-            return xliffUnit;
-        }
-
-        IList<TranslationContainer> ProcessPropertyContainers(IPropertyContainer propertyContainer, ref int groupNum, ref int unitNum)
+        IList<TranslationContainer> ProcessPropertyContainers(IList<PropertyContainer> propertyContainers, IdCounter counter)
         {
             var containers = new List<TranslationContainer>();
-            foreach (var group in propertyContainer.PropertyGroups)
-            {
-                var id = "g" + (++groupNum);
-                var xliffGroup = new Group(id)
-                {
-                    Name = group.Name
-                };
-                containers.Add(xliffGroup);
-                xliffGroup.Containers.AddAll(ProcessPropertyContainers(group, ref groupNum, ref unitNum));
-            }
-            foreach (var property in propertyContainer.Properties)
-            {
-                Unit xliffUnit = ProcessProperty(property, ref unitNum);
 
-                containers.Add(xliffUnit);
+            foreach (var container in propertyContainers)
+            {
+                var xliffContainer = container.ToXliff(counter);
+                containers.Add(xliffContainer);
             }
+
             return containers;
         }
     }

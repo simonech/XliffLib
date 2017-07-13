@@ -5,14 +5,12 @@ using System.Text;
 
 namespace XliffLib.Model
 {
-    public class Document : IPropertyContainer
+    public class Document
     {
         public Document()
         {
-            PropertyGroups = new List<PropertyGroup>();
-            Properties = new List<Property>();
+            Containers = new List<PropertyContainer>();
         }
-        public IList<PropertyGroup> PropertyGroups { get; private set; }
-        public IList<Property> Properties { get; private set; }
+        public IList<PropertyContainer> Containers { get; private set; }
     }
 }

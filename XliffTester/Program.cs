@@ -24,7 +24,7 @@ namespace XliffTester
             var doc = new Document();
             bundle.Documents.Add(doc);
             var property = new Property("original", content);
-            doc.Properties.Add(property);
+            doc.Containers.Add(property);
 
             Extractor extractor = new SimpleExtractor();
             //Extractor extractor = new DefaultExtractor();
