@@ -1,0 +1,128 @@
+<xliff version='2.0'
+    xmlns='urn:oasis:names:tc:xliff:document:2.0'
+    xmlns:fs='urn:oasis:names:tc:xliff:fs:2.0'
+    srcLang="en-GB" trgLang="it-IT">
+    <file id="f1">
+        <group id="g1" name="Content" >
+            <unit id="u1" name="Title">
+                <segment>
+                    <source>60th anniversary of the Rome Treaties, 25/03/2017</source>
+                </segment>
+            </unit>
+            <group id="g2" name="body">
+                <unit id="u2" name="Paragraph">
+                    <segment>
+                        <source>EU heads of state or government met in Rome, Italy, on 25 March, for the 60th anniversary of the Rome Treaties.</source>
+                    </segment>
+                    <segment>
+                        <source>This was an occasion to reflect on the state of the European Union and look at the future of the integration process.</source>
+                    </segment>
+                </unit>
+                <unit id="u3" name="Paragraph">
+                    <segment>
+                        <source>"Today in Rome we are renewing the unique alliance of free nations that was initiated 60 years ago by our great predecessors", said President Donald Tusk at the ceremony in Campidoglio.</source>
+                    </segment>
+                    <segment>
+                        <source>"At that time they did not discuss multiple speeds, they did not devise exits, but despite all the tragic circumstances of the recent history, they placed all their faith in the unity of Europe."</source>
+                    </segment>
+                </unit>
+                <unit id="u4" name="Paragraph">
+                    <segment>
+                        <source>President Tusk highlighted that fact that on the day of the anniversary millions of people across Europe were demonstrating their support for the EU.</source>
+                    </segment>
+                </unit>
+                <group id="g3" name="Quote">
+                    <unit id="u5" name="Text">
+                        <ignorable>
+                            <source>"</source>
+                        </ignorable>
+                        <segment>
+                            <source>The European Union is not about slogans, it is not about procedures, it is not about regulations.</source>
+                        </segment>
+                        <segment>
+                            <source>Our Union is a guarantee that freedom, dignity, democracy and independence are no longer only our dreams, but our everyday reality.</source>
+                        </segment>
+                        <ignorable>
+                            <source>"</source>
+                        </ignorable>
+                    </unit>
+                    <unit id="u6" name="Author">
+                        <segment>
+                            <source>President Donald Tusk</source>
+                        </segment>
+                    </unit>
+                </group>
+                <group id="g4" name="Video">
+                    <unit id="u7" name="Caption">
+                        <segment>
+                            <source>Highlights of the 60th anniversary of the Rome Treaties</source>
+                        </segment>
+                    </unit>
+                </group>
+                <group id="g5" name="Image">
+                    <unit id="u8" name="Caption">
+                        <segment>
+                            <source>Official logo of the celebrations of the Rome Treaties 60th anniversary</source>
+                        </segment>
+                    </unit>
+                </group>
+            </group>
+            <group id="g6" name="Related Links">
+                <group id="g7" name="Link">
+                    <unit id="u9" name="Text">
+                        <segment>
+                            <source>Speech by President Donald Tusk at the ceremony of the 60th anniversary of the Treaties of Rome, 25/03/2017</source>
+                        </segment>
+                    </unit>
+                    <unit id="u10" name="link" translate="no">
+                        <segment>
+                            <source>http://www.consilium.europa.eu/en/press/press-releases/2017/03/25-tusk-ceremony-rome-speech/</source>
+                        </segment>
+                    </unit>
+                </group>
+                <group id="g8" name="Link">
+                    <unit id="u11" name="Text">
+                        <segment>
+                            <source>Political reflection on the future of the EU (background information)</source>
+                        </segment>
+                    </unit>
+                    <unit id="u12" name="link" translate="no">
+                        <segment>
+                            <source>http://www.consilium.europa.eu/en/policies/eu-future-reflection/</source>
+                        </segment>
+                    </unit>
+                </group>
+                <group id="g9" name="Link" >
+                    <unit id="u13" name="Text">
+                        <segment>
+                            <source>60 years of the Rome Treaties (official website)</source>
+                        </segment>
+                    </unit>
+                    <unit id="u14" name="link" translate="no">
+                        <segment>
+                            <source>https://europa.eu/european-union/eu60_en</source>
+                        </segment>
+                    </unit>
+                </group>
+            </group>
+        </group>
+        <group id="g10" name="Metadata">
+            <unit id="u15" name="Abstract">
+                <segment>
+                    <source>How appointments are made.</source>
+                </segment>
+            </unit>
+            <unit id="u16" name="Location">
+               <segment>
+                   <source>Rome</source>
+               </segment>
+            </unit>
+            <unit id="u17" name="Chairman">
+                <segment>
+                    <source>Chaired by Donald Tusk</source>
+                </segment>
+            </unit>
+        </group>
+        
+    </file>
+</xliff>
