@@ -51,7 +51,7 @@
     <Compile Include="BasicSegmenter.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\Document.cs" />
-    <Compile Include="Model\IPropertyContainer.cs" />
+    <Compile Include="Model\PropertyContainer.cs" />
     <Compile Include="Model\Property.cs" />
     <Compile Include="Model\PropertyGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +65,7 @@
     <Compile Include="ISourceExtractor.cs" />
     <Compile Include="DefaultExtractor.cs" />
     <Compile Include="CDataSplitter.cs" />
+    <Compile Include="IdCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

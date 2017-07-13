@@ -3,19 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Localization.Xliff.OM.Core;
 
 namespace XliffLib.Model
 {
-    public class PropertyGroup : IPropertyContainer
+    public class PropertyGroup : PropertyContainer
     {
-        public PropertyGroup(string name)
+        public PropertyGroup(string name): base(name)
         {
-            PropertyGroups = new List<PropertyGroup>();
-            Properties = new List<Property>();
-            Name = name;
+            Containers = new List<PropertyContainer>();
         }
-        public IList<PropertyGroup> PropertyGroups { get; private set; }
-        public IList<Property> Properties { get; private set; }
-        public string Name { get; set; }
+        public IList<PropertyContainer> Containers { get; private set; }
+
+        public override TranslationContainer ToXliff(IdCounter counter)
+        {
+			var id = "g" + (counter.GetNextGroupId());
+			var xliffGroup = new Group(id)
+			{
+				Name = this.Name
+			};
+            foreach (var container in Containers)
+            {
+				var xliffContainer = container.ToXliff(counter);
+				xliffGroup.Containers.Add(xliffContainer);
+            }
+            return xliffGroup;
+        }
     }
 }

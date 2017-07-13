@@ -1,11 +1,11 @@
 ﻿{
   'documents': [
     {
-      'propertyGroups': [],
-      'properties': [
-        {
-          'name': 'title',
-          'value': 'content'
+      'containers': [
+          {
+            '$type': 'XliffLib.Model.Property, XliffLib', 
+            'name': 'title',
+            'value': 'content'
         }
       ]
     }

@@ -17,13 +17,17 @@ namespace XliffLib.Utils
 
             return JsonConvert.SerializeObject(bundle, new JsonSerializerSettings
             {
-                ContractResolver = contractResolver
+                ContractResolver = contractResolver,
+                TypeNameHandling = TypeNameHandling.Auto
             });
         }
 
         public static Bundle ToBundle(this string jsonString)
         {
-            return JsonConvert.DeserializeObject<Bundle>(jsonString);
+            return JsonConvert.DeserializeObject<Bundle>(jsonString, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
         }
     }
 }
