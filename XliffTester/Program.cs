@@ -28,7 +28,7 @@ namespace XliffTester
 
             Extractor extractor = new SimpleExtractor();
             //Extractor extractor = new DefaultExtractor();
-            XliffDocument xliff = extractor.Extract(bundle, "en-GB");
+            XliffDocument xliff = extractor.Extract(bundle, "en-GB", "it-IT");
 
 
             try

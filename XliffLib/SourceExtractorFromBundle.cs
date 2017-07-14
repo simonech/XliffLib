@@ -44,14 +44,15 @@ namespace XliffLib
             set;
         }
 
-        public XliffDocument Extract(string sourceLanguage)
+        public XliffDocument Extract(string sourceLanguage, string targetLanguage)
         {
-            return Extract(Xliff, sourceLanguage);
+            return Extract(Xliff, sourceLanguage,targetLanguage);
         }
 
-        private XliffDocument Extract(Bundle xliff, string sourceLanguage)
+        private XliffDocument Extract(Bundle xliff, string sourceLanguage, string targetLanguage)
         {
             var document = new XliffDocument(sourceLanguage);
+            document.TargetLanguage = targetLanguage;
 
             var idCounter = new IdCounter();
             foreach (var doc in xliff.Documents)

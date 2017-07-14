@@ -5,6 +5,6 @@ namespace XliffLib
     public interface ISourceExtractor
     {
         object Input { get; set; }
-        XliffDocument Extract(string sourceLanguage);
+        XliffDocument Extract(string sourceLanguage, string targetLanguage);
     }
 }

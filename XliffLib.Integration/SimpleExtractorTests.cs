@@ -17,7 +17,7 @@ namespace XliffLib.Integration
             var xliff = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".xlf");
 
             var extractor = new SimpleExtractor();
-            var xliffModel = extractor.Extract(bundle, "en-US");
+            var xliffModel = extractor.Extract(bundle, "en-US", "it-IT");
 
             var xliffString = extractor.Write(xliffModel, true);
 
