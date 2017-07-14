@@ -31,7 +31,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US","it-IT");
 
             var actual = xliffModel.Files.Count;
             Assert.AreEqual(1, actual);
@@ -43,7 +43,7 @@ namespace XliffLib.Test
             var bundle = EmbeddedFilesReader.ReadString("XliffLib.Test.TestFiles.OnePropertyInRoot.json").ToBundle();
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -62,7 +62,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var actual = xliffModel.Files[0].Containers.Count;
             Assert.AreEqual(1, actual);
@@ -81,7 +81,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var xliffGroup = xliffModel.Files[0].Containers[0] as Group;
             var actual = xliffGroup.Containers[0].Id;
@@ -104,7 +104,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
             var unit1 = xliffGroup1.Containers[0] as Unit;
@@ -131,7 +131,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
             var actual = xliffGroup1.Id;
@@ -156,7 +156,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var xliffGroup1 = xliffModel.Files[0].Containers[0] as Group;
             var actual = xliffGroup1.Name;
@@ -173,7 +173,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var unit = xliffModel.Files[0].Containers[0] as Unit;
             var actual = unit.Name;
@@ -190,7 +190,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var unit = xliffModel.Files[0].Containers[0] as Unit;
             var segment = unit.Resources[0] as Segment;
@@ -208,7 +208,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var unit = xliffModel.Files[0].Containers[0] as Unit;
             var segment = unit.Resources[0] as Segment;

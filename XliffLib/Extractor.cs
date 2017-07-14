@@ -48,10 +48,10 @@ namespace XliffLib
         }
 
 
-        public XliffDocument Extract(object sourceDocument, string sourceLanguage)
+        public XliffDocument Extract(object sourceDocument, string sourceLanguage, string targetLanguage)
         {
             SourceExtractor.Input = sourceDocument;
-            XliffDocument document = SourceExtractor.Extract(sourceLanguage);
+            XliffDocument document = SourceExtractor.Extract(sourceLanguage, targetLanguage);
 
             foreach (var step in ProcessingSteps)
             {
