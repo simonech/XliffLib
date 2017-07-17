@@ -5,9 +5,9 @@ using System.Text;
 
 namespace XliffLib.Model
 {
-    public class Document
+    public class Document: ContentElement
     {
-        public Document()
+        public Document(): base()
         {
             Containers = new List<PropertyContainer>();
         }

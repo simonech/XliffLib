@@ -56,8 +56,6 @@ namespace XliffLib.Test
             var bundle = new Bundle();
             var doc = new Document();
             var group = new PropertyGroup("content");
-            var prop = new Property("title", "my content");
-            group.Containers.Add(prop);
             doc.Containers.Add(group);
             bundle.Documents.Add(doc);
 

@@ -36,6 +36,7 @@ namespace XliffLib.Integration
             {
                 yield return new TestCaseData("OnePropertyInRoot");
                 yield return new TestCaseData("OneNestedProperty");
+                yield return new TestCaseData("OnePropertyWithAttributes");
             }
         }
     }

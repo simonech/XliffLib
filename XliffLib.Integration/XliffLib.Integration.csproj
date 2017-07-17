@@ -57,6 +57,8 @@
     <EmbeddedResource Include="TestFiles\OnePropertyInRoot.xlf" />
     <EmbeddedResource Include="TestFiles\OneNestedProperty.xlf" />
     <EmbeddedResource Include="TestFiles\OneNestedProperty.json" />
+    <EmbeddedResource Include="TestFiles\OnePropertyWithAttributes.json" />
+    <EmbeddedResource Include="TestFiles\OnePropertyWithAttributes.xlf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

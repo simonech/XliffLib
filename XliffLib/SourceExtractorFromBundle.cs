@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Localization.Xliff.OM.Core;
+using Localization.Xliff.OM.Modules.Metadata;
 using XliffLib.Model;
 using XliffLib.Utils;
 
@@ -60,6 +61,11 @@ namespace XliffLib
                 var fileId = "f" + (idCounter.GetNextFileId());
                 var xliffFile = new File(fileId);
 
+                if(doc.Attributes.Count>0)
+                {
+                    xliffFile.Metadata = doc.Attributes.ToXliffMetadata();
+                }
+
                 var containers = ProcessPropertyContainers(doc.Containers, idCounter);
                 xliffFile.Containers.AddAll(containers);
                 document.Files.Add(xliffFile);
@@ -74,6 +80,10 @@ namespace XliffLib
             foreach (var container in propertyContainers)
             {
                 var xliffContainer = container.ToXliff(counter);
+                if(container.Attributes.Count>0)
+                {
+                    xliffContainer.Metadata = container.Attributes.ToXliffMetadata();
+                }
                 containers.Add(xliffContainer);
             }
 
