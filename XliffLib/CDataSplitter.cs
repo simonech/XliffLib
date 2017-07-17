@@ -25,6 +25,7 @@ namespace XliffLib
                     if (segment != null)
                     {
                         var cdata = segment.Source.Text[0] as CDataTag;
+                        if (cdata == null) continue;
                         var html = cdata.Text;
                         var paragraphs = html.SplitByParagraphs();
                         if (paragraphs.Count() > 1)
