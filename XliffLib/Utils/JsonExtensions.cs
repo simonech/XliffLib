@@ -18,7 +18,8 @@ namespace XliffLib.Utils
             return JsonConvert.SerializeObject(bundle, new JsonSerializerSettings
             {
                 ContractResolver = contractResolver,
-                TypeNameHandling = TypeNameHandling.Auto
+                TypeNameHandling = TypeNameHandling.Auto,
+                NullValueHandling = NullValueHandling.Ignore
             });
         }
 
@@ -26,7 +27,8 @@ namespace XliffLib.Utils
         {
             return JsonConvert.DeserializeObject<Bundle>(jsonString, new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.Auto
+                TypeNameHandling = TypeNameHandling.Auto,
+                NullValueHandling = NullValueHandling.Ignore
             });
         }
     }

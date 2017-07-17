@@ -55,6 +55,7 @@
     <Compile Include="JsonTests.cs" />
     <Compile Include="HtmlExtractionTests.cs" />
     <Compile Include="CDataSplitterTests.cs" />
+    <Compile Include="MetaDataTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
