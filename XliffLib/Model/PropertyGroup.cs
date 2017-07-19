@@ -17,15 +17,20 @@ namespace XliffLib.Model
 
         public override TranslationContainer ToXliff(IdCounter counter)
         {
-			var id = "g" + (counter.GetNextGroupId());
-			var xliffGroup = new Group(id)
-			{
-				Name = this.Name
-			};
+            var id = "g" + (counter.GetNextGroupId());
+            var xliffGroup = new Group(id)
+            {
+                Name = this.Name
+            };
+            if (this.Attributes.Count > 0)
+            {
+                xliffGroup.Metadata = this.Attributes.ToXliffMetadata();
+            }
+
             foreach (var container in Containers)
             {
-				var xliffContainer = container.ToXliff(counter);
-				xliffGroup.Containers.Add(xliffContainer);
+                var xliffContainer = container.ToXliff(counter);
+                xliffGroup.Containers.Add(xliffContainer);
             }
             return xliffGroup;
         }

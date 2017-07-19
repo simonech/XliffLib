@@ -80,10 +80,6 @@ namespace XliffLib
             foreach (var container in propertyContainers)
             {
                 var xliffContainer = container.ToXliff(counter);
-                if(container.Attributes.Count>0)
-                {
-                    xliffContainer.Metadata = container.Attributes.ToXliffMetadata();
-                }
                 containers.Add(xliffContainer);
             }
 

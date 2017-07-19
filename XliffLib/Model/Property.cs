@@ -15,23 +15,27 @@ namespace XliffLib.Model
 
         public override TranslationContainer ToXliff(IdCounter counter)
         {
-			var unitId = "u" + (counter.GetNextUnitId());
-			var xliffUnit = new Unit(unitId);
-			xliffUnit.Name = this.Name;
+            var unitId = "u" + (counter.GetNextUnitId());
+            var xliffUnit = new Unit(unitId);
+            xliffUnit.Name = this.Name;
 
-			var segment = new Segment();
-			if (this.Value.IsHtml())
-			{
-				var source = new Source();
-				source.Text.Add(new CDataTag(this.Value));
-				segment.Source = source;
-			}
-			else
-				segment.Source = new Source(this.Value);
+            if (this.Attributes.Count > 0)
+            {
+                xliffUnit.Metadata = this.Attributes.ToXliffMetadata();
+            }
 
+            var segment = new Segment();
+            if (this.Value.IsHtml())
+            {
+                var source = new Source();
+                source.Text.Add(new CDataTag(this.Value));
+                segment.Source = source;
+            }
+            else
+                segment.Source = new Source(this.Value);
 
-			xliffUnit.Resources.Add(segment);
-			return xliffUnit;
+            xliffUnit.Resources.Add(segment);
+            return xliffUnit;
         }
     }
 }

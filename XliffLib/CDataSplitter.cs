@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Localization.Xliff.OM.Core;
 using XliffLib.Utils;
 using System.Linq;
+using Localization.Xliff.OM.Modules.Metadata;
 
 namespace XliffLib
 {
@@ -32,6 +33,26 @@ namespace XliffLib
                         {
                             //TODO: Copy name and other attributes
                             var newGroup = new Group(unit.Id + "-g");
+                            newGroup.Name = unit.Name;
+                            if (unit.Metadata != null)
+                            {
+                                var newMetadataContainer = new MetadataContainer();
+                                foreach (var metaGroup in unit.Metadata.Groups)
+                                {
+                                    var newMetaGroup = new MetaGroup();
+                                    newMetaGroup.Id = metaGroup.Id;
+
+                                    foreach (Meta item in metaGroup.Containers)
+                                    {
+                                        var newElement = new Meta(item.Type, item.NonTranslatableText);
+                                        newMetaGroup.Containers.Add(newElement);
+                                    }
+
+                                    newMetadataContainer.Groups.Add(newMetaGroup);
+                                }
+
+                                newGroup.Metadata = newMetadataContainer;
+                            }
 
                             var i = 0;
                             foreach (var para in paragraphs)
