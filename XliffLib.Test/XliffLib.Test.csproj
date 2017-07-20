@@ -56,6 +56,7 @@
     <Compile Include="HtmlExtractionTests.cs" />
     <Compile Include="CDataSplitterTests.cs" />
     <Compile Include="MetaDataTests.cs" />
+    <Compile Include="MergerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
