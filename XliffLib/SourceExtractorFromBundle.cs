@@ -60,6 +60,7 @@ namespace XliffLib
             {
                 var fileId = "f" + (idCounter.GetNextFileId());
                 var xliffFile = new File(fileId);
+                xliffFile.Original = doc.SourceIdentifier;
 
                 if(doc.Attributes.Count>0)
                 {

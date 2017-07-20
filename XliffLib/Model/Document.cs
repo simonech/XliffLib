@@ -11,6 +11,9 @@ namespace XliffLib.Model
         {
             Containers = new List<PropertyContainer>();
         }
+
+        public string SourceIdentifier { get; set; }
+
         public IList<PropertyContainer> Containers { get; private set; }
     }
 }
