@@ -39,11 +39,11 @@ namespace XliffLib
             }
         }
 
-        public Bundle Xliff
-        {
-            get;
-            set;
-        }
+		public Bundle Xliff
+		{
+			get;
+			set;
+		}
 
         public XliffDocument Extract(string sourceLanguage, string targetLanguage)
         {
@@ -67,24 +67,15 @@ namespace XliffLib
                     xliffFile.Metadata = doc.Attributes.ToXliffMetadata();
                 }
 
-                var containers = ProcessPropertyContainers(doc.Containers, idCounter);
-                xliffFile.Containers.AddAll(containers);
+                foreach (var container in doc.Containers)
+                {
+                    var xliffContainer = container.ToXliff(idCounter);
+                    xliffFile.Containers.Add(xliffContainer);
+                }
+
                 document.Files.Add(xliffFile);
             }
             return document;
-        }
-
-        IList<TranslationContainer> ProcessPropertyContainers(IList<PropertyContainer> propertyContainers, IdCounter counter)
-        {
-            var containers = new List<TranslationContainer>();
-
-            foreach (var container in propertyContainers)
-            {
-                var xliffContainer = container.ToXliff(counter);
-                containers.Add(xliffContainer);
-            }
-
-            return containers;
         }
     }
 }
