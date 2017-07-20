@@ -12,14 +12,14 @@ namespace XliffLib
             return ++_fileId;
         }
 
-		public int GetNextGroupId()
-		{
-			return ++_groupId;
-		}
+        public int GetNextGroupId()
+        {
+            return ++_groupId;
+        }
 
-		public int GetNextUnitId()
-		{
+        public int GetNextUnitId()
+        {
             return ++_unitId;
-		}
+        }
     }
 }

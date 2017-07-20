@@ -8,7 +8,7 @@ namespace XliffLib.Model
     {
         public ContentElement()
         {
-			Attributes = new AttributeList();
+            Attributes = new AttributeList();
         }
 
         public AttributeList Attributes { get; set; }

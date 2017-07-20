@@ -39,15 +39,15 @@ namespace XliffLib
             }
         }
 
-		public Bundle Xliff
-		{
-			get;
-			set;
-		}
+        public Bundle Xliff
+        {
+            get;
+            set;
+        }
 
         public XliffDocument Extract(string sourceLanguage, string targetLanguage)
         {
-            return Extract(Xliff, sourceLanguage,targetLanguage);
+            return Extract(Xliff, sourceLanguage, targetLanguage);
         }
 
         private XliffDocument Extract(Bundle xliff, string sourceLanguage, string targetLanguage)
@@ -62,7 +62,7 @@ namespace XliffLib
                 var xliffFile = new File(fileId);
                 xliffFile.Original = doc.SourceIdentifier;
 
-                if(doc.Attributes.Count>0)
+                if (doc.Attributes.Count > 0)
                 {
                     xliffFile.Metadata = doc.Attributes.ToXliffMetadata();
                 }

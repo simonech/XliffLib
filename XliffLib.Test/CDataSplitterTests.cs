@@ -20,10 +20,10 @@ namespace XliffLib.Test
             return stream;
         }
 
-		[Test()]
-		public void PlainTextUnitIsNotSplit()
-		{
-			var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+        [Test()]
+        public void PlainTextUnitIsNotSplit()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <unit id=""u1"">
@@ -34,16 +34,16 @@ namespace XliffLib.Test
     </file>
 </xliff>";
 
-			XliffDocument document = LoadXliff(xliff);
-			var splitter = new CDataSplitter();
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new CDataSplitter();
 
-			var newDocument = splitter.ExecuteExtraction(document);
+            var newDocument = splitter.ExecuteExtraction(document);
 
-			Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
-			var unit = newDocument.Files[0].Containers[0] as Unit;
-			Assert.IsNotNull(unit);
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
 
-		}
+        }
 
         [Test()]
         public void SingleParagraphUnitIsNotSplit()

@@ -4,7 +4,7 @@ using Localization.Xliff.OM.Modules.Metadata;
 
 namespace XliffLib.Model
 {
-    public class AttributeList: Dictionary<string, string>
+    public class AttributeList : Dictionary<string, string>
     {
         public AttributeList()
         {
@@ -12,20 +12,20 @@ namespace XliffLib.Model
 
         public MetadataContainer ToXliffMetadata()
         {
-			var metadata = new MetadataContainer();
+            var metadata = new MetadataContainer();
 
-			var defaultGroup = new MetaGroup()
-			{
-				Id = "XliffLib"
-			};
+            var defaultGroup = new MetaGroup()
+            {
+                Id = "XliffLib"
+            };
 
-			foreach (var attribute in this)
-			{
-				var metadataItem = new Meta(attribute.Key, attribute.Value);
-				defaultGroup.Containers.Add((metadataItem));
-			}
+            foreach (var attribute in this)
+            {
+                var metadataItem = new Meta(attribute.Key, attribute.Value);
+                defaultGroup.Containers.Add((metadataItem));
+            }
 
-			metadata.Groups.Add(defaultGroup);
+            metadata.Groups.Add(defaultGroup);
             return metadata;
         }
     }

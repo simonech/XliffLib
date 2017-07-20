@@ -5,30 +5,30 @@ using XliffLib.Model;
 
 namespace XliffLib.Test
 {
-	[TestFixture()]
-	public class MergerTests
-	{
+    [TestFixture()]
+    public class MergerTests
+    {
 
-		private XliffDocument SetupXliffFile(bool withCData = false, bool withGroup = false)
-		{
+        private XliffDocument SetupXliffFile(bool withCData = false, bool withGroup = false)
+        {
             var contentValue = "contenuto tradotto";
             if (withCData)
                 contentValue = "<![CDATA[<p>Ciao Mondo!</p>]]>";
 
-			var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
                 <xliff srcLang=""en-US"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
                   <file id=""f1"" original=""cmsId"">
                     <unit id=""u1"" name=""title"">
                       <segment>
                         <source>content</source>
-                        <target>"+contentValue +@"</target>
+                        <target>" + contentValue + @"</target>
                       </segment>
                     </unit>
                   </file>
                 </xliff>";
 
-			if (withGroup)
-				xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+            if (withGroup)
+                xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
                 <xliff srcLang=""en-US"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
                   <file id=""f1"" original=""cmsId"">
                     <group id=""g1"" name=""Content"">
@@ -41,41 +41,41 @@ namespace XliffLib.Test
                     </group>
                   </file>
                 </xliff>";
-            
-			return Merger.Read(xliff);
-		}
 
-		[Test()]
-		public void MergerCreatesABundle()
-		{
+            return Merger.Read(xliff);
+        }
 
-			XliffDocument doc = SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
+        [Test()]
+        public void MergerCreatesABundle()
+        {
 
-			merger.Merge(doc);
+            XliffDocument doc = SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			var bundle = merger.Output as Bundle;
+            merger.Merge(doc);
 
-			Assert.IsNotNull(bundle);
-		}
+            var bundle = merger.Output as Bundle;
 
-		[Test()]
-		public void MergerCreatesABundleWithOneDocIfXliffHasOneFile()
-		{
-			XliffDocument doc = SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
+            Assert.IsNotNull(bundle);
+        }
 
-			merger.Merge(doc);
+        [Test()]
+        public void MergerCreatesABundleWithOneDocIfXliffHasOneFile()
+        {
+            XliffDocument doc = SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			var bundle = merger.Output as Bundle;
+            merger.Merge(doc);
 
-			Assert.AreEqual(1, bundle.Documents.Count);
-		}
+            var bundle = merger.Output as Bundle;
 
-		[Test()]
-		public void MergerCreatesABundleWithTwoDocsIfXliffHastwoFiles()
-		{
-			var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+            Assert.AreEqual(1, bundle.Documents.Count);
+        }
+
+        [Test()]
+        public void MergerCreatesABundleWithTwoDocsIfXliffHastwoFiles()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
                 <xliff srcLang=""en-US"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
                   <file id=""f1"">
                     <unit id=""u1"" name=""title"">
@@ -96,129 +96,129 @@ namespace XliffLib.Test
                 </xliff>";
 
 
-			XliffDocument doc = Merger.Read(xliff);
-			IMergerToSource merger = new MergerToBundle();
+            XliffDocument doc = Merger.Read(xliff);
+            IMergerToSource merger = new MergerToBundle();
 
-			merger.Merge(doc);
+            merger.Merge(doc);
 
-			var bundle = merger.Output as Bundle;
+            var bundle = merger.Output as Bundle;
 
-			Assert.AreEqual(2, bundle.Documents.Count);
-		}
+            Assert.AreEqual(2, bundle.Documents.Count);
+        }
 
-		[Test()]
-		public void MergerCreatesBundleWithCorrectOriginal()
-		{
-			XliffDocument doc = SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
+        [Test()]
+        public void MergerCreatesBundleWithCorrectOriginal()
+        {
+            XliffDocument doc = SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			merger.Merge(doc);
+            merger.Merge(doc);
 
-			var bundle = merger.Output as Bundle;
+            var bundle = merger.Output as Bundle;
 
-			Assert.AreEqual("cmsId", bundle.Documents[0].SourceIdentifier);
-		}
-
-
-		[Test()]
-		public void MergerCreatesBundleWithOnePropertyIfXliffHasOneUnit()
-		{
-			XliffDocument doc = SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
-
-			merger.Merge(doc);
-
-			var bundle = merger.Output as Bundle;
-
-			Assert.AreEqual(1, bundle.Documents[0].Containers.Count);
-			Assert.IsInstanceOf<Property>(bundle.Documents[0].Containers[0]);
-		}
-
-		[Test()]
-		public void MergerCreatesBundleWithPropertyWithRightName()
-		{
-
-			XliffDocument doc = SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
-
-			merger.Merge(doc);
-
-			var bundle = merger.Output as Bundle;
-			var property = bundle.Documents[0].Containers[0] as Property;
-
-			Assert.AreEqual("title", property.Name);
-		}
-
-		[Test()]
-		public void MergerCreatesBundleWithPropertyWithRightPlainTextValue()
-		{
-			XliffDocument doc = SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
-
-			merger.Merge(doc);
-
-			var bundle = merger.Output as Bundle;
-			var property = bundle.Documents[0].Containers[0] as Property;
-
-			Assert.AreEqual("contenuto tradotto", property.Value);
-		}
-
-		[Test()]
-		public void MergerCreatesBundleWithPropertyWithRightCDataValue()
-		{
-			XliffDocument doc = SetupXliffFile(withCData: true);
-			IMergerToSource merger = new MergerToBundle();
-
-			merger.Merge(doc);
-
-			var bundle = merger.Output as Bundle;
-			var property = bundle.Documents[0].Containers[0] as Property;
-
-			Assert.AreEqual("<p>Ciao Mondo!</p>", property.Value);
-		}
+            Assert.AreEqual("cmsId", bundle.Documents[0].SourceIdentifier);
+        }
 
 
-		[Test()]
-		public void MergerCreatesBundleWithOnePropertyGroupIfXliffHasOneGroup()
-		{
-			XliffDocument doc = SetupXliffFile(withGroup: true);
-			IMergerToSource merger = new MergerToBundle();
+        [Test()]
+        public void MergerCreatesBundleWithOnePropertyIfXliffHasOneUnit()
+        {
+            XliffDocument doc = SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			merger.Merge(doc);
+            merger.Merge(doc);
 
-			var bundle = merger.Output as Bundle;
+            var bundle = merger.Output as Bundle;
 
-			Assert.AreEqual(1, bundle.Documents[0].Containers.Count);
-			Assert.IsInstanceOf<PropertyGroup>(bundle.Documents[0].Containers[0]);
-		}
+            Assert.AreEqual(1, bundle.Documents[0].Containers.Count);
+            Assert.IsInstanceOf<Property>(bundle.Documents[0].Containers[0]);
+        }
 
-		[Test()]
-		public void MergerCreatesBundleWithOnePropertyGroupWithRightName()
-		{
-			XliffDocument doc = SetupXliffFile(withGroup: true);
-			IMergerToSource merger = new MergerToBundle();
+        [Test()]
+        public void MergerCreatesBundleWithPropertyWithRightName()
+        {
 
-			merger.Merge(doc);
+            XliffDocument doc = SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			var bundle = merger.Output as Bundle;
-			var group = bundle.Documents[0].Containers[0] as PropertyGroup;
+            merger.Merge(doc);
 
-			Assert.AreEqual("Content", group.Name);
-		}
+            var bundle = merger.Output as Bundle;
+            var property = bundle.Documents[0].Containers[0] as Property;
 
-		[Test()]
-		public void MergerCreatesBundleWithOnePropertyGroupWithProperties()
-		{
-			XliffDocument doc = SetupXliffFile(withGroup: true);
-			IMergerToSource merger = new MergerToBundle();
+            Assert.AreEqual("title", property.Name);
+        }
 
-			merger.Merge(doc);
+        [Test()]
+        public void MergerCreatesBundleWithPropertyWithRightPlainTextValue()
+        {
+            XliffDocument doc = SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			var bundle = merger.Output as Bundle;
-			var group = bundle.Documents[0].Containers[0] as PropertyGroup;
+            merger.Merge(doc);
 
-			Assert.AreEqual(1, group.Containers.Count);
-		}
+            var bundle = merger.Output as Bundle;
+            var property = bundle.Documents[0].Containers[0] as Property;
 
-	}
+            Assert.AreEqual("contenuto tradotto", property.Value);
+        }
+
+        [Test()]
+        public void MergerCreatesBundleWithPropertyWithRightCDataValue()
+        {
+            XliffDocument doc = SetupXliffFile(withCData: true);
+            IMergerToSource merger = new MergerToBundle();
+
+            merger.Merge(doc);
+
+            var bundle = merger.Output as Bundle;
+            var property = bundle.Documents[0].Containers[0] as Property;
+
+            Assert.AreEqual("<p>Ciao Mondo!</p>", property.Value);
+        }
+
+
+        [Test()]
+        public void MergerCreatesBundleWithOnePropertyGroupIfXliffHasOneGroup()
+        {
+            XliffDocument doc = SetupXliffFile(withGroup: true);
+            IMergerToSource merger = new MergerToBundle();
+
+            merger.Merge(doc);
+
+            var bundle = merger.Output as Bundle;
+
+            Assert.AreEqual(1, bundle.Documents[0].Containers.Count);
+            Assert.IsInstanceOf<PropertyGroup>(bundle.Documents[0].Containers[0]);
+        }
+
+        [Test()]
+        public void MergerCreatesBundleWithOnePropertyGroupWithRightName()
+        {
+            XliffDocument doc = SetupXliffFile(withGroup: true);
+            IMergerToSource merger = new MergerToBundle();
+
+            merger.Merge(doc);
+
+            var bundle = merger.Output as Bundle;
+            var group = bundle.Documents[0].Containers[0] as PropertyGroup;
+
+            Assert.AreEqual("Content", group.Name);
+        }
+
+        [Test()]
+        public void MergerCreatesBundleWithOnePropertyGroupWithProperties()
+        {
+            XliffDocument doc = SetupXliffFile(withGroup: true);
+            IMergerToSource merger = new MergerToBundle();
+
+            merger.Merge(doc);
+
+            var bundle = merger.Output as Bundle;
+            var group = bundle.Documents[0].Containers[0] as PropertyGroup;
+
+            Assert.AreEqual(1, group.Containers.Count);
+        }
+
+    }
 }

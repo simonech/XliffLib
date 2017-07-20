@@ -5,9 +5,9 @@ using XliffLib.Utils;
 
 namespace XliffLib.Model
 {
-    public class Property: PropertyContainer
+    public class Property : PropertyContainer
     {
-        public Property(string name, string text): base(name)
+        public Property(string name, string text) : base(name)
         {
             Value = text;
         }
@@ -21,26 +21,26 @@ namespace XliffLib.Model
                 throw new InvalidOperationException("Cannot operate on multiple segments. Make sure previous steps of the import have merged all segments into one.");
             var segment = unit.Resources[0] as Segment;
 
-			//TODO: Add test for this condition
-			if (segment.Target == null)
+            //TODO: Add test for this condition
+            if (segment.Target == null)
                 throw new InvalidOperationException("Property doesn't have a target: cannot import.");
 
-			//TODO: Add test for this condition
-			if(segment.Target.Text.Count>1)
+            //TODO: Add test for this condition
+            if (segment.Target.Text.Count > 1)
                 throw new InvalidOperationException("Cannot operate on target with multiple elements. Make sure previous steps have converted all inline markup into a CData section");
 
             var text = segment.Target.Text[0] as PlainText;
 
-            if(text!=null)
+            if (text != null)
                 return new Property(xliffUnit.Name, text.Text);
 
-			var html = segment.Target.Text[0] as CDataTag;
-            if(html!=null)
+            var html = segment.Target.Text[0] as CDataTag;
+            if (html != null)
                 return new Property(xliffUnit.Name, html.Text);
 
-			//TODO: Add test for this condition
-			return null;
-            
+            //TODO: Add test for this condition
+            return null;
+
         }
 
         public override TranslationContainer ToXliff(IdCounter counter)
