@@ -4,21 +4,21 @@ using XliffLib.Model;
 
 namespace XliffLib
 {
-    public class MergerToBundle: IMergerToSource
+    public class MergerToBundle : IMergerToSource
     {
         public MergerToBundle()
         {
         }
 
-		private Bundle Bundle
-		{
-			get;
-			set;
-		}
-
-        public object Output 
+        private Bundle Bundle
         {
-            get 
+            get;
+            set;
+        }
+
+        public object Output
+        {
+            get
             {
                 return Bundle;
             }

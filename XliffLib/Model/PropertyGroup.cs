@@ -9,7 +9,7 @@ namespace XliffLib.Model
 {
     public class PropertyGroup : PropertyContainer
     {
-        public PropertyGroup(string name): base(name)
+        public PropertyGroup(string name) : base(name)
         {
             Containers = new List<PropertyContainer>();
         }
@@ -18,7 +18,7 @@ namespace XliffLib.Model
         public static new PropertyContainer FromXliff(TranslationContainer xliffGroup)
         {
             var group = xliffGroup as Group;
-            var propertyGroup =new PropertyGroup(xliffGroup.Name);
+            var propertyGroup = new PropertyGroup(xliffGroup.Name);
 
             foreach (var container in group.Containers)
             {

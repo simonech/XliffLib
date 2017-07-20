@@ -1,15 +1,15 @@
 ﻿{
-    "documents": [
+  "documents": [
+    {
+      "attributes": { "CmsId": "12345" },
+      "containers": [
         {
-            "attributes": { "CmsId": "12345" },
-            "containers": [
-                {
-                    "$type": "XliffLib.Model.Property, XliffLib",
-                    "attributes": { "CmsPropertyName": "Title" },
-                    "value": "my title",
-                    "name": "title"
-                }
-            ]
+          "$type": "XliffLib.Model.Property, XliffLib",
+          "attributes": { "CmsPropertyName": "Title" },
+          "value": "my title",
+          "name": "title"
         }
-    ]
+      ]
+    }
+  ]
 }

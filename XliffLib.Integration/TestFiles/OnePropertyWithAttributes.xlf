@@ -7,11 +7,11 @@
       </mda:metaGroup>
     </mda:metadata>
     <unit id="u1" name="title">
-        <mda:metadata>
-	      <mda:metaGroup id="XliffLib">
-	        <mda:meta type="CmsPropertyName">Title</mda:meta>
-	      </mda:metaGroup>
-	    </mda:metadata>
+      <mda:metadata>
+        <mda:metaGroup id="XliffLib">
+          <mda:meta type="CmsPropertyName">Title</mda:meta>
+        </mda:metaGroup>
+      </mda:metadata>
       <segment>
         <source>my title</source>
       </segment>

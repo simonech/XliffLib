@@ -22,20 +22,20 @@ namespace XliffLib.Test
             Assert.AreEqual("{\"documents\":[{\"containers\":[{\"$type\":\"XliffLib.Model.Property, XliffLib\",\"value\":\"my title\",\"name\":\"title\"}]}]}", actual);
         }
 
-		[Test]
-		public void CanSerializeWithAttributesToJson()
-		{
-			var bundle = new Bundle();
-			var doc = new Document();
-            doc.Attributes.Add("CmsId","12345");
-			var prop = new Property("title", "my title");
-			doc.Containers.Add(prop);
-			bundle.Documents.Add(doc);
+        [Test]
+        public void CanSerializeWithAttributesToJson()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            doc.Attributes.Add("CmsId", "12345");
+            var prop = new Property("title", "my title");
+            doc.Containers.Add(prop);
+            bundle.Documents.Add(doc);
 
-			var actual = bundle.ToJson();
+            var actual = bundle.ToJson();
 
             Assert.AreEqual("{\"documents\":[{\"containers\":[{\"$type\":\"XliffLib.Model.Property, XliffLib\",\"value\":\"my title\",\"name\":\"title\"}],\"attributes\":{\"CmsId\":\"12345\"}}]}", actual);
-		}
+        }
 
         [Test]
         public void CanGetBundleFromJsonString()

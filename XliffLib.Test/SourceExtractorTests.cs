@@ -31,7 +31,7 @@ namespace XliffLib.Test
             bundle.Documents.Add(doc);
 
             ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US","it-IT");
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
             var actual = xliffModel.Files.Count;
             Assert.AreEqual(1, actual);
@@ -178,35 +178,35 @@ namespace XliffLib.Test
             Assert.AreEqual("content", actual);
         }
 
-		[Test]
-		public void SourceLanguageIsCorrectlyRepresentedInXliff()
-		{
-			var bundle = new Bundle();
-			var doc = new Document();
-			var prop = new Property("content", "my content");
-			doc.Containers.Add(prop);
-			bundle.Documents.Add(doc);
+        [Test]
+        public void SourceLanguageIsCorrectlyRepresentedInXliff()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            var prop = new Property("content", "my content");
+            doc.Containers.Add(prop);
+            bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US", "it-IT");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
-			Assert.AreEqual("en-US", xliffModel.SourceLanguage);
+            Assert.AreEqual("en-US", xliffModel.SourceLanguage);
 
-		}
+        }
 
         [Test]
         public void TargetLanguageIsCorrectlyRepresentedInXliff()
         {
-			var bundle = new Bundle();
-			var doc = new Document();
-			var prop = new Property("content", "my content");
-			doc.Containers.Add(prop);
-			bundle.Documents.Add(doc);
+            var bundle = new Bundle();
+            var doc = new Document();
+            var prop = new Property("content", "my content");
+            doc.Containers.Add(prop);
+            bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US", "it-IT");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
-            Assert.AreEqual("it-IT",xliffModel.TargetLanguage);
+            Assert.AreEqual("it-IT", xliffModel.TargetLanguage);
 
         }
 
