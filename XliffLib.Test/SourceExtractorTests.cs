@@ -68,25 +68,6 @@ namespace XliffLib.Test
         }
 
         [Test]
-        public void PropertyInsideFirstLevelGroupGetsRightId()
-        {
-            var bundle = new Bundle();
-            var doc = new Document();
-            var group = new PropertyGroup("content");
-            var prop = new Property("title", "my content");
-            group.Containers.Add(prop);
-            doc.Containers.Add(group);
-            bundle.Documents.Add(doc);
-
-            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US", "it-IT");
-
-            var xliffGroup = xliffModel.Files[0].Containers[0] as Group;
-            var actual = xliffGroup.Containers[0].Id;
-            Assert.AreEqual("u1", actual);
-        }
-
-        [Test]
         public void PropertiesInsideDifferentGroupsGetsDifferentIds()
         {
             var bundle = new Bundle();
@@ -162,23 +143,6 @@ namespace XliffLib.Test
         }
 
         [Test]
-        public void XliffUnitKeepsNameOfProperty()
-        {
-            var bundle = new Bundle();
-            var doc = new Document();
-            var prop = new Property("content", "my content");
-            doc.Containers.Add(prop);
-            bundle.Documents.Add(doc);
-
-            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US", "it-IT");
-
-            var unit = xliffModel.Files[0].Containers[0] as Unit;
-            var actual = unit.Name;
-            Assert.AreEqual("content", actual);
-        }
-
-        [Test]
         public void SourceLanguageIsCorrectlyRepresentedInXliff()
         {
             var bundle = new Bundle();
@@ -210,40 +174,6 @@ namespace XliffLib.Test
 
         }
 
-        [Test]
-        public void TextValuesAreEncodedAsSimpleText()
-        {
-            var bundle = new Bundle();
-            var doc = new Document();
-            var prop = new Property("content", "content");
-            doc.Containers.Add(prop);
-            bundle.Documents.Add(doc);
 
-            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US", "it-IT");
-
-            var unit = xliffModel.Files[0].Containers[0] as Unit;
-            var segment = unit.Resources[0] as Segment;
-            var actual = segment.Source.Text[0] as PlainText;
-            Assert.IsNotNull(actual);
-        }
-
-        [Test]
-        public void HtmlValuesAreEncodedIntoCData()
-        {
-            var bundle = new Bundle();
-            var doc = new Document();
-            var prop = new Property("content", "<p>content</p>");
-            doc.Containers.Add(prop);
-            bundle.Documents.Add(doc);
-
-            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-            var xliffModel = extractor.Extract("en-US", "it-IT");
-
-            var unit = xliffModel.Files[0].Containers[0] as Unit;
-            var segment = unit.Resources[0] as Segment;
-            var actual = segment.Source.Text[0] as CDataTag;
-            Assert.IsNotNull(actual);
-        }
     }
 }
