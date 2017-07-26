@@ -58,6 +58,7 @@
     <Compile Include="MetaDataTests.cs" />
     <Compile Include="MergerTests.cs" />
     <Compile Include="PropertyExtractionTests.cs" />
+    <Compile Include="PropertyMergeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

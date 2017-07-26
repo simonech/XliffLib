@@ -134,49 +134,6 @@ namespace XliffLib.Test
             Assert.IsInstanceOf<Property>(bundle.Documents[0].Containers[0]);
         }
 
-        [Test()]
-        public void MergerCreatesBundleWithPropertyWithRightName()
-        {
-
-            XliffDocument doc = SetupXliffFile();
-            IMergerToSource merger = new MergerToBundle();
-
-            merger.Merge(doc);
-
-            var bundle = merger.Output as Bundle;
-            var property = bundle.Documents[0].Containers[0] as Property;
-
-            Assert.AreEqual("title", property.Name);
-        }
-
-        [Test()]
-        public void MergerCreatesBundleWithPropertyWithRightPlainTextValue()
-        {
-            XliffDocument doc = SetupXliffFile();
-            IMergerToSource merger = new MergerToBundle();
-
-            merger.Merge(doc);
-
-            var bundle = merger.Output as Bundle;
-            var property = bundle.Documents[0].Containers[0] as Property;
-
-            Assert.AreEqual("contenuto tradotto", property.Value);
-        }
-
-        [Test()]
-        public void MergerCreatesBundleWithPropertyWithRightCDataValue()
-        {
-            XliffDocument doc = SetupXliffFile(withCData: true);
-            IMergerToSource merger = new MergerToBundle();
-
-            merger.Merge(doc);
-
-            var bundle = merger.Output as Bundle;
-            var property = bundle.Documents[0].Containers[0] as Property;
-
-            Assert.AreEqual("<p>Ciao Mondo!</p>", property.Value);
-        }
-
 
         [Test()]
         public void MergerCreatesBundleWithOnePropertyGroupIfXliffHasOneGroup()

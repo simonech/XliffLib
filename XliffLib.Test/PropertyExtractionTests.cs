@@ -67,7 +67,7 @@ namespace XliffLib.Test
             var prop = new Property("content", "my content");
 
             var unit = prop.ToXliff(_idCounter) as Unit;
-            Assert.AreEqual("u1",unit.Id);
+            Assert.AreEqual("u1", unit.Id);
         }
 
         [Test]
@@ -81,24 +81,24 @@ namespace XliffLib.Test
             Assert.AreEqual("u2", unit2.Id);
         }
 
-		[Test]
-		public void UnitDoesntHaveMetadataIfProperyHasNotAttributes()
-		{
-			var prop = new Property("content", "my content");
+        [Test]
+        public void UnitDoesntHaveMetadataIfProperyHasNotAttributes()
+        {
+            var prop = new Property("content", "my content");
 
-			var unit = prop.ToXliff(_idCounter) as Unit;
-			Assert.IsNull(unit.Metadata);
-		}
+            var unit = prop.ToXliff(_idCounter) as Unit;
+            Assert.IsNull(unit.Metadata);
+        }
 
         [Test]
         public void PropertyAttributesAreStoredInUnitAsMetadata()
         {
             var prop = new Property("content", "my content");
-            prop.Attributes.Add("CMSID","12345");
+            prop.Attributes.Add("CMSID", "12345");
 
             var unit = prop.ToXliff(_idCounter) as Unit;
             Assert.IsNotNull(unit.Metadata);
-			Assert.IsTrue(unit.Metadata.HasGroups);
+            Assert.IsTrue(unit.Metadata.HasGroups);
         }
 
     }
