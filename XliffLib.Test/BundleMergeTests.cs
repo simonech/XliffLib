@@ -12,10 +12,8 @@ namespace XliffLib.Test
         [Test()]
         public void MergerCreatesABundle()
         {
-
-            XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
             IMergerToSource merger = new MergerToBundle();
-
+            XliffDocument doc = new XliffDocument("en-US");
             merger.Merge(doc);
 
             var bundle = merger.Output as Bundle;
@@ -26,7 +24,9 @@ namespace XliffLib.Test
         [Test()]
         public void MergerCreatesABundleWithOneDocIfXliffHasOneFile()
         {
-            XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
+            XliffDocument doc = new XliffDocument("en-US");
+            var file = new File("f1");
+            doc.Files.Add(file);
             IMergerToSource merger = new MergerToBundle();
 
             merger.Merge(doc);
@@ -39,28 +39,11 @@ namespace XliffLib.Test
         [Test()]
         public void MergerCreatesABundleWithTwoDocsIfXliffHastwoFiles()
         {
-            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
-                <xliff srcLang=""en-US"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
-                  <file id=""f1"">
-                    <unit id=""u1"" name=""title"">
-                      <segment>
-                        <source>content</source>
-                        <target>contenuto tradotto</target>
-                      </segment>
-                    </unit>
-                  </file>
-                  <file id=""f2"">
-                    <unit id=""u2"" name=""title"">
-                      <segment>
-                        <source>content</source>
-                        <target>contenuto tradotto</target>
-                      </segment>
-                    </unit>
-                  </file>
-                </xliff>";
 
+            XliffDocument doc = new XliffDocument("en-US");
+            doc.Files.Add(new File("f1"));
+            doc.Files.Add(new File("f2"));
 
-            XliffDocument doc = Merger.Read(xliff);
             IMergerToSource merger = new MergerToBundle();
 
             merger.Merge(doc);
