@@ -22,7 +22,7 @@ namespace XliffLib.Model
             var segment = unit.Resources[0] as Segment;
 
             //TODO: Add test for this condition
-            if (segment.Target == null || segment.Target.Text == null | segment.Target.Text.Count == 0)
+            if (segment.Target == null || segment.Target.Text == null || segment.Target.Text.Count == 0)
                 throw new InvalidOperationException("Property doesn't have a target: cannot import.");
 
             //TODO: Add test for this condition
