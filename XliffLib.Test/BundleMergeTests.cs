@@ -24,9 +24,12 @@ namespace XliffLib.Test
         [Test()]
         public void MergerCreatesABundleWithOneDocIfXliffHasOneFile()
         {
+
             XliffDocument doc = new XliffDocument("en-US");
             var file = new File("f1");
             doc.Files.Add(file);
+
+
             IMergerToSource merger = new MergerToBundle();
 
             merger.Merge(doc);
@@ -40,9 +43,11 @@ namespace XliffLib.Test
         public void MergerCreatesABundleWithTwoDocsIfXliffHastwoFiles()
         {
 
+
             XliffDocument doc = new XliffDocument("en-US");
             doc.Files.Add(new File("f1"));
             doc.Files.Add(new File("f2"));
+
 
             IMergerToSource merger = new MergerToBundle();
 
