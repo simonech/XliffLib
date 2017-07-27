@@ -64,7 +64,6 @@
     <Compile Include="BundleExtractionTests.cs" />
     <Compile Include="BundleMergeTests.cs" />
     <Compile Include="FileMergeTests.cs" />
-    <Compile Include="Utils\PrepareXliffForMergeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

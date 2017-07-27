@@ -19,6 +19,5 @@ namespace XliffLib.Model
         }
 
         public IList<Document> Documents { get; private set; }
-
     }
 }
