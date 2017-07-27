@@ -11,21 +11,21 @@ namespace XliffLib.Test
         [Test()]
         public void XliffUnitNameIsMergedIntoProperty()
         {
-			var unit = new Unit("u1");
+            var unit = new Unit("u1");
             unit.Name = "title";
-			var segment = new Segment();
-			segment.Target = new Target("testo tradotto");
-			unit.Resources.Add(segment);
+            var segment = new Segment();
+            segment.Target = new Target("testo tradotto");
+            unit.Resources.Add(segment);
 
             Property property = Property.FromXliff(unit) as Property;
 
             Assert.AreEqual("title", property.Name);
         }
 
-		[Test()]
-		public void XliffContentIsMergedIntoProperty()
-		{
-			var unit = new Unit("u1");
+        [Test()]
+        public void XliffContentIsMergedIntoProperty()
+        {
+            var unit = new Unit("u1");
             var segment = new Segment();
             segment.Target = new Target("testo tradotto");
             unit.Resources.Add(segment);
@@ -35,18 +35,18 @@ namespace XliffLib.Test
             Assert.AreEqual("testo tradotto", property.Value);
         }
 
-		[Test()]
-		public void XliffCDataContentIsMergedIntoProperty()
-		{
-			var unit = new Unit("u1");
-			var segment = new Segment();
-			segment.Target = new Target();
+        [Test()]
+        public void XliffCDataContentIsMergedIntoProperty()
+        {
+            var unit = new Unit("u1");
+            var segment = new Segment();
+            segment.Target = new Target();
             segment.Target.Text.Add(new CDataTag("<p>testo tradotto</p>"));
-			unit.Resources.Add(segment);
+            unit.Resources.Add(segment);
 
-			Property property = Property.FromXliff(unit) as Property;
+            Property property = Property.FromXliff(unit) as Property;
 
-			Assert.AreEqual("<p>testo tradotto</p>", property.Value);
-		}
+            Assert.AreEqual("<p>testo tradotto</p>", property.Value);
+        }
     }
 }

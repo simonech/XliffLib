@@ -9,37 +9,37 @@ namespace XliffLib.Test
     [TestFixture()]
     public class BundleMergeTests
     {
-		[Test()]
-		public void MergerCreatesABundle()
-		{
+        [Test()]
+        public void MergerCreatesABundle()
+        {
 
-			XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
+            XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			merger.Merge(doc);
+            merger.Merge(doc);
 
-			var bundle = merger.Output as Bundle;
+            var bundle = merger.Output as Bundle;
 
-			Assert.IsNotNull(bundle);
-		}
+            Assert.IsNotNull(bundle);
+        }
 
-		[Test()]
-		public void MergerCreatesABundleWithOneDocIfXliffHasOneFile()
-		{
-			XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
-			IMergerToSource merger = new MergerToBundle();
+        [Test()]
+        public void MergerCreatesABundleWithOneDocIfXliffHasOneFile()
+        {
+            XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
+            IMergerToSource merger = new MergerToBundle();
 
-			merger.Merge(doc);
+            merger.Merge(doc);
 
-			var bundle = merger.Output as Bundle;
+            var bundle = merger.Output as Bundle;
 
-			Assert.AreEqual(1, bundle.Documents.Count);
-		}
+            Assert.AreEqual(1, bundle.Documents.Count);
+        }
 
-		[Test()]
-		public void MergerCreatesABundleWithTwoDocsIfXliffHastwoFiles()
-		{
-			var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+        [Test()]
+        public void MergerCreatesABundleWithTwoDocsIfXliffHastwoFiles()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
                 <xliff srcLang=""en-US"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
                   <file id=""f1"">
                     <unit id=""u1"" name=""title"">
@@ -60,15 +60,15 @@ namespace XliffLib.Test
                 </xliff>";
 
 
-			XliffDocument doc = Merger.Read(xliff);
-			IMergerToSource merger = new MergerToBundle();
+            XliffDocument doc = Merger.Read(xliff);
+            IMergerToSource merger = new MergerToBundle();
 
-			merger.Merge(doc);
+            merger.Merge(doc);
 
-			var bundle = merger.Output as Bundle;
+            var bundle = merger.Output as Bundle;
 
-			Assert.AreEqual(2, bundle.Documents.Count);
-		}
+            Assert.AreEqual(2, bundle.Documents.Count);
+        }
 
 
     }

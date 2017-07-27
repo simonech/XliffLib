@@ -10,35 +10,35 @@ namespace XliffLib.Test
     [TestFixture()]
     public class FileExtractionTests
     {
-		[Test]
-		public void FileWithOnePropertyGroupWritesToXliffFileWithOneGroup()
-		{
-			var bundle = new Bundle();
-			var doc = new Document();
-			var group = new PropertyGroup("content");
-			doc.Containers.Add(group);
-			bundle.Documents.Add(doc);
+        [Test]
+        public void FileWithOnePropertyGroupWritesToXliffFileWithOneGroup()
+        {
+            var bundle = new Bundle();
+            var doc = new Document();
+            var group = new PropertyGroup("content");
+            doc.Containers.Add(group);
+            bundle.Documents.Add(doc);
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US", "it-IT");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
-			var actual = xliffModel.Files[0].Containers.Count;
-			Assert.AreEqual(1, actual);
-			Assert.IsAssignableFrom<Group>(xliffModel.Files[0].Containers[0]);
-		}
+            var actual = xliffModel.Files[0].Containers.Count;
+            Assert.AreEqual(1, actual);
+            Assert.IsAssignableFrom<Group>(xliffModel.Files[0].Containers[0]);
+        }
 
-		[Test]
-		public void FileWithOnePropertyWritesToXliffFileWithOneUnit()
-		{
-			var bundle = EmbeddedFilesReader.ReadString("XliffLib.Test.TestFiles.OnePropertyInRoot.json").ToBundle();
+        [Test]
+        public void FileWithOnePropertyWritesToXliffFileWithOneUnit()
+        {
+            var bundle = EmbeddedFilesReader.ReadString("XliffLib.Test.TestFiles.OnePropertyInRoot.json").ToBundle();
 
-			ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
-			var xliffModel = extractor.Extract("en-US", "it-IT");
+            ISourceExtractor extractor = new SourceExtractorFromBundle(bundle);
+            var xliffModel = extractor.Extract("en-US", "it-IT");
 
-			var actual = xliffModel.Files[0].Containers.Count;
-			Assert.AreEqual(1, actual);
-			Assert.IsAssignableFrom<Unit>(xliffModel.Files[0].Containers[0]);
-		}
+            var actual = xliffModel.Files[0].Containers.Count;
+            Assert.AreEqual(1, actual);
+            Assert.IsAssignableFrom<Unit>(xliffModel.Files[0].Containers[0]);
+        }
 
     }
 }
