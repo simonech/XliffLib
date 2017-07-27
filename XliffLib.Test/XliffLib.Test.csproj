@@ -56,9 +56,15 @@
     <Compile Include="HtmlExtractionTests.cs" />
     <Compile Include="CDataSplitterTests.cs" />
     <Compile Include="MetaDataTests.cs" />
-    <Compile Include="MergerTests.cs" />
     <Compile Include="PropertyExtractionTests.cs" />
     <Compile Include="PropertyMergeTests.cs" />
+    <Compile Include="PropertyGroupExtractionTests.cs" />
+    <Compile Include="PropertyGroupMergeTests.cs" />
+    <Compile Include="FileExtractionTests.cs" />
+    <Compile Include="BundleExtractionTests.cs" />
+    <Compile Include="BundleMergeTests.cs" />
+    <Compile Include="FileMergeTests.cs" />
+    <Compile Include="Utils\PrepareXliffForMergeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

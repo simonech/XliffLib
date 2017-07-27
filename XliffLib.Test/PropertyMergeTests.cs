@@ -9,7 +9,7 @@ namespace XliffLib.Test
     public class PropertyMergeTests
     {
         [Test()]
-        public void XliffNameIsMergedIntoProperty()
+        public void XliffUnitNameIsMergedIntoProperty()
         {
 			var unit = new Unit("u1");
             unit.Name = "title";
