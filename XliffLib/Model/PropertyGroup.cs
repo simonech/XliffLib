@@ -34,12 +34,9 @@ namespace XliffLib.Model
             var id = "g" + (idCounter.GetNextGroupId());
             var xliffGroup = new Group(id)
             {
-                Name = this.Name
+                Name = this.Name,
+                Metadata=Attributes.ToXliffMetadata()
             };
-            if (this.Attributes.Count > 0)
-            {
-                xliffGroup.Metadata = this.Attributes.ToXliffMetadata();
-            }
 
             foreach (var container in Containers)
             {

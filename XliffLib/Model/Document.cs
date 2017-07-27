@@ -21,13 +21,11 @@ namespace XliffLib.Model
         public override XliffElement ToXliff(IdCounter idCounter)
         {
             var fileId = "f" + idCounter.GetNextFileId();
-            var xliffFile = new File(fileId);
-            xliffFile.Original = this.SourceIdentifier;
-
-            if (this.Attributes.Count > 0)
+            var xliffFile = new File(fileId)
             {
-                xliffFile.Metadata = this.Attributes.ToXliffMetadata();
-            }
+                Original = this.SourceIdentifier,
+                Metadata = Attributes.ToXliffMetadata()
+            };
 
             foreach (var container in this.Containers)
             {

@@ -12,6 +12,9 @@ namespace XliffLib.Model
 
         public MetadataContainer ToXliffMetadata()
         {
+            if (this.Count == 0)
+                return null;
+            
             var metadata = new MetadataContainer();
 
             var defaultGroup = new MetaGroup()

@@ -44,17 +44,14 @@ namespace XliffLib.Model
 
         }
 
-        public override XliffElement ToXliff(IdCounter counter)
+        public override XliffElement ToXliff(IdCounter idCounter)
         {
-            var unitId = "u" + (counter.GetNextUnitId());
-            var xliffUnit = new Unit(unitId);
-            xliffUnit.Name = this.Name;
-
-            if (this.Attributes.Count > 0)
+            var unitId = "u" + (idCounter.GetNextUnitId());
+            var xliffUnit = new Unit(unitId)
             {
-                xliffUnit.Metadata = this.Attributes.ToXliffMetadata();
-            }
-
+                Name = this.Name,
+                Metadata = Attributes.ToXliffMetadata()
+            };
             var segment = new Segment();
             if (this.Value.IsHtml())
             {
