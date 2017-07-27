@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Localization.Xliff.OM;
 using Localization.Xliff.OM.Core;
 
 namespace XliffLib.Model
@@ -17,5 +18,7 @@ namespace XliffLib.Model
         {
             return Attributes.Count > 0;
         }
+
+        public abstract XliffElement ToXliff(IdCounter idCounter);
     }
 }

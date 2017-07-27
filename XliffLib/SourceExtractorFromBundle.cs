@@ -58,22 +58,7 @@ namespace XliffLib
             var idCounter = new IdCounter();
             foreach (var doc in xliff.Documents)
             {
-                var fileId = "f" + (idCounter.GetNextFileId());
-                var xliffFile = new File(fileId);
-                xliffFile.Original = doc.SourceIdentifier;
-
-                if (doc.Attributes.Count > 0)
-                {
-                    xliffFile.Metadata = doc.Attributes.ToXliffMetadata();
-                }
-
-                foreach (var container in doc.Containers)
-                {
-                    var xliffContainer = container.ToXliff(idCounter);
-                    xliffFile.Containers.Add(xliffContainer);
-                }
-
-                document.Files.Add(xliffFile);
+                document.Files.Add(doc.ToXliff(idCounter) as File);
             }
             return document;
         }

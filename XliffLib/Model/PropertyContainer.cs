@@ -11,8 +11,6 @@ namespace XliffLib.Model
         }
         public string Name { get; set; }
 
-        public abstract TranslationContainer ToXliff(IdCounter counter);
-
 
         public static PropertyContainer FromXliff(TranslationContainer container)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Localization.Xliff.OM;
 using Localization.Xliff.OM.Core;
 using XliffLib.Utils;
 
@@ -43,7 +44,7 @@ namespace XliffLib.Model
 
         }
 
-        public override TranslationContainer ToXliff(IdCounter counter)
+        public override XliffElement ToXliff(IdCounter counter)
         {
             var unitId = "u" + (counter.GetNextUnitId());
             var xliffUnit = new Unit(unitId);
