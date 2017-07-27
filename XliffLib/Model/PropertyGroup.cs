@@ -29,9 +29,9 @@ namespace XliffLib.Model
             return propertyGroup;
         }
 
-        public override XliffElement ToXliff(IdCounter counter)
+        public override XliffElement ToXliff(IdCounter idCounter)
         {
-            var id = "g" + (counter.GetNextGroupId());
+            var id = "g" + (idCounter.GetNextGroupId());
             var xliffGroup = new Group(id)
             {
                 Name = this.Name
@@ -43,7 +43,7 @@ namespace XliffLib.Model
 
             foreach (var container in Containers)
             {
-                var xliffContainer = container.ToXliff(counter) as TranslationContainer;
+                var xliffContainer = container.ToXliff(idCounter) as TranslationContainer;
                 xliffGroup.Containers.Add(xliffContainer);
             }
             return xliffGroup;

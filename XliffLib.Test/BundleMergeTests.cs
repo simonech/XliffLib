@@ -69,7 +69,5 @@ namespace XliffLib.Test
 
             Assert.AreEqual(2, bundle.Documents.Count);
         }
-
-
     }
 }
