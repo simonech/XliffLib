@@ -29,16 +29,7 @@ namespace XliffLib
             Bundle = new Bundle();
             foreach (var file in xliff.Files)
             {
-                var document = new Document();
-                document.SourceIdentifier = file.Original;
-
-                foreach (var container in file.Containers)
-                {
-                    var propertyContainer = PropertyContainer.FromXliff(container);
-                    document.Containers.Add(propertyContainer);
-                }
-
-                Bundle.Documents.Add(document);
+                Bundle.Documents.Add(Document.FromXliff(file));
             }
         }
     }
