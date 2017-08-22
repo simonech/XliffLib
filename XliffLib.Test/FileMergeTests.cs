@@ -24,10 +24,10 @@ namespace XliffLib.Test
         public void MergerCreatesBundleWithOnePropertyIfXliffHasOneUnit()
         {
             var file = new File("f1");
-			var unit = new Unit("u1");
-			var segment = new Segment();
-			segment.Target = new Target("testo tradotto");
-			unit.Resources.Add(segment);
+            var unit = new Unit("u1");
+            var segment = new Segment();
+            segment.Target = new Target("testo tradotto");
+            unit.Resources.Add(segment);
             file.Containers.Add(unit);
 
             var doc = Document.FromXliff(file);
@@ -39,9 +39,9 @@ namespace XliffLib.Test
         [Test()]
         public void MergerCreatesBundleWithOnePropertyGroupIfXliffHasOneGroup()
         {
-			var file = new File("f1");
-			var group = new Group("g1");
-			file.Containers.Add(group);
+            var file = new File("f1");
+            var group = new Group("g1");
+            file.Containers.Add(group);
 
             var doc = Document.FromXliff(file);
 

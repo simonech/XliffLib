@@ -39,14 +39,14 @@ namespace XliffLib.Model
 
         public static Document FromXliff(File file)
         {
-			var document = new Document();
-			document.SourceIdentifier = file.Original;
+            var document = new Document();
+            document.SourceIdentifier = file.Original;
 
-			foreach (var container in file.Containers)
-			{
-				var propertyContainer = PropertyContainer.FromXliff(container);
-				document.Containers.Add(propertyContainer);
-			}
+            foreach (var container in file.Containers)
+            {
+                var propertyContainer = PropertyContainer.FromXliff(container);
+                document.Containers.Add(propertyContainer);
+            }
 
             return document;
         }

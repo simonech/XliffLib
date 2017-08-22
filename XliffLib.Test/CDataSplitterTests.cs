@@ -21,7 +21,7 @@ namespace XliffLib.Test
         }
 
         [Test()]
-        public void PlainTextUnitIsNotSplit()
+        public void SingleParagraphPlainTextUnitIsNotSplit()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
