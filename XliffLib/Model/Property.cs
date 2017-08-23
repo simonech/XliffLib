@@ -30,14 +30,24 @@ namespace XliffLib.Model
             if (segment.Target.Text.Count > 1)
                 throw new InvalidOperationException("Cannot operate on target with multiple elements. Make sure previous steps have converted all inline markup into a CData section");
 
+            string textValue = string.Empty;
             var text = segment.Target.Text[0] as PlainText;
 
             if (text != null)
-                return new Property(xliffUnit.Name, text.Text);
+                textValue = text.Text;
 
             var html = segment.Target.Text[0] as CDataTag;
             if (html != null)
-                return new Property(xliffUnit.Name, html.Text);
+                textValue = html.Text;
+
+            if(!String.IsNullOrWhiteSpace(textValue))
+            {
+                var property = new Property(unit.Name, textValue);
+                if (unit.Metadata != null)
+                    property.Attributes = AttributeList.FromXliffMetadata(unit.Metadata);
+                return property;
+            }
+
 
             //TODO: Add test for this condition
             return null;

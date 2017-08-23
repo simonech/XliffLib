@@ -20,6 +20,8 @@ namespace XliffLib.Model
         {
             var group = xliffGroup as Group;
             var propertyGroup = new PropertyGroup(xliffGroup.Name);
+            if (group.Metadata != null)
+                propertyGroup.Attributes = AttributeList.FromXliffMetadata(group.Metadata);
 
             foreach (var container in group.Containers)
             {

@@ -44,6 +44,7 @@
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="SimpleMergerTests.cs" />
     <Compile Include="DataSamples.cs" />
+    <Compile Include="BackAndForthTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

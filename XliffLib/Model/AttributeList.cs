@@ -25,11 +25,41 @@ namespace XliffLib.Model
             foreach (var attribute in this)
             {
                 var metadataItem = new Meta(attribute.Key, attribute.Value);
-                defaultGroup.Containers.Add((metadataItem));
+                defaultGroup.Containers.Add(metadataItem);
             }
 
             metadata.Groups.Add(defaultGroup);
             return metadata;
+        }
+
+        public static AttributeList FromXliffMetadata (MetadataContainer metadata)
+        {
+            if (metadata != null)
+            {
+                if(metadata.HasGroups)
+                {
+                    MetaGroup defaultGroup = null;
+                    foreach (var group in metadata.Groups)
+                    {
+                        if (group.Id == "XliffLib")
+                        {
+                            defaultGroup = group;
+                            break;
+                        }
+                    }
+                    if(defaultGroup!=null)
+                    {
+                        var attributes = new AttributeList();
+                        foreach (Meta item in defaultGroup.Containers)
+                        {
+                            attributes.Add(item.Type,item.NonTranslatableText);
+                        }
+                        return attributes;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
