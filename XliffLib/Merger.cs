@@ -40,13 +40,14 @@ namespace XliffLib
             return document;
         }
 
-        public void Merge(XliffDocument document)
+        public Bundle Merge(XliffDocument document)
         {
             foreach (var step in ProcessingSteps)
             {
                 document = step.ExecuteMerge(document);
             }
             SourceMerger.Merge(document);
+            return SourceMerger.Output;
         }
 
         private static Stream GenerateStreamFromString(string s)

@@ -1,11 +1,12 @@
 ﻿using System;
 using Localization.Xliff.OM.Core;
+using XliffLib.Model;
 
 namespace XliffLib
 {
     public interface IMergerToSource
     {
         void Merge(XliffDocument xliff);
-        object Output { get; }
+        Bundle Output { get; }
     }
 }

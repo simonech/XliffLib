@@ -10,13 +10,6 @@ namespace XliffLib.Test
     public class SourceExtractorTests
     {
         [Test]
-        public void NotPassingABundleMakesException()
-        {
-            ISourceExtractor extractor = new SourceExtractorFromBundle();
-            Assert.Throws<ArgumentNullException>(() => extractor.Input = "a string");
-        }
-
-        [Test]
         public void SourceLanguageIsCorrectlyRepresentedInXliff()
         {
             var bundle = new Bundle();

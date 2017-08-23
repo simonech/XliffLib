@@ -1,10 +1,11 @@
 ﻿using Localization.Xliff.OM.Core;
+using XliffLib.Model;
 
 namespace XliffLib
 {
     public interface ISourceExtractor
     {
-        object Input { get; set; }
+        Bundle Input { get; set; }
         XliffDocument Extract(string sourceLanguage, string targetLanguage);
     }
 }

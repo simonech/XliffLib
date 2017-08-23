@@ -16,7 +16,7 @@ namespace XliffLib.Test
             XliffDocument doc = new XliffDocument("en-US");
             merger.Merge(doc);
 
-            var bundle = merger.Output as Bundle;
+            var bundle = merger.Output;
 
             Assert.IsNotNull(bundle);
         }
@@ -29,12 +29,11 @@ namespace XliffLib.Test
             var file = new File("f1");
             doc.Files.Add(file);
 
-
             IMergerToSource merger = new MergerToBundle();
 
             merger.Merge(doc);
 
-            var bundle = merger.Output as Bundle;
+            var bundle = merger.Output;
 
             Assert.AreEqual(1, bundle.Documents.Count);
         }
@@ -42,18 +41,15 @@ namespace XliffLib.Test
         [Test()]
         public void MergerCreatesABundleWithTwoDocsIfXliffHastwoFiles()
         {
-
-
             XliffDocument doc = new XliffDocument("en-US");
             doc.Files.Add(new File("f1"));
             doc.Files.Add(new File("f2"));
-
 
             IMergerToSource merger = new MergerToBundle();
 
             merger.Merge(doc);
 
-            var bundle = merger.Output as Bundle;
+            var bundle = merger.Output;
 
             Assert.AreEqual(2, bundle.Documents.Count);
         }
