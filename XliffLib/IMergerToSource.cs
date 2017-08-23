@@ -8,5 +8,6 @@ namespace XliffLib
     {
         void Merge(XliffDocument xliff);
         Bundle Output { get; }
+        string TargetLanguage { get; }
     }
 }
