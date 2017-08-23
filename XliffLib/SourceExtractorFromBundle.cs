@@ -14,32 +14,14 @@ namespace XliffLib
         {
 
         }
+
         public SourceExtractorFromBundle(Bundle sourceDocument)
         {
             Input = sourceDocument;
         }
 
-        public object Input
-        {
-            get
-            {
-                return Xliff;
-            }
-            set
-            {
 
-                var xliff = value as Bundle;
-
-                if (xliff == null)
-                {
-                    throw new ArgumentNullException(nameof(value), "Input value should be of type XliffLib.Model.Bundle.");
-
-                }
-                Xliff = xliff;
-            }
-        }
-
-        public Bundle Xliff
+        public Bundle Input
         {
             get;
             set;
@@ -47,7 +29,7 @@ namespace XliffLib
 
         public XliffDocument Extract(string sourceLanguage, string targetLanguage)
         {
-            return Extract(Xliff, sourceLanguage, targetLanguage);
+            return Extract(Input, sourceLanguage, targetLanguage);
         }
 
         private XliffDocument Extract(Bundle xliff, string sourceLanguage, string targetLanguage)

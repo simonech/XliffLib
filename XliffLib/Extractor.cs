@@ -4,6 +4,7 @@ using Localization.Xliff.OM.Core;
 using IO = System.IO;
 using Localization.Xliff.OM.Serialization;
 using System.Linq;
+using XliffLib.Model;
 
 namespace XliffLib
 {
@@ -48,7 +49,7 @@ namespace XliffLib
         }
 
 
-        public XliffDocument Extract(object sourceDocument, string sourceLanguage, string targetLanguage)
+        public XliffDocument Extract(Bundle sourceDocument, string sourceLanguage, string targetLanguage)
         {
             SourceExtractor.Input = sourceDocument;
             XliffDocument document = SourceExtractor.Extract(sourceLanguage, targetLanguage);

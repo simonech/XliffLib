@@ -10,26 +10,18 @@ namespace XliffLib
         {
         }
 
-        private Bundle Bundle
+        public Bundle Output
         {
             get;
             set;
         }
 
-        public object Output
-        {
-            get
-            {
-                return Bundle;
-            }
-        }
-
         public void Merge(XliffDocument xliff)
         {
-            Bundle = new Bundle();
+            Output = new Bundle();
             foreach (var file in xliff.Files)
             {
-                Bundle.Documents.Add(Document.FromXliff(file));
+                Output.Documents.Add(Document.FromXliff(file));
             }
         }
     }
