@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Localization.Xliff.OM.Core;
 using Localization.Xliff.OM.Serialization;
+using XliffLib.Model;
 
 namespace XliffLib
 {
@@ -37,6 +38,15 @@ namespace XliffLib
             }
 
             return document;
+        }
+
+        public void Merge(XliffDocument document)
+        {
+            foreach (var step in ProcessingSteps)
+            {
+                document = step.ExecuteMerge(document);
+            }
+            SourceMerger.Merge(document);
         }
 
         private static Stream GenerateStreamFromString(string s)
