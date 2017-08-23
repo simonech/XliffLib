@@ -3,7 +3,6 @@ using System;
 using XliffLib.Integration.Utils;
 using Localization.Xliff.OM.Core;
 using XliffLib.Utils;
-using System.Collections;
 
 namespace XliffLib.Integration
 {
@@ -25,19 +24,6 @@ namespace XliffLib.Integration
             var cleanedResult = System.Text.RegularExpressions.Regex.Replace(xliffString, @"\s+", " ");
 
             Assert.AreEqual(cleanedExpected, cleanedResult);
-        }
-    }
-
-    internal class DataSamples
-    {
-        public static IEnumerable FileNames
-        {
-            get
-            {
-                yield return new TestCaseData("OnePropertyInRoot");
-                yield return new TestCaseData("OneNestedProperty");
-                yield return new TestCaseData("OnePropertyWithAttributes");
-            }
         }
     }
 }

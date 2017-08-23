@@ -28,7 +28,7 @@ namespace XliffLib
             ProcessingSteps = new List<IProcessingStep>();
         }
 
-        public static XliffDocument Read(string xliff)
+        public XliffDocument Read(string xliff)
         {
             XliffDocument document = null;
             using (Stream stream = GenerateStreamFromString(xliff))

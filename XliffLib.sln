@@ -64,6 +64,7 @@ Global
 		$6.FileWidth = 80
 		$6.TabsToSpaces = True
 		$6.scope = application/xml
+		$6.NoTabsAfterNonTabs = True
 		$0.XmlFormattingPolicy = $7
 		$7.scope = application/xml
 		$0.TextStylePolicy = $8
@@ -84,8 +85,10 @@ Global
 		$11.inheritsSet = null
 		$11.scope = text/x-vs
 		$0.TextStylePolicy = $12
-		$12.inheritsSet = null
 		$12.scope = application/x-xliff+xml
+		$12.FileWidth = 80
+		$12.TabsToSpaces = True
+		$12.NoTabsAfterNonTabs = True
 		$0.XmlFormattingPolicy = $13
 		$13.inheritsSet = null
 		$13.scope = application/x-xliff+xml

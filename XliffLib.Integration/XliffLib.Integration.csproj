@@ -35,10 +35,15 @@
     <Reference Include="Xliff.OM">
       <HintPath>..\packages\Xliff.OM.1.0.2.0\lib\portable-net45+sl50+win+wpa81+wp80\Xliff.OM.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SimpleExtractorTests.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
+    <Compile Include="SimpleMergerTests.cs" />
+    <Compile Include="DataSamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -59,6 +64,9 @@
     <EmbeddedResource Include="TestFiles\OneNestedProperty.json" />
     <EmbeddedResource Include="TestFiles\OnePropertyWithAttributes.json" />
     <EmbeddedResource Include="TestFiles\OnePropertyWithAttributes.xlf" />
+    <EmbeddedResource Include="TestFiles\OnePropertyInRoot.target.xlf" />
+    <EmbeddedResource Include="TestFiles\OnePropertyWithAttributes.target.xlf" />
+    <EmbeddedResource Include="TestFiles\OneNestedProperty.target.xlf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
