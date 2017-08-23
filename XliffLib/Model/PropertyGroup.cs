@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Localization.Xliff.OM;
 using Localization.Xliff.OM.Core;
 
 namespace XliffLib.Model
@@ -28,21 +29,18 @@ namespace XliffLib.Model
             return propertyGroup;
         }
 
-        public override TranslationContainer ToXliff(IdCounter counter)
+        public override XliffElement ToXliff(IdCounter idCounter)
         {
-            var id = "g" + (counter.GetNextGroupId());
+            var id = "g" + (idCounter.GetNextGroupId());
             var xliffGroup = new Group(id)
             {
-                Name = this.Name
+                Name = this.Name,
+                Metadata=Attributes.ToXliffMetadata()
             };
-            if (this.Attributes.Count > 0)
-            {
-                xliffGroup.Metadata = this.Attributes.ToXliffMetadata();
-            }
 
             foreach (var container in Containers)
             {
-                var xliffContainer = container.ToXliff(counter);
+                var xliffContainer = container.ToXliff(idCounter) as TranslationContainer;
                 xliffGroup.Containers.Add(xliffContainer);
             }
             return xliffGroup;

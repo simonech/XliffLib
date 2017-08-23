@@ -64,7 +64,6 @@
     <Compile Include="BundleExtractionTests.cs" />
     <Compile Include="BundleMergeTests.cs" />
     <Compile Include="FileMergeTests.cs" />
-    <Compile Include="Utils\PrepareXliffForMergeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -79,9 +78,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="TestFiles\OnePropertyInRoot.json" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

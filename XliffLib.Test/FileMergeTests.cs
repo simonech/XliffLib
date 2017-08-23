@@ -12,42 +12,41 @@ namespace XliffLib.Test
         [Test()]
         public void MergerCreatesBundleWithCorrectOriginal()
         {
-            XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
-            IMergerToSource merger = new MergerToBundle();
+            var file = new File("f1");
+            file.Original = "cmsId";
 
-            merger.Merge(doc);
+            var doc = Document.FromXliff(file);
 
-            var bundle = merger.Output as Bundle;
-
-            Assert.AreEqual("cmsId", bundle.Documents[0].SourceIdentifier);
+            Assert.AreEqual("cmsId", doc.SourceIdentifier);
         }
 
         [Test()]
         public void MergerCreatesBundleWithOnePropertyIfXliffHasOneUnit()
         {
-            XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile();
-            IMergerToSource merger = new MergerToBundle();
+            var file = new File("f1");
+            var unit = new Unit("u1");
+            var segment = new Segment();
+            segment.Target = new Target("testo tradotto");
+            unit.Resources.Add(segment);
+            file.Containers.Add(unit);
 
-            merger.Merge(doc);
+            var doc = Document.FromXliff(file);
 
-            var bundle = merger.Output as Bundle;
-
-            Assert.AreEqual(1, bundle.Documents[0].Containers.Count);
-            Assert.IsInstanceOf<Property>(bundle.Documents[0].Containers[0]);
+            Assert.AreEqual(1, doc.Containers.Count);
+            Assert.IsInstanceOf<Property>(doc.Containers[0]);
         }
 
         [Test()]
         public void MergerCreatesBundleWithOnePropertyGroupIfXliffHasOneGroup()
         {
-            XliffDocument doc = PrepareXliffForMergeTest.SetupXliffFile(withGroup: true);
-            IMergerToSource merger = new MergerToBundle();
+            var file = new File("f1");
+            var group = new Group("g1");
+            file.Containers.Add(group);
 
-            merger.Merge(doc);
+            var doc = Document.FromXliff(file);
 
-            var bundle = merger.Output as Bundle;
-
-            Assert.AreEqual(1, bundle.Documents[0].Containers.Count);
-            Assert.IsInstanceOf<PropertyGroup>(bundle.Documents[0].Containers[0]);
+            Assert.AreEqual(1, doc.Containers.Count);
+            Assert.IsInstanceOf<PropertyGroup>(doc.Containers[0]);
         }
     }
 }
