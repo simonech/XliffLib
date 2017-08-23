@@ -22,6 +22,17 @@ namespace XliffLib.Test
         }
 
         [Test()]
+        public void MergerGetsTargetLanguage()
+        {
+            IMergerToSource merger = new MergerToBundle();
+            XliffDocument doc = new XliffDocument("en-US");
+            doc.TargetLanguage = "it-IT";
+            merger.Merge(doc);
+
+            Assert.AreEqual("it-IT",merger.TargetLanguage);
+        }
+
+        [Test()]
         public void MergerCreatesABundleWithOneDocIfXliffHasOneFile()
         {
 
