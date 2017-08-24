@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Localization.Xliff.OM.Modules.Metadata;
+using System.Linq;
 
 namespace XliffLib.Model
 {
@@ -13,8 +14,10 @@ namespace XliffLib.Model
         public MetadataContainer ToXliffMetadata()
         {
             if (this.Count == 0)
+            {
                 return null;
-            
+            }
+
             var metadata = new MetadataContainer();
 
             var defaultGroup = new MetaGroup()
@@ -32,30 +35,27 @@ namespace XliffLib.Model
             return metadata;
         }
 
-        public static AttributeList FromXliffMetadata (MetadataContainer metadata)
+        public static AttributeList FromXliffMetadata(MetadataContainer metadata)
         {
-            if (metadata != null)
+            if (metadata != null && metadata.HasGroups)
             {
-                if(metadata.HasGroups)
+                MetaGroup defaultGroup = null;
+                foreach (var group in metadata.Groups)
                 {
-                    MetaGroup defaultGroup = null;
-                    foreach (var group in metadata.Groups)
+                    if (group.Id == "XliffLib")
                     {
-                        if (group.Id == "XliffLib")
-                        {
-                            defaultGroup = group;
-                            break;
-                        }
+                        defaultGroup = group;
+                        break;
                     }
-                    if(defaultGroup!=null)
+                }
+                if (defaultGroup != null)
+                {
+                    var attributes = new AttributeList();
+                    foreach (Meta item in defaultGroup.Containers.OfType<Meta>())
                     {
-                        var attributes = new AttributeList();
-                        foreach (Meta item in defaultGroup.Containers)
-                        {
-                            attributes.Add(item.Type,item.NonTranslatableText);
-                        }
-                        return attributes;
+                        attributes.Add(item.Type, item.NonTranslatableText);
                     }
+                    return attributes;
                 }
             }
 

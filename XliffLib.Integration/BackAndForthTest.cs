@@ -7,10 +7,10 @@ using XliffLib.Utils;
 
 namespace XliffLib.Integration
 {
-    [TestFixture()]
+    [TestFixture]
     public class BackAndForthTest
     {
-        [Test(), TestCaseSource(typeof(DataSamples), "FileNames")]
+        [Test, TestCaseSource(typeof(DataSamples), "FileNames")]
         public void CanExtractAndMerge(string filename)
         {
             var bundleString = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".json");
@@ -26,10 +26,18 @@ namespace XliffLib.Integration
                     res.Target = new Target();
                     foreach (var source in res.Source.Text)
                     {
-                        if(source is PlainText)
-                            res.Target.Text.Add(new PlainText(((PlainText)source).Text));
-                        if (source is CDataTag)
-                            res.Target.Text.Add(new CDataTag(((CDataTag)source).Text));
+                        var plainText = source as PlainText;
+                        if (plainText != null)
+                        {
+                            res.Target.Text.Add(new PlainText(plainText.Text));
+                        }
+
+                        var cDataText = source as CDataTag;
+                        if (cDataText != null)
+                        {
+                            res.Target.Text.Add(new CDataTag(cDataText.Text));
+                        }
+                            
                     }
                 }
             }

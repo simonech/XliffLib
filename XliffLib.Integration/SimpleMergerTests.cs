@@ -10,11 +10,10 @@ using Newtonsoft.Json.Linq;
 namespace XliffLib.Integration
 {
 
-    [TestFixture()]
+    [TestFixture]
     public class SimpleMergerTests
     {
-
-        [Test(), TestCaseSource(typeof(DataSamples), "FileNames")]
+        [Test, TestCaseSource(typeof(DataSamples), "FileNames")]
         public void CanMergeSimpleFile(string filename)
         {
             var bundle = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".json");
@@ -29,7 +28,6 @@ namespace XliffLib.Integration
 
             JObject expected = JObject.Parse(bundle);
             JObject result = JObject.Parse(jsonResult);
-
 
             Assert.IsTrue(JToken.DeepEquals(expected, result),"The two bundles are different:\r\nExpected {0}\r\nResult {1}",bundle,jsonResult);
         }

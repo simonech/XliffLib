@@ -6,10 +6,10 @@ using XliffLib.Utils;
 
 namespace XliffLib.Integration
 {
-    [TestFixture()]
+    [TestFixture]
     public class SimpleExtractorTests
     {
-        [Test(), TestCaseSource(typeof(DataSamples), "FileNames")]
+        [Test, TestCaseSource(typeof(DataSamples), "FileNames")]
         public void CanExtractSimpleFile(string filename)
         {
             var bundle = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".json").ToBundle();

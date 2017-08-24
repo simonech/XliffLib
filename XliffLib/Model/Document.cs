@@ -41,8 +41,10 @@ namespace XliffLib.Model
         {
             var document = new Document();
             document.SourceIdentifier = file.Original;
-            if (file.Metadata!=null)
+            if (file.Metadata != null)
+            {
                 document.Attributes = AttributeList.FromXliffMetadata(file.Metadata);
+            }
 
             foreach (var container in file.Containers)
             {

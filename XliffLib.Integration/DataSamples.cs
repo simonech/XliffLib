@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace XliffLib.Integration
 {
-    internal class DataSamples
+    internal static class DataSamples
     {
         public static IEnumerable FileNames
         {

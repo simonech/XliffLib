@@ -44,7 +44,9 @@ namespace XliffLib.Model
             {
                 var property = new Property(unit.Name, textValue);
                 if (unit.Metadata != null)
+                {
                     property.Attributes = AttributeList.FromXliffMetadata(unit.Metadata);
+                }
                 return property;
             }
 
