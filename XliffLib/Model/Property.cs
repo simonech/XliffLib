@@ -17,18 +17,19 @@ namespace XliffLib.Model
         public static new PropertyContainer FromXliff(TranslationContainer xliffUnit)
         {
             var unit = xliffUnit as Unit;
+ 
             //TODO: Add test for this condition
             if (unit.Resources.Count > 1)
-                throw new InvalidOperationException("Cannot operate on multiple segments. Make sure previous steps of the import have merged all segments into one.");
+                throw new InvalidOperationException("Error on unit " + unit.SelectorPath + ": Cannot operate on multiple segments. Make sure previous steps of the import have merged all segments into one.");
             var segment = unit.Resources[0] as Segment;
 
             //TODO: Add test for this condition
             if (segment.Target == null || segment.Target.Text == null || segment.Target.Text.Count == 0)
-                throw new InvalidOperationException("Property doesn't have a target: cannot import.");
+                throw new InvalidOperationException("Unit " + unit.SelectorPath + " doesn't have a target: cannot import.");
 
             //TODO: Add test for this condition
             if (segment.Target.Text.Count > 1)
-                throw new InvalidOperationException("Cannot operate on target with multiple elements. Make sure previous steps have converted all inline markup into a CData section");
+                throw new InvalidOperationException("Error on unit " + unit.SelectorPath + ": Cannot operate on target with multiple elements. Make sure previous steps have converted all inline markup into a CData section");
 
             string textValue = string.Empty;
             var text = segment.Target.Text[0] as PlainText;
