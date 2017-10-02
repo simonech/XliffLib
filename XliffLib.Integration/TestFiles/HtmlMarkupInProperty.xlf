@@ -2,13 +2,12 @@
 <xliff srcLang="en-US" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
   <file id="f1">
     <unit id="u1" name="title">
-      <originaldata>
+      <originalData>
         <data id="d1">&lt;b&gt;</data>
         <data id="d2">&lt;/b&gt;</data>
-      </originaldata>
+      </originalData>
       <segment>
-        <source>content in <pc id="1" dataRefStart="d1" dataRefEnd="d2" type="fmt" subType="
-xlf:b">bold</pc></source>
+        <source>content in <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">bold</pc></source>
       </segment>
     </unit>
   </file>

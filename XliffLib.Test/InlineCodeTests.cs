@@ -32,8 +32,8 @@ namespace XliffLib.Test
             var result = original.ConvertHtmlTagsInInLineCodes();
 
             Assert.AreEqual(2, result.OriginalData.Count);
-            Assert.AreEqual("d1", result.OriginalData["&lt;b&gt;"], "Original data not stored");
-            Assert.AreEqual("d2", result.OriginalData["&lt;/b&gt;"], "Original data not stored");
+            Assert.AreEqual("d1", result.OriginalData["<b>"], "Original data not stored");
+            Assert.AreEqual("d2", result.OriginalData["</b>"], "Original data not stored");
 
             Assert.AreEqual(3, result.Text.Count);
             var plainText = result.Text[0] as PlainText;
@@ -58,10 +58,10 @@ namespace XliffLib.Test
             var result = original.ConvertHtmlTagsInInLineCodes();
 
             Assert.AreEqual(4, result.OriginalData.Count);
-            Assert.AreEqual("d1", result.OriginalData["&lt;b&gt;"], "Original data not stored");
-            Assert.AreEqual("d2", result.OriginalData["&lt;/b&gt;"], "Original data not stored");
-            Assert.AreEqual("d3", result.OriginalData["&lt;i&gt;"], "Original data not stored");
-            Assert.AreEqual("d4", result.OriginalData["&lt;/i&gt;"], "Original data not stored");
+            Assert.AreEqual("d1", result.OriginalData["<b>"], "Original data not stored");
+            Assert.AreEqual("d2", result.OriginalData["</b>"], "Original data not stored");
+            Assert.AreEqual("d3", result.OriginalData["<i>"], "Original data not stored");
+            Assert.AreEqual("d4", result.OriginalData["</i>"], "Original data not stored");
 
             Assert.AreEqual(4,result.Text.Count);
         }
@@ -75,8 +75,8 @@ namespace XliffLib.Test
             var result = original.ConvertHtmlTagsInInLineCodes();
 
             Assert.AreEqual(2, result.OriginalData.Count);
-            Assert.AreEqual("d1", result.OriginalData["&lt;b&gt;"], "Original data not stored");
-            Assert.AreEqual("d2", result.OriginalData["&lt;/b&gt;"], "Original data not stored");
+            Assert.AreEqual("d1", result.OriginalData["<b>"], "Original data not stored");
+            Assert.AreEqual("d2", result.OriginalData["</b>"], "Original data not stored");
 
             Assert.AreEqual(4, result.Text.Count);
         }
@@ -90,7 +90,7 @@ namespace XliffLib.Test
             var result = original.ConvertHtmlTagsInInLineCodes();
 
             Assert.AreEqual(1, result.OriginalData.Count);
-            Assert.AreEqual("d1", result.OriginalData["&lt;br/&gt;"], "Original data not stored");
+            Assert.AreEqual("d1", result.OriginalData["<br/>"], "Original data not stored");
 
             var ph = result.Text[0] as StandaloneCode;
             Assert.IsNotNull(ph);

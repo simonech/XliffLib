@@ -69,10 +69,8 @@ namespace XliffLib.Utils
 
         }
 
-        private static string AddOriginalData(Dictionary<String, String> originalData, string tagName, ref int lastOriginalData)
+        private static string AddOriginalData(Dictionary<String, String> originalData, string tagValue, ref int lastOriginalData)
         {
-            string tagValue = tagName.Replace("<", "&lt;");
-            tagValue = tagValue.Replace(">", "&gt;");
             if (originalData.ContainsKey(tagValue))
             {
                 return originalData[tagValue];
