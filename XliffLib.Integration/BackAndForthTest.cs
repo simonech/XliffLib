@@ -10,7 +10,7 @@ namespace XliffLib.Integration
     [TestFixture]
     public class BackAndForthTest
     {
-        [Test, TestCaseSource(typeof(DataSamples), "FileNames")]
+        [Test, TestCaseSource(typeof(DataSamples), "FileNamesSimpleExtractor")]
         public void CanExtractAndMerge(string filename)
         {
             var bundleString = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".json");
@@ -37,7 +37,6 @@ namespace XliffLib.Integration
                         {
                             res.Target.Text.Add(new CDataTag(cDataText.Text));
                         }
-                            
                     }
                 }
             }

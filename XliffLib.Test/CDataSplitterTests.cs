@@ -9,17 +9,6 @@ namespace XliffLib.Test
     [TestFixture()]
     public class CDataSplitterTests
     {
-
-        private static Stream GenerateStreamFromString(string s)
-        {
-            var stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
-
         [Test()]
         public void SingleParagraphPlainTextUnitIsNotSplit()
         {
@@ -42,7 +31,6 @@ namespace XliffLib.Test
             Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
             var unit = newDocument.Files[0].Containers[0] as Unit;
             Assert.IsNotNull(unit);
-
         }
 
         [Test()]
@@ -176,6 +164,17 @@ namespace XliffLib.Test
             }
 
             return document;
+        }
+
+
+        private static Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
     }
 }

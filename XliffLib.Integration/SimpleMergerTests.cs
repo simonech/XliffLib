@@ -13,7 +13,7 @@ namespace XliffLib.Integration
     [TestFixture]
     public class SimpleMergerTests
     {
-        [Test, TestCaseSource(typeof(DataSamples), "FileNames")]
+        [Test, TestCaseSource(typeof(DataSamples), "FileNamesSimpleExtractor")]
         public void CanMergeSimpleFile(string filename)
         {
             var bundle = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".json");

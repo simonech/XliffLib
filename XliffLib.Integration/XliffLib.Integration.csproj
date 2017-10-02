@@ -68,6 +68,9 @@
     <EmbeddedResource Include="TestFiles\OnePropertyInRoot.target.xlf" />
     <EmbeddedResource Include="TestFiles\OnePropertyWithAttributes.target.xlf" />
     <EmbeddedResource Include="TestFiles\OneNestedProperty.target.xlf" />
+    <EmbeddedResource Include="TestFiles\HtmlMarkupInProperty.json" />
+    <EmbeddedResource Include="TestFiles\HtmlMarkupInProperty.xlf" />
+    <EmbeddedResource Include="TestFiles\HtmlMarkupInProperty.target.xlf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

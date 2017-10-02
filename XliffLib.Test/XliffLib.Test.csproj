@@ -65,6 +65,8 @@
     <Compile Include="BundleExtractionTests.cs" />
     <Compile Include="BundleMergeTests.cs" />
     <Compile Include="FileMergeTests.cs" />
+    <Compile Include="InlineCodeExtractorTests.cs" />
+    <Compile Include="InlineCodeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
