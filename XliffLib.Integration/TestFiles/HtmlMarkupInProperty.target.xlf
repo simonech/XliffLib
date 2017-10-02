@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff srcLang="en-US" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="f1">
+    <unit id="u1" name="title">
+      <originalData>
+        <data id="d1">&lt;b&gt;</data>
+        <data id="d2">&lt;/b&gt;</data>
+      </originalData>
+      <segment>
+        <source>content in <pc id="1" dataRefStart="d1" dataRefEnd="d2">bold</pc></source>
+        <target>content in <pc id="1" dataRefStart="d1" dataRefEnd="d2">bold</pc></target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
