@@ -2,13 +2,15 @@
 using Localization.Xliff.OM.Core;
 using NUnit.Framework;
 using XliffLib.Utils;
+using System.Collections.Generic;
+
 namespace XliffLib.Test
 {
     [TestFixture()]
     public class InlineCodeTests
     {
         [Test()]
-        public void PlainTextIsLeftUntouched()
+        public void PlainTextIsNotConveredToInlineCodes()
         {
 
             string original = "This is a simple text";
@@ -142,6 +144,36 @@ namespace XliffLib.Test
             Assert.IsNotNull(pc);
             Assert.AreEqual(CodeType.Formatting, pc.Type);
             Assert.AreEqual("xlf:u", pc.SubType);
+        }
+
+
+        [Test]
+        public void PlainTextInXliffIsNotChanged()
+        {
+            var xliffCode = new List<ResourceStringContent>();
+
+            var text = new PlainText("text");
+            xliffCode.Add(text);
+
+            var htmlString = xliffCode.ConvertToHtml();
+
+            Assert.AreEqual("text", htmlString);
+        }
+
+
+        [Test]
+        public void PcWithBoldTypeGetsBackToHtmlBTag()
+        {
+            var xliffCode = new List<ResourceStringContent>();
+            
+            var pc = new SpanningCode("1", "bold");
+            pc.Type = CodeType.Formatting;
+            pc.SubType = "xlf:b";
+            xliffCode.Add(pc);
+
+            var htmlString = xliffCode.ConvertToHtml();
+
+            Assert.AreEqual("<b>bold</b>", htmlString);
         }
 
     }

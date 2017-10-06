@@ -77,6 +77,7 @@
     <Compile Include="Merger.cs" />
     <Compile Include="InlineCodeProcessing.cs" />
     <Compile Include="Utils\InlineCodeExtensions.cs" />
+    <Compile Include="Utils\ListResourceStringContentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -98,7 +99,7 @@
           <XmlFormattingPolicy inheritsSet="null" scope="application/config+xml" />
           <TextStylePolicy RemoveTrailingWhitespace="True" EolMarker="Native" FileWidth="80" TabWidth="2" TabsToSpaces="True" IndentWidth="2" NoTabsAfterNonTabs="True" scope="application/xml" />
           <XmlFormattingPolicy scope="application/xml">
-            <DefaultFormat OmitXmlDeclaration="False" NewLineChars="&#xA;" IndentContent="True" ContentIndentString="&#x9;" AttributesInNewLine="False" MaxAttributesPerLine="10" AttributesIndentString="&#x9;" WrapAttributes="False" AlignAttributes="False" AlignAttributeValues="False" QuoteChar="&quot;" SpacesBeforeAssignment="0" SpacesAfterAssignment="0" EmptyLinesBeforeStart="0" EmptyLinesAfterStart="0" EmptyLinesBeforeEnd="0" EmptyLinesAfterEnd="0" />
+            <DefaultFormat OmitXmlDeclaration="False" NewLineChars="&#xA;" IndentContent="True" ContentIndentString="	" AttributesInNewLine="False" MaxAttributesPerLine="10" AttributesIndentString="	" WrapAttributes="False" AlignAttributes="False" AlignAttributeValues="False" QuoteChar="&quot;" SpacesBeforeAssignment="0" SpacesAfterAssignment="0" EmptyLinesBeforeStart="0" EmptyLinesAfterStart="0" EmptyLinesBeforeEnd="0" EmptyLinesAfterEnd="0" />
           </XmlFormattingPolicy>
         </Policies>
       </Properties>
