@@ -9,7 +9,7 @@ namespace XliffLib.Utils
     public static class InlineCodeExtensions
     {
 
-        public static IDictionary<string, InlineCodeType> Map = new Dictionary<string, InlineCodeType>()
+        private static IDictionary<string, InlineCodeType> Map = new Dictionary<string, InlineCodeType>()
         {
             {"b", new InlineCodeType(CodeType.Formatting, "xlf:b")},
             {"strong", new InlineCodeType(CodeType.Formatting, "xlf:b")},
