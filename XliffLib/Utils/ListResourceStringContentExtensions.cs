@@ -22,7 +22,18 @@ namespace XliffLib.Utils
                         break;
                     case nameof(SpanningCode):
                         var pc = item as SpanningCode;
-                        sb.Append(pc.Text);
+                        var content = pc.Text.ConvertToHtml();
+                        string tag;
+                        switch (pc.SubType)
+                        {
+                            case "xlf:b":
+                                tag = "b";
+                                break;
+                            default:
+                                tag = string.Empty;
+                                break;
+                        }
+                        sb.AppendFormat($"<{tag}>{content}</{tag}>");
                         break;
                 }
             }
