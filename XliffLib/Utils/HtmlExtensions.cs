@@ -19,9 +19,12 @@ namespace XliffLib.Utils
             return !doc.DocumentNode.ChildNodes.All(n => IsTextOrXliff(n));
         }
 
-        public static String[] SplitByParagraphs(this string htmlText)
+        public static String[] SplitByParagraphs(this string text)
         {
-            return htmlText.SplitByTags("p");
+            if (IsHtml(text))
+                return text.SplitByTags("p");
+            else
+                return text.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static String[] SplitByTags(this string htmlText, params string[] tags)
