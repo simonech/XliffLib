@@ -5,7 +5,7 @@ namespace XliffLib
     {
         public DefaultExtractor() : base(new SourceExtractorFromBundle())
         {
-            ProcessingSteps.Add(new CDataSplitter());
+            ProcessingSteps.Add(new ParagraphSplitter());
             ProcessingSteps.Add(new InlineCodeProcessing());
         }
     }

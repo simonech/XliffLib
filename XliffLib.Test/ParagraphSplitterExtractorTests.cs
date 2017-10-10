@@ -7,7 +7,7 @@ using Localization.Xliff.OM.Core;
 namespace XliffLib.Test
 {
     [TestFixture()]
-    public class CDataSplitterTests
+    public class ParagraphSplitterExtractorTests
     {
         [Test()]
         public void SingleParagraphPlainTextUnitIsNotSplit()
@@ -24,7 +24,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new CDataSplitter();
+            var splitter = new ParagraphSplitter();
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -49,7 +49,7 @@ Hello Word3!</source>
     </file>
 </xliff>";
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new CDataSplitter();
+            var splitter = new ParagraphSplitter();
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -91,7 +91,7 @@ Hello Word3!</source>
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new CDataSplitter();
+            var splitter = new ParagraphSplitter();
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -118,7 +118,7 @@ Hello Word3!</source>
             XliffDocument document = LoadXliff(xliff);
 
 
-            var splitter = new CDataSplitter();
+            var splitter = new ParagraphSplitter();
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -168,7 +168,7 @@ Hello Word3!</source>
 
             XliffDocument document = LoadXliff(xliff);
 
-            var splitter = new CDataSplitter();
+            var splitter = new ParagraphSplitter();
 
             var newDocument = splitter.ExecuteExtraction(document);
 

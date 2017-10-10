@@ -7,9 +7,9 @@ using Localization.Xliff.OM.Modules.Metadata;
 
 namespace XliffLib
 {
-    public class CDataSplitter : IProcessingStep
+    public class ParagraphSplitter : IProcessingStep
     {
-        public CDataSplitter()
+        public ParagraphSplitter()
         {
         }
 
