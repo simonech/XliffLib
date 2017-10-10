@@ -40,7 +40,23 @@ namespace XliffLib
 
         public XliffDocument ExecuteMerge(XliffDocument document)
         {
-            throw new NotImplementedException();
+            var units = document.CollapseChildren<Unit>();
+            foreach (var unit in units)
+            {
+                foreach (var resource in unit.Resources)
+                {
+                    var segment = resource as Segment;
+                    if (segment != null)
+                    {
+                        if (segment.Target.Text.Count == 1 && segment.Target.Text[0] is PlainText) continue;
+
+                        var html = segment.Target.Text.ConvertToHtml();
+                        segment.Target.Text.Clear();
+                        segment.Target.Text.Add(new CDataTag("<p>"+ html + "</p>"));
+                    }
+                }
+            }
+            return document;
         }
     }
 }

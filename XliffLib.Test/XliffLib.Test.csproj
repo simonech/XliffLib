@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InlineCodeMergerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceExtractorTests.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />

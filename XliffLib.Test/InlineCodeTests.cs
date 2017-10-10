@@ -166,14 +166,59 @@ namespace XliffLib.Test
         {
             var xliffCode = new List<ResourceStringContent>();
             
-            var pc = new SpanningCode("1", "bold");
+            var pc = new SpanningCode("1", "text");
             pc.Type = CodeType.Formatting;
             pc.SubType = "xlf:b";
             xliffCode.Add(pc);
 
             var htmlString = xliffCode.ConvertToHtml();
 
-            Assert.AreEqual("<b>bold</b>", htmlString);
+            Assert.AreEqual("<b>text</b>", htmlString);
+        }
+
+        [Test]
+        public void PcWithItalicTypeGetsBackToHtmlITag()
+        {
+            var xliffCode = new List<ResourceStringContent>();
+
+            var pc = new SpanningCode("1", "text");
+            pc.Type = CodeType.Formatting;
+            pc.SubType = "xlf:i";
+            xliffCode.Add(pc);
+
+            var htmlString = xliffCode.ConvertToHtml();
+
+            Assert.AreEqual("<i>text</i>", htmlString);
+        }
+
+        [Test]
+        public void PcWithUnderlineTypeGetsBackToHtmlUTag()
+        {
+            var xliffCode = new List<ResourceStringContent>();
+
+            var pc = new SpanningCode("1", "text");
+            pc.Type = CodeType.Formatting;
+            pc.SubType = "xlf:u";
+            xliffCode.Add(pc);
+
+            var htmlString = xliffCode.ConvertToHtml();
+
+            Assert.AreEqual("<u>text</u>", htmlString);
+        }
+
+        [Test]
+        public void PhWithUnderlineTypeGetsBackToHtmlBrTag()
+        {
+            var xliffCode = new List<ResourceStringContent>();
+
+            var ph = new StandaloneCode("1");
+            ph.Type = CodeType.Formatting;
+            ph.SubType = "xlf:lb";
+            xliffCode.Add(ph);
+
+            var htmlString = xliffCode.ConvertToHtml();
+
+            Assert.AreEqual("<br/>", htmlString);
         }
 
     }

@@ -20,6 +20,20 @@ namespace XliffLib.Utils
                         var text = item as PlainText;
                         sb.Append(text.Text);
                         break;
+                    case nameof(StandaloneCode):
+                        var ph = item as StandaloneCode;
+                        string autoclosingTag;
+                        switch (ph.SubType)
+                        {
+                            case "xlf:lb":
+                                autoclosingTag = "br";
+                                break;
+                            default:
+                                autoclosingTag = string.Empty;
+                                break;
+                        }
+                        sb.AppendFormat($"<{autoclosingTag}/>");
+                        break;
                     case nameof(SpanningCode):
                         var pc = item as SpanningCode;
                         var content = pc.Text.ConvertToHtml();
@@ -28,6 +42,12 @@ namespace XliffLib.Utils
                         {
                             case "xlf:b":
                                 tag = "b";
+                                break;
+                            case "xlf:i":
+                                tag = "i";
+                                break;
+                            case "xlf:u":
+                                tag = "u";
                                 break;
                             default:
                                 tag = string.Empty;
