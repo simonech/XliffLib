@@ -65,7 +65,7 @@ namespace XliffLib.Test
             Assert.AreEqual(1, unit.CollapseChildren<Target>()[0].Text.Count);
             var segment = unit.CollapseChildren<Target>()[0].Text[0] as CDataTag;
             Assert.IsNotNull(segment);
-            Assert.AreEqual("<p>Hello <b>World</b>!</p>", segment.Text);
+            Assert.AreEqual("<p>Hello <strong>World</strong>!</p>", segment.Text);
         }
 
         [Test()]
@@ -130,12 +130,12 @@ namespace XliffLib.Test
             Assert.AreEqual(1, unit1.CollapseChildren<Target>()[0].Text.Count);
             var segment1 = unit1.CollapseChildren<Target>()[0].Text[0] as CDataTag;
             Assert.IsNotNull(segment1);
-            Assert.AreEqual("<p>Hello <b>World 1</b>!</p>", segment1.Text);
+            Assert.AreEqual("<p>Hello <strong>World 1</strong>!</p>", segment1.Text);
 
             Assert.AreEqual(1, unit2.CollapseChildren<Target>()[0].Text.Count);
             var segment2 = unit2.CollapseChildren<Target>()[0].Text[0] as CDataTag;
             Assert.IsNotNull(segment2);
-            Assert.AreEqual("<p>Hello <b>World 2</b>!</p>", segment2.Text);
+            Assert.AreEqual("<p>Hello <strong>World 2</strong>!</p>", segment2.Text);
         }
 
         [Test()]
@@ -174,12 +174,12 @@ namespace XliffLib.Test
             Assert.AreEqual(1, unit1.CollapseChildren<Target>()[0].Text.Count);
             var segment1 = unit1.CollapseChildren<Target>()[0].Text[0] as CDataTag;
             Assert.IsNotNull(segment1);
-            Assert.AreEqual("<p>Hello <b>World 1</b>!</p>", segment1.Text);
+            Assert.AreEqual("<p>Hello <strong>World 1</strong>!</p>", segment1.Text);
 
             Assert.AreEqual(1, unit2.CollapseChildren<Target>()[0].Text.Count);
             var segment2 = unit2.CollapseChildren<Target>()[0].Text[0] as CDataTag;
             Assert.IsNotNull(segment2);
-            Assert.AreEqual("<p>Hello <b>World 2</b>!</p>", segment2.Text);
+            Assert.AreEqual("<p>Hello <strong>World 2</strong>!</p>", segment2.Text);
         }
 
         //Move to actual XliffReader

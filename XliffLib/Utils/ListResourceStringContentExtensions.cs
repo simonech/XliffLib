@@ -41,10 +41,10 @@ namespace XliffLib.Utils
                         switch (pc.SubType)
                         {
                             case "xlf:b":
-                                tag = "b";
+                                tag = "strong";
                                 break;
                             case "xlf:i":
-                                tag = "i";
+                                tag = "em";
                                 break;
                             case "xlf:u":
                                 tag = "u";

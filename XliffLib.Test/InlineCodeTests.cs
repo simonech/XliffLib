@@ -162,7 +162,7 @@ namespace XliffLib.Test
 
 
         [Test]
-        public void PcWithBoldTypeGetsBackToHtmlBTag()
+        public void PcWithBoldTypeGetsBackToHtmlStrongTag()
         {
             var xliffCode = new List<ResourceStringContent>();
             
@@ -173,11 +173,11 @@ namespace XliffLib.Test
 
             var htmlString = xliffCode.ConvertToHtml();
 
-            Assert.AreEqual("<b>text</b>", htmlString);
+            Assert.AreEqual("<strong>text</strong>", htmlString);
         }
 
         [Test]
-        public void PcWithItalicTypeGetsBackToHtmlITag()
+        public void PcWithItalicTypeGetsBackToHtmlEmTag()
         {
             var xliffCode = new List<ResourceStringContent>();
 
@@ -188,7 +188,7 @@ namespace XliffLib.Test
 
             var htmlString = xliffCode.ConvertToHtml();
 
-            Assert.AreEqual("<i>text</i>", htmlString);
+            Assert.AreEqual("<em>text</em>", htmlString);
         }
 
         [Test]
