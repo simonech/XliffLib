@@ -34,6 +34,49 @@ namespace XliffLib.Test
         }
 
         [Test()]
+        public void MulipleParagraphPlainTextUnitIsSplit()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"">
+            <segment>
+                <source>Hello Word1!
+Hello Word2!
+Hello Word3!</source>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new CDataSplitter();
+
+            var newDocument = splitter.ExecuteExtraction(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var group = newDocument.Files[0].Containers[0] as Group;
+            Assert.IsNotNull(group);
+            Assert.AreEqual("u1-g", group.Id);
+
+            Assert.AreEqual(3, group.Containers.Count);
+
+            var unit1 = group.Containers[0] as Unit;
+            var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("Hello Word1!", textUnit1);
+
+            var unit2 = group.Containers[1] as Unit;
+            var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("Hello Word2!", textUnit2);
+
+            var unit3 = group.Containers[2] as Unit;
+            var textUnit3 = unit3.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("Hello Word3!", textUnit3);
+        }
+
+        [Test()]
         public void SingleParagraphUnitIsNotSplit()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>

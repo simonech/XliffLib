@@ -26,8 +26,8 @@ namespace XliffTester
             var property = new Property("original", content);
             doc.Containers.Add(property);
 
-            Extractor extractor = new SimpleExtractor();
-            //Extractor extractor = new DefaultExtractor();
+            //Extractor extractor = new SimpleExtractor();
+            Extractor extractor = new DefaultExtractor();
             XliffDocument xliff = extractor.Extract(bundle, "en-GB", "it-IT");
 
 
