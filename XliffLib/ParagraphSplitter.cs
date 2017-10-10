@@ -15,9 +15,7 @@ namespace XliffLib
 
         public XliffDocument ExecuteExtraction(XliffDocument document)
         {
-
             var units = document.CollapseChildren<Unit>();
-
             foreach (var unit in units)
             {
                 foreach (var resource in unit.Resources)
@@ -133,7 +131,86 @@ namespace XliffLib
 
         public XliffDocument ExecuteMerge(XliffDocument document)
         {
+            var groups = document.CollapseChildren<Group>().Where(g => g.Id.StartsWith("u"));
+
+            foreach (var group in groups)
+            {
+                var unitId = group.Id.Replace("-g", "");
+                var newUnit = new Unit(unitId);
+                newUnit.Name = group.Name;
+
+                if (group.Metadata != null)
+                {
+                    var newMetadataContainer = new MetadataContainer();
+                    foreach (var metaGroup in group.Metadata.Groups)
+                    {
+                        var newMetaGroup = new MetaGroup();
+                        newMetaGroup.Id = metaGroup.Id;
+
+                        foreach (Meta item in metaGroup.Containers)
+                        {
+                            var newElement = new Meta(item.Type, item.NonTranslatableText);
+                            newMetaGroup.Containers.Add(newElement);
+                        }
+
+                        newMetadataContainer.Groups.Add(newMetaGroup);
+                    }
+                    newUnit.Metadata = newMetadataContainer;
+                }
+
+                var newSegment = new Segment();
+                var source = new Source();
+                var target = new Target();
+
+                source.Text.Add(MergeBackUnits(group.CollapseChildren<Source>()));
+                target.Text.Add(MergeBackUnits(group.CollapseChildren<Target>()));
+
+                newSegment.Source = source;
+                newSegment.Target = target;
+                newUnit.Resources.Add(newSegment);
+
+                var parentFile = group.Parent as File;
+                if (parentFile != null)
+                {
+                    parentFile.Containers.Add(newUnit);
+                    parentFile.Containers.Remove(group);
+                }
+                else
+                {
+                    var parentGroup = group.Parent as Group;
+                    if (parentGroup != null)
+                    {
+                        parentGroup.Containers.Add(newUnit);
+                        parentGroup.Containers.Remove(group);
+                    }
+                }
+            }
+
             return document;
+        }
+
+        private ResourceStringContent MergeBackUnits<T>(IList<T> list) where T : ResourceString
+        {
+            ResourceStringContent result=null;
+            foreach (var item in list)
+            {
+                if(item.Text.Count>1)
+                    throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
+
+                if (item.Text[0] is CDataTag)
+                {
+                    result = new CDataTag("<p>Was a bunch of CDATA</p>");
+                }
+                else if (item.Text[0] is PlainText)
+                {
+                    result = new PlainText("was many plain text");
+                }
+                else
+                {
+                    throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
+                }
+            }
+            return result;
         }
     }
 }

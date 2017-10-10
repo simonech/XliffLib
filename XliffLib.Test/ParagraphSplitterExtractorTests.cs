@@ -39,7 +39,7 @@ namespace XliffLib.Test
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
-        <unit id=""u1"">
+        <unit id=""u1"" name=""originaParagraph"">
             <segment>
                 <source>Hello Word1!
 Hello Word2!
@@ -57,6 +57,7 @@ Hello Word3!</source>
             var group = newDocument.Files[0].Containers[0] as Group;
             Assert.IsNotNull(group);
             Assert.AreEqual("u1-g", group.Id);
+            Assert.AreEqual("originaParagraph", group.Name);
 
             Assert.AreEqual(3, group.Containers.Count);
 
@@ -195,6 +196,7 @@ Hello Word3!</source>
 
             Assert.AreEqual("<![CDATA[<p>Hello Word2!</p>]]>", textUnit2);
         }
+
 
         //Move to actual XliffReader
         private static XliffDocument LoadXliff(string xliff)
