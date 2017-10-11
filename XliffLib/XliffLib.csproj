@@ -68,7 +68,7 @@
     <Compile Include="IProcessingStep.cs" />
     <Compile Include="ISourceExtractor.cs" />
     <Compile Include="DefaultExtractor.cs" />
-    <Compile Include="CDataSplitter.cs" />
+    <Compile Include="ParagraphSplitter.cs" />
     <Compile Include="IdCounter.cs" />
     <Compile Include="Model\ContentElement.cs" />
     <Compile Include="Model\AttributeList.cs" />

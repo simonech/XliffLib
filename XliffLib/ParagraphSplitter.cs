@@ -4,20 +4,19 @@ using Localization.Xliff.OM.Core;
 using XliffLib.Utils;
 using System.Linq;
 using Localization.Xliff.OM.Modules.Metadata;
+using System.Text;
 
 namespace XliffLib
 {
-    public class CDataSplitter : IProcessingStep
+    public class ParagraphSplitter : IProcessingStep
     {
-        public CDataSplitter()
+        public ParagraphSplitter()
         {
         }
 
         public XliffDocument ExecuteExtraction(XliffDocument document)
         {
-
             var units = document.CollapseChildren<Unit>();
-
             foreach (var unit in units)
             {
                 foreach (var resource in unit.Resources)
@@ -133,7 +132,93 @@ namespace XliffLib
 
         public XliffDocument ExecuteMerge(XliffDocument document)
         {
+            var groups = document.CollapseChildren<Group>().Where(g => g.Id.StartsWith("u"));
+
+            foreach (var group in groups)
+            {
+                var unitId = group.Id.Replace("-g", "");
+                var newUnit = new Unit(unitId);
+                newUnit.Name = group.Name;
+
+                if (group.Metadata != null)
+                {
+                    var newMetadataContainer = new MetadataContainer();
+                    foreach (var metaGroup in group.Metadata.Groups)
+                    {
+                        var newMetaGroup = new MetaGroup();
+                        newMetaGroup.Id = metaGroup.Id;
+
+                        foreach (Meta item in metaGroup.Containers)
+                        {
+                            var newElement = new Meta(item.Type, item.NonTranslatableText);
+                            newMetaGroup.Containers.Add(newElement);
+                        }
+
+                        newMetadataContainer.Groups.Add(newMetaGroup);
+                    }
+                    newUnit.Metadata = newMetadataContainer;
+                }
+
+                var newSegment = new Segment();
+                var source = new Source();
+                var target = new Target();
+
+                source.Text.Add(MergeBackUnits(group.CollapseChildren<Source>()));
+                target.Text.Add(MergeBackUnits(group.CollapseChildren<Target>()));
+
+                newSegment.Source = source;
+                newSegment.Target = target;
+                newUnit.Resources.Add(newSegment);
+
+                var parentFile = group.Parent as File;
+                if (parentFile != null)
+                {
+                    parentFile.Containers.Add(newUnit);
+                    parentFile.Containers.Remove(group);
+                }
+                else
+                {
+                    var parentGroup = group.Parent as Group;
+                    if (parentGroup != null)
+                    {
+                        parentGroup.Containers.Add(newUnit);
+                        parentGroup.Containers.Remove(group);
+                    }
+                }
+            }
+
             return document;
+        }
+
+        private ResourceStringContent MergeBackUnits<T>(IList<T> list) where T : ResourceString
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                if(item.Text.Count>1)
+                    throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
+
+                var cdata = item.Text[0] as CDataTag;
+                var text = item.Text[0] as PlainText;
+                if (cdata != null)
+                {
+                    sb.Append(cdata.Text);
+                }
+                else if (text != null)
+                {
+                    sb.AppendLine(text.Text);
+                }
+                else
+                {
+                    throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
+                }
+            }
+
+            var finalText = sb.ToString();
+            if (finalText.IsHtml())
+                return new CDataTag(finalText);
+            else
+                return new PlainText(finalText.TrimEnd('\r','\n'));
         }
     }
 }
