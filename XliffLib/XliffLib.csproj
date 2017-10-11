@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicSegmenter.cs" />
+    <Compile Include="DefaultMerger.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\PropertyContainer.cs" />
