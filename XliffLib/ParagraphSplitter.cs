@@ -4,6 +4,7 @@ using Localization.Xliff.OM.Core;
 using XliffLib.Utils;
 using System.Linq;
 using Localization.Xliff.OM.Modules.Metadata;
+using System.Text;
 
 namespace XliffLib
 {
@@ -191,26 +192,33 @@ namespace XliffLib
 
         private ResourceStringContent MergeBackUnits<T>(IList<T> list) where T : ResourceString
         {
-            ResourceStringContent result=null;
+            StringBuilder sb = new StringBuilder();
             foreach (var item in list)
             {
                 if(item.Text.Count>1)
                     throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
 
-                if (item.Text[0] is CDataTag)
+                var cdata = item.Text[0] as CDataTag;
+                var text = item.Text[0] as PlainText;
+                if (cdata != null)
                 {
-                    result = new CDataTag("<p>Was a bunch of CDATA</p>");
+                    sb.Append(cdata.Text);
                 }
-                else if (item.Text[0] is PlainText)
+                else if (text != null)
                 {
-                    result = new PlainText("was many plain text");
+                    sb.AppendLine(text.Text);
                 }
                 else
                 {
                     throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
                 }
             }
-            return result;
+
+            var finalText = sb.ToString();
+            if (finalText.IsHtml())
+                return new CDataTag(finalText);
+            else
+                return new PlainText(finalText.TrimEnd('\r','\n'));
         }
     }
 }
