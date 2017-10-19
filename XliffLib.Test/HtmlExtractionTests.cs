@@ -29,19 +29,25 @@ namespace XliffLib.Test
         [Test(), TestCaseSource(typeof(DataSamples), "SplitLIValues")]
         public string[] SplitLIValuesAreCorrect(string text)
         {
-            return text.SplitByTags("ul");
+            return text.SplitByTags("ul","li");
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "SplitMultipleTags")]
         public string[] SplitMultipleTagsAreCorrect(string text)
         {
-            return text.SplitByTags("ul", "p");
+            return text.SplitByDefaultTags();
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "RemoveContainingHtmlTag")]
         public string RemoveContainingHtmlTagAreCorrect(string text)
         {
             return text.RemoveContainingTag();
+        }
+
+        [Test(), TestCaseSource(typeof(DataSamples), "GetContainingHtmlTag")]
+        public string GetContainingHtmlTagAreCorrect(string text)
+        {
+            return text.GetContainingTag();
         }
     }
 
@@ -94,6 +100,7 @@ namespace XliffLib.Test
             get
             {
                 yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<ul><li>Item1</li><li>Item2</li></ul>" });
+                yield return new TestCaseData("<li>Item1</li><li>Item2</li>").Returns(new string[] { "<li>Item1</li>","<li>Item2</li>" });
             }
         }
 
@@ -102,6 +109,7 @@ namespace XliffLib.Test
             get
             {
                 yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>", "<ul><li>Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
+                yield return new TestCaseData("<h1>Para1</h1><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<h1>Para1</h1>", "<ul><li>Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
             }
         }
 
@@ -112,6 +120,17 @@ namespace XliffLib.Test
                 yield return new TestCaseData("<p>Item</p>").Returns("Item");
                 yield return new TestCaseData("<li>Item1</li>").Returns("Item1");
                 yield return new TestCaseData("<p>This is text with some <b>formatting</b> inside</p>").Returns("This is text with some <b>formatting</b> inside");
+            }
+        }
+
+        public static IEnumerable GetContainingHtmlTag
+        {
+            get
+            {
+                yield return new TestCaseData("<p>Item</p>").Returns("p");
+                yield return new TestCaseData("<li>Item1</li>").Returns("li");
+                yield return new TestCaseData("<p>This is text with some <b>formatting</b> inside</p>").Returns("p");
+                yield return new TestCaseData("<ul><li>Item1</li><li>Item2</li></ul>").Returns("ul");
             }
         }
     }

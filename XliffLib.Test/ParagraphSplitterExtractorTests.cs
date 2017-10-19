@@ -99,7 +99,59 @@ Hello Word3!</source>
             Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
             var unit = newDocument.Files[0].Containers[0] as Unit;
             Assert.IsNotNull(unit);
+        }
 
+        [Test()]
+        public void SingleHtmlParagraphUnitIsUnwrapped()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"" name=""body"">
+            <segment>
+                <source><![CDATA[<p>Hello Word!</p>]]></source>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteExtraction(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+
+            Assert.AreEqual("body|p", unit.Name);
+            Assert.AreEqual("Hello Word!", unit.Resources[0].Source.Text[0].ToString());
+        }
+
+
+        [Test()]
+        public void SingleHtmlParagraphUnitWithFormattingIsUnwrapped()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"" name=""body"">
+            <segment>
+                <source><![CDATA[<p>Hello <b>Word</b>!</p>]]></source>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteExtraction(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+
+            Assert.AreEqual("body|p", unit.Name);
+            Assert.AreEqual("<![CDATA[Hello <b>Word</b>!]]>", unit.Resources[0].Source.Text[0].ToString());
         }
 
         [Test()]
@@ -133,17 +185,67 @@ Hello Word3!</source>
             var unit1 = group.Containers[0] as Unit;
             var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("<![CDATA[<p>Hello Word1!</p>]]>", textUnit1);
+            Assert.AreEqual("p", unit1.Name);
+            Assert.AreEqual("Hello Word1!", textUnit1);
 
             var unit2 = group.Containers[1] as Unit;
             var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("<![CDATA[<p>Hello Word2!</p>]]>", textUnit2);
+            Assert.AreEqual("p", unit2.Name);
+            Assert.AreEqual("Hello Word2!", textUnit2);
 
             var unit3 = group.Containers[2] as Unit;
             var textUnit3 = unit3.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("<![CDATA[<p>Hello <b>Word3</b>!</p>]]>", textUnit3);
+            Assert.AreEqual("p", unit3.Name);
+            Assert.AreEqual("<![CDATA[Hello <b>Word3</b>!]]>", textUnit3);
+        }
+
+        [Test()]
+        public void UnorderedListWithoutFormattingIsTransformedIntoGroupWithManyUnits()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"">
+            <segment>
+                <source><![CDATA[<ul><li>Hello Word1!</li><li>Hello Word2!</li><li>Hello Word3!</li></ul>]]></source>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteExtraction(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var group = newDocument.Files[0].Containers[0] as Group;
+            Assert.IsNotNull(group);
+            Assert.AreEqual("u1-g", group.Id);
+
+            Assert.AreEqual("ul", group.Name);
+            Assert.AreEqual(3, group.Containers.Count);
+
+            var unit1 = group.Containers[0] as Unit;
+            var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("li", unit1.Name);
+            Assert.AreEqual("Hello Word1!", textUnit1);
+
+            var unit2 = group.Containers[1] as Unit;
+            var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("li", unit2.Name);
+            Assert.AreEqual("Hello Word2!", textUnit2);
+
+            var unit3 = group.Containers[2] as Unit;
+            var textUnit3 = unit3.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("li", unit3.Name);
+            Assert.AreEqual("Hello Word3!", textUnit3);
         }
 
         [Test()]
@@ -189,12 +291,14 @@ Hello Word3!</source>
             var unit1 = nestedGroup.Containers[0] as Unit;
             var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("<![CDATA[<p>Hello Word nested!</p>]]>", textUnit1);
+            Assert.AreEqual("p", unit1.Name);
+            Assert.AreEqual("Hello Word nested!", textUnit1);
 
             var unit2 = nestedGroup.Containers[1] as Unit;
             var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("<![CDATA[<p>Hello Word2!</p>]]>", textUnit2);
+            Assert.AreEqual("p", unit2.Name);
+            Assert.AreEqual("Hello Word2!", textUnit2);
         }
 
 

@@ -11,6 +11,10 @@ namespace XliffLib.Utils
             "cp","ph","pc","sc","ec","mrk","sm","em"
         };
 
+        private static string[] HTMLTAGSTOSPLIT = {
+            "p","ul","ol","li","h1","h2","h3","h4"
+        };
+
 
         public static bool IsHtml(this string text)
         {
@@ -24,11 +28,26 @@ namespace XliffLib.Utils
             if (IsHtml(text))
                 return text.SplitByTags("p");
             else
+                return text.SplitPlainText();
+        }
+
+        public static String[] SplitPlainText(this string text)
+        {
+            if (IsHtml(text))
+                throw new InvalidOperationException(@"The text supplied is not plain text: {text}");
+            else
                 return text.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static String[] SplitByDefaultTags(this string text)
+        {
+            return text.SplitByTags(HTMLTAGSTOSPLIT);
         }
 
         public static String[] SplitByTags(this string htmlText, params string[] tags)
         {
+            if(!IsHtml(htmlText))
+                throw new InvalidOperationException(@"The text supplied is not HTML: {htmlText}");
             var doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             return doc.DocumentNode.ChildNodes.Where(e => tags.Contains(e.Name)).Select(e => e.OuterHtml).ToArray();
@@ -39,6 +58,13 @@ namespace XliffLib.Utils
             var doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             return doc.DocumentNode.ChildNodes[0].InnerHtml;
+        }
+
+        public static string GetContainingTag(this string htmlText)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(htmlText);
+            return doc.DocumentNode.ChildNodes[0].Name;
         }
 
         private static bool IsTextOrXliff(HtmlNode n)

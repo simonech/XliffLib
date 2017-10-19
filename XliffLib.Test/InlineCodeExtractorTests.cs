@@ -39,6 +39,35 @@ namespace XliffLib.Test
         }
 
         [Test()]
+        public void SingleParagraphCDataWithoutFormattigIsLeftUntouched()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"">
+            <segment>
+                <source><![CDATA[<p>Hello World!</p>]]></source>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var inlineprocessing = new InlineCodeProcessing();
+
+            var newDocument = inlineprocessing.ExecuteExtraction(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNull(unit.OriginalData);
+
+            Assert.AreEqual(1, unit.CollapseChildren<Source>()[0].Text.Count);
+            var segment = unit.CollapseChildren<Source>()[0].Text[0] as PlainText;
+            Assert.IsNotNull(segment);
+            Assert.AreEqual("Hello World!", segment.Text);
+        }
+
+        [Test()]
         public void TextWithBoldUnitCreatesUnitWithOriginalDataAndInlineCode()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>

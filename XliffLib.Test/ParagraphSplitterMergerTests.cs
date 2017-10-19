@@ -126,6 +126,51 @@ namespace XliffLib.Test
         }
 
         [Test()]
+        public void OneGroupWithMultipleParagraphWithNotFormattingCDataAreMergedBackIntoOneUnit()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <group id=""u1-g"" name=""original"">
+            <unit id=""u1-1"">
+                <segment>
+                    <source><![CDATA[<p>Hello Word1!</p>]]></source>
+                    <target><![CDATA[<p>Hello Word1!</p>]]></target>
+                </segment>
+            </unit>
+            <unit id=""u1-2"">
+                <segment>
+                    <source><![CDATA[<p>Hello Word2!</p>]]></source>
+                    <target><![CDATA[<p>Hello Word2!</p>]]></target>
+                </segment>
+            </unit>
+            <unit id=""u1-3"">
+                <segment>
+                    <source><![CDATA[<p>Hello Word3!</p>]]></source>
+                    <target><![CDATA[<p>Hello Word3!</p>]]></target>
+                </segment>
+            </unit>
+        </group>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteMerge(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+            Assert.AreEqual("u1", unit.Id);
+            Assert.AreEqual("original", unit.Name);
+            Assert.AreEqual(1, unit.Resources[0].Target.Text.Count);
+            var cdata = unit.Resources[0].Target.Text[0] as CDataTag;
+            Assert.IsNotNull(cdata);
+            Assert.AreEqual("<p>Hello Word1!</p><p>Hello Word2!</p><p>Hello Word3!</p>", cdata.Text);
+        }
+
+        [Test()]
         public void TwoGroupsWithMultipleParagraphCDataAreMergedBackIntoOneUnit()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>

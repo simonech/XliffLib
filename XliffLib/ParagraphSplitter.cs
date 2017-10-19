@@ -19,49 +19,112 @@ namespace XliffLib
             var units = document.CollapseChildren<Unit>();
             foreach (var unit in units)
             {
-                foreach (var resource in unit.Resources)
-                {
-                    var segment = resource as Segment;
-                    if (segment != null)
-                    {
-                        if (segment.Source.Text.Count > 1)
-                        {
-                            throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: "+unit.SelectorPath);
-                        }
-                        if(segment.Source.Text[0] is CDataTag)
-                        {
-                            SplitCData(unit, segment.Source.Text[0] as CDataTag);
-                        }
-                        else if (segment.Source.Text[0] is PlainText)
-                        {
-                            SplitPlainText(unit, segment.Source.Text[0] as PlainText);
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + unit.SelectorPath);
-                        }
-                    }
-                }
+                SplitUnitAndIterate(unit);
             }
 
             return document;
         }
 
-        private void SplitPlainText(Unit unit, PlainText plainText)
+        private void SplitUnitAndIterate(Unit unit)
         {
-            SplitUnit(unit, plainText.Text, false);
+            if (unit.Resources.Count == 0)
+            {
+                return;
+            }
+            if (unit.Resources.Count > 1)
+            {
+                throw new InvalidOperationException("Cannot work with Units with multiple Segments: "+ unit.SelectorPath);
+            }
+
+            var segment = unit.Resources[0] as Segment;
+
+            if (segment == null) return;
+
+            if (segment.Source.Text.Count > 1)
+            {
+                throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + unit.SelectorPath);
+            }
+            if (segment.Source.Text[0] is CDataTag)
+            {
+                var cdata = segment.Source.Text[0] as CDataTag;
+                var nameBefore = unit.Name;
+                var container = SplitUnit(unit, cdata.Text, true);
+                if (container is Group)
+                {
+                    var group = container as Group;
+                    foreach (Unit innerUnit in group.Containers)
+                    {
+                        SplitUnitAndIterate(innerUnit);
+                    }
+                }
+                else if(container is Unit)
+                {
+                    if(!container.Name.Equals(nameBefore))
+                    {
+                        SplitUnitAndIterate(container as Unit);
+                    }
+                }
+            }
+            else if (segment.Source.Text[0] is PlainText)
+            {
+                var text = segment.Source.Text[0] as PlainText;
+                SplitUnit(unit, text.Text, false);
+            }
+            else
+            {
+                throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + unit.SelectorPath);
+            }
         }
 
-        private void SplitCData(Unit unit, CDataTag cDataTag)
+        private TranslationContainer SplitUnit(Unit unit, string text, bool isCData=true)
         {
-            SplitUnit(unit, cDataTag.Text, true);
-        }
+            string[] paragraphs;
+            if (isCData)
+                paragraphs = text.SplitByDefaultTags();
+            else
+            {
+                paragraphs = text.SplitPlainText();
+            }
+            if(paragraphs.Count()==0)
+            {
+                return unit;
+            }
+            else if (paragraphs.Count() == 1)
+            {
+                string newContent;
+                if (isCData)
+                {
+                    string containingTag = paragraphs[0].GetContainingTag();
+                    newContent = paragraphs[0].RemoveContainingTag();
+                    if(String.IsNullOrEmpty(unit.Name))
+                    {
+                        unit.Name = containingTag;
+                    }
+                    else
+                    {
+                        unit.Name = unit.Name + "|" + containingTag;
+                    }
+                }
+                else
+                {
+                    newContent = paragraphs[0];
+                }
 
-
-        private void SplitUnit(Unit unit, string text, bool isCData=true)
-        {
-            var paragraphs = text.SplitByParagraphs();
-            if (paragraphs.Count() > 1)
+                var source = new Source();
+                ResourceStringContent content;
+                if (newContent.IsHtml())
+                {
+                    content = new CDataTag(newContent);
+                }
+                else
+                {
+                    content = new PlainText(newContent);
+                }
+                source.Text.Add(content);
+                unit.Resources[0].Source = source;
+                return unit;
+            }
+            else
             {
                 //TODO: Copy name and other attributes
                 var newGroup = new Group(unit.Id + "-g");
@@ -79,10 +142,8 @@ namespace XliffLib
                             var newElement = new Meta(item.Type, item.NonTranslatableText);
                             newMetaGroup.Containers.Add(newElement);
                         }
-
                         newMetadataContainer.Groups.Add(newMetaGroup);
                     }
-
                     newGroup.Metadata = newMetadataContainer;
                 }
 
@@ -127,6 +188,7 @@ namespace XliffLib
                         parentGroup.Containers.Remove(unit);
                     }
                 }
+                return newGroup;
             }
         }
 
@@ -163,7 +225,7 @@ namespace XliffLib
                 var source = new Source();
                 var target = new Target();
 
-                source.Text.Add(MergeBackUnits(group.CollapseChildren<Source>()));
+                //source.Text.Add(MergeBackUnits(group.CollapseChildren<Source>()));
                 target.Text.Add(MergeBackUnits(group.CollapseChildren<Target>()));
 
                 newSegment.Source = source;
