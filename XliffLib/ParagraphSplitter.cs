@@ -52,7 +52,7 @@ namespace XliffLib
                 if (container is Group)
                 {
                     var group = container as Group;
-                    foreach (Unit innerUnit in group.Containers)
+                    foreach (Unit innerUnit in group.Containers.ToList())
                     {
                         SplitUnitAndIterate(innerUnit);
                     }
@@ -176,16 +176,16 @@ namespace XliffLib
                 var parentFile = unit.Parent as File;
                 if (parentFile != null)
                 {
-                    parentFile.Containers.Add(newGroup);
-                    parentFile.Containers.Remove(unit);
+                    var index = parentFile.Containers.IndexOf(unit);
+                    parentFile.Containers[index] = newGroup;
                 }
                 else
                 {
                     var parentGroup = unit.Parent as Group;
                     if (parentGroup != null)
                     {
-                        parentGroup.Containers.Add(newGroup);
-                        parentGroup.Containers.Remove(unit);
+                        var index = parentGroup.Containers.IndexOf(unit);
+                        parentGroup.Containers[index] = newGroup;
                     }
                 }
                 return newGroup;
@@ -249,6 +249,46 @@ namespace XliffLib
                 }
             }
 
+            var units = document.CollapseChildren<Unit>().Where(u => u.Name!=null && u.Name.Contains("|"));
+
+            foreach (var unit in units)
+            {
+                var nameArray = unit.Name?.Split('|');
+                if (nameArray.Length == 0)
+                {
+                    continue;
+                }
+                unit.Name = nameArray[0];
+                var enclosingTag = nameArray[1];
+
+                var newSegment = new Segment();
+                var source = new Source();
+                var target = new Target();
+
+                //var sourceText = unit.Resources[0].Source.Text[0] as PlainText;
+                //source.Text.Clear();
+                //source.Text.Add(new CDataTag(string.Format("<{0}>{1}</{0}>", enclosingTag, sourceText.Text)));
+
+                var targetCdata = unit.Resources[0].Target.Text[0] as CDataTag;
+                var targetText = unit.Resources[0].Target.Text[0] as PlainText;
+
+                target.Text.Clear();
+                if(targetCdata!=null)
+                {
+                    target.Text.Add(new CDataTag(string.Format("<{0}>{1}</{0}>", enclosingTag, targetCdata.Text)));
+                }
+                else if (targetText != null)
+                {
+                    target.Text.Add(new CDataTag(string.Format("<{0}>{1}</{0}>", enclosingTag, targetText.Text)));
+                }
+
+                newSegment.Source = source;
+                newSegment.Target = target;
+
+                unit.Resources.Clear();
+                unit.Resources.Add(newSegment);
+            }
+
             return document;
         }
 
@@ -260,20 +300,34 @@ namespace XliffLib
                 if(item.Text.Count>1)
                     throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
 
+                var segment = item.SelectableAncestor as Segment;
+                var unit = segment.Parent as Unit;
+                var unitName = unit.Name;
+
                 var cdata = item.Text[0] as CDataTag;
                 var text = item.Text[0] as PlainText;
-                if (cdata != null)
-                {
-                    sb.Append(cdata.Text);
-                }
-                else if (text != null)
+
+                if (string.IsNullOrEmpty(unitName))
                 {
                     sb.AppendLine(text.Text);
                 }
                 else
                 {
-                    throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
+                    if (cdata != null)
+                    {
+                        sb.Append(string.Format("<{0}>{1}</{0}>", unitName, cdata.Text));
+                    }
+                    else if (text != null)
+                    {
+                        sb.Append(string.Format("<{0}>{1}</{0}>", unitName, text.Text));
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
+                    }
                 }
+
+
             }
 
             var finalText = sb.ToString();

@@ -5,7 +5,7 @@
         {
           "$type": "XliffLib.Model.Property, XliffLib",
           "name": "title",
-          "value": "<p>content in <strong>bold</strong></p>"
+          "value": "<h1>Header</h1><p>Some longer text</p><ul><li>One item</li><li>Two item</li></ul><p>content in <strong>bold</strong></p>"
         }
       ]
     }

@@ -20,7 +20,7 @@ namespace XliffLib
                     {
                         var cdata = segment.Source.Text[0] as CDataTag;
                         if (cdata == null) continue;
-                        var html = cdata.Text.RemoveContainingTag();
+                        var html = cdata.Text;
                         var inlineCodeExtraction = html.ConvertHtmlTagsInInLineCodes();
                         foreach (var data in inlineCodeExtraction.OriginalData)
                         {
@@ -49,10 +49,9 @@ namespace XliffLib
                     if (segment != null)
                     {
                         if (segment.Target.Text.Count == 1 && segment.Target.Text[0] is PlainText) continue;
-
                         var html = segment.Target.Text.ConvertToHtml();
                         segment.Target.Text.Clear();
-                        segment.Target.Text.Add(new CDataTag("<p>"+ html + "</p>"));
+                        segment.Target.Text.Add(new CDataTag(html));
                     }
                 }
             }

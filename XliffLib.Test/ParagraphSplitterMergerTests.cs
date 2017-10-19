@@ -36,6 +36,162 @@ namespace XliffLib.Test
         }
 
         [Test()]
+        public void SingleParagraphHtmlUnitIsWrappedInP()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"" name=""original|p"">
+            <segment>
+                <source>Hello Word!</source>
+                <target>Hello Word!</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteMerge(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+
+            Assert.AreEqual("u1", unit.Id);
+            Assert.AreEqual("original", unit.Name);
+
+            Assert.AreEqual(1, unit.Resources[0].Target.Text.Count);
+            var text = unit.Resources[0].Target.Text[0] as CDataTag;
+            Assert.IsNotNull(text);
+            Assert.AreEqual("<p>Hello Word!</p>", text.Text);
+        }
+
+        [Test()]
+        public void OrderedListInTheRootWithTwoItemIsWrappedInUL()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <group id=""u1-g"" name=""original|ul"">
+            <unit id=""u1-1"" name=""li"">
+                <segment>
+                        <source>Hello</source>
+                        <target>Hello</target>
+                </segment>
+            </unit>
+            <unit id=""u1-2"" name=""li"">
+                <segment>
+                        <source>Hello</source>
+                        <target>Hello</target>
+                </segment>
+            </unit>
+        </group>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteMerge(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+
+            Assert.AreEqual("u1", unit.Id);
+            Assert.AreEqual("original", unit.Name);
+
+            Assert.AreEqual(1, unit.Resources[0].Target.Text.Count);
+            var text = unit.Resources[0].Target.Text[0] as CDataTag;
+            Assert.IsNotNull(text);
+            Assert.AreEqual("<ul><li>Hello</li><li>Hello</li></ul>", text.Text);
+        }
+
+        [Test()]
+        public void OrderedListAsChildWithTwoItemIsWrappedInUL()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+    <group id=""u1-g"" name=""original"">
+      <unit id=""u1-1"" name=""p"" >
+        <segment>
+          <source>whatever</source>
+<target>whatever</target>
+        </segment>
+      </unit>
+      <group id=""u1-2-g"" name=""ul"" >
+        <unit id= ""u1-2-1"" name=""li"">
+          <segment>
+            <source>Item 1</source>
+<target>Item 1</target>
+          </segment>
+        </unit>
+        <unit id= ""u1-2-2"" name=""li"" >
+          <segment>
+            <source>Item 1</source>
+<target>Item 1</target>
+          </segment>
+        </unit>
+      </group>
+    </group>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteMerge(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+
+            Assert.AreEqual("u1", unit.Id);
+            Assert.AreEqual("original", unit.Name);
+
+            Assert.AreEqual(1, unit.Resources[0].Target.Text.Count);
+            var text = unit.Resources[0].Target.Text[0] as CDataTag;
+            Assert.IsNotNull(text);
+            Assert.AreEqual("<p>whatever</p><ul><li>Item 1</li><li>Item 1</li></ul>", text.Text);
+        }
+
+        [Test()]
+        public void SingleParagraphHtmlWithFormattingUnitIsWrappedInP()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"" name=""original|p"">
+            <segment>
+                    <source><![CDATA[Hello <b>Word</b>!]]></source>
+                    <target><![CDATA[Hello <b>Word</b>!]]></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter();
+
+            var newDocument = splitter.ExecuteMerge(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+
+            Assert.AreEqual("u1", unit.Id);
+            Assert.AreEqual("original", unit.Name);
+
+            Assert.AreEqual(1, unit.Resources[0].Target.Text.Count);
+            var text = unit.Resources[0].Target.Text[0] as CDataTag;
+            Assert.IsNotNull(text);
+            Assert.AreEqual("<p>Hello <b>Word</b>!</p>", text.Text);
+        }
+
+        [Test()]
         public void OneGroupMultipleParagraphPlainTextAreMergedBackIntoOneUnit()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
@@ -87,22 +243,22 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original"">
-            <unit id=""u1-1"">
+            <unit id=""u1-1"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello Word1!</p>]]></source>
-                    <target><![CDATA[<p>Hello Word1!</p>]]></target>
+                    <source>Hello Word1!</source>
+                    <target>Hello Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u1-2"">
+            <unit id=""u1-2"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello Word2!</p>]]></source>
-                    <target><![CDATA[<p>Hello Word2!</p>]]></target>
+                    <source>Hello Word2!</source>
+                    <target>Hello Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u1-3"">
+            <unit id=""u1-3"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello <b>Word3</b>!</p>]]></source>
-                    <target><![CDATA[<p>Hello <b>Word3</b>!</p>]]></target>
+                    <source><![CDATA[Hello <b>Word3</b>!]]></source>
+                    <target><![CDATA[Hello <b>Word3</b>!]]></target>
                 </segment>
             </unit>
         </group>
@@ -132,22 +288,22 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original"">
-            <unit id=""u1-1"">
+            <unit id=""u1-1"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello Word1!</p>]]></source>
-                    <target><![CDATA[<p>Hello Word1!</p>]]></target>
+                    <source>Hello Word1!</source>
+                    <target>Hello Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u1-2"">
+            <unit id=""u1-2"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello Word2!</p>]]></source>
-                    <target><![CDATA[<p>Hello Word2!</p>]]></target>
+                    <source>Hello Word2!</source>
+                    <target>Hello Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u1-3"">
+            <unit id=""u1-3"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello Word3!</p>]]></source>
-                    <target><![CDATA[<p>Hello Word3!</p>]]></target>
+                    <source>Hello Word3!</source>
+                    <target>Hello Word3!</target>
                 </segment>
             </unit>
         </group>
@@ -177,42 +333,42 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original1"">
-            <unit id=""u1-1"">
+            <unit id=""u1-1"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello Word1!</p>]]></source>
-                    <target><![CDATA[<p>Hello Word1!</p>]]></target>
+                    <source>Hello Word1!</source>
+                    <target>Hello Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u1-2"">
+            <unit id=""u1-2"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello Word2!</p>]]></source>
-                    <target><![CDATA[<p>Hello Word2!</p>]]></target>
+                    <source>Hello Word2!</source>
+                    <target>Hello Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u1-3"">
+            <unit id=""u1-3"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello <b>Word3</b>!</p>]]></source>
-                    <target><![CDATA[<p>Hello <b>Word3</b>!</p>]]></target>
+                    <source><![CDATA[Hello <b>Word3</b>!]]></source>
+                    <target><![CDATA[Hello <b>Word3</b>!]]></target>
                 </segment>
             </unit>
         </group>
         <group id=""u2-g"" name=""original2"">
-            <unit id=""u2-1"">
+            <unit id=""u2-1"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello2 Word1!</p>]]></source>
-                    <target><![CDATA[<p>Hello2 Word1!</p>]]></target>
+                    <source>Hello2 Word1!</source>
+                    <target>Hello2 Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u2-2"">
+            <unit id=""u2-2"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello2 Word2!</p>]]></source>
-                    <target><![CDATA[<p>Hello2 Word2!</p>]]></target>
+                    <source>Hello2 Word2!</source>
+                    <target>Hello2 Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u2-3"">
+            <unit id=""u2-3"" name=""p"">
                 <segment>
-                    <source><![CDATA[<p>Hello2 <b>Word3</b>!</p>]]></source>
-                    <target><![CDATA[<p>Hello2 <b>Word3</b>!</p>]]></target>
+                    <source><![CDATA[Hello2 <b>Word3</b>!]]></source>
+                    <target><![CDATA[Hello2 <b>Word3</b>!]]></target>
                 </segment>
             </unit>
         </group>

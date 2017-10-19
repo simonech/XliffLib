@@ -46,7 +46,7 @@ namespace XliffLib.Test
     <file id=""f1"">
         <unit id=""u1"">
             <segment>
-                <source><![CDATA[<p>Hello World!</p>]]></source>
+                <source><![CDATA[Hello World!]]></source>
             </segment>
         </unit>
     </file>
@@ -75,7 +75,7 @@ namespace XliffLib.Test
     <file id=""f1"">
         <unit id=""u1"">
             <segment>
-                <source><![CDATA[<p>Hello <b>World</b>!</p>]]></source>
+                <source><![CDATA[Hello <b>World</b>!]]></source>
             </segment>
         </unit>
     </file>

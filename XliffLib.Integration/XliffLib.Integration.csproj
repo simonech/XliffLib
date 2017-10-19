@@ -32,6 +32,7 @@
       <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
     <Reference Include="Xliff.OM">
       <HintPath>..\packages\Xliff.OM.1.0.2.0\lib\portable-net45+sl50+win+wpa81+wp80\Xliff.OM.dll</HintPath>
     </Reference>
@@ -49,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="TestFiles\ULMarkupInProperty.json" />
+    <EmbeddedResource Include="TestFiles\ComplexMarkupInProperty.json" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

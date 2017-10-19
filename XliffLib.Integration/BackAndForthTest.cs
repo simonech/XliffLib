@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using Localization.Xliff.OM.Core;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -10,38 +11,33 @@ namespace XliffLib.Integration
     [TestFixture]
     public class BackAndForthTest
     {
-        [Test, TestCaseSource(typeof(DataSamples), "FileNamesSimpleExtractor")]
+        [Test, TestCaseSource(typeof(DataSamples), "BackForthTests")]
         public void CanExtractAndMerge(string filename)
         {
             var bundleString = EmbeddedFilesReader.ReadString("XliffLib.Integration.TestFiles." + filename + ".json");
             var bundle = bundleString.ToBundle();
 
-            var extractor = new SimpleExtractor();
+            var extractor = new DefaultExtractor();
             var xliffModel = extractor.Extract(bundle, "en-US", "it-IT");
 
-            foreach (var unit in xliffModel.CollapseChildren<Unit>())
-            {
-                foreach (var res in unit.Resources)
-                {
-                    res.Target = new Target();
-                    foreach (var source in res.Source.Text)
-                    {
-                        var plainText = source as PlainText;
-                        if (plainText != null)
-                        {
-                            res.Target.Text.Add(new PlainText(plainText.Text));
-                        }
+            var xliffString = extractor.Write(xliffModel, true);
 
-                        var cDataText = source as CDataTag;
-                        if (cDataText != null)
-                        {
-                            res.Target.Text.Add(new CDataTag(cDataText.Text));
-                        }
-                    }
-                }
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xliffString);
+
+            var allSources = doc.GetElementsByTagName("source");
+            foreach (XmlNode source in allSources)
+            {
+                var newTarget = doc.CreateElement("target", "urn:oasis:names:tc:xliff:document:2.0");
+                newTarget.InnerXml = source.InnerXml;
+                source.ParentNode.AppendChild(newTarget);
             }
 
-            var merger = new SimpleMerger();
+            var newXliff = doc.OuterXml;
+
+            var merger = new DefaultMerger();
+
+            xliffModel = merger.Read(newXliff);
 
             var resultingBundle = merger.Merge(xliffModel);
             var jsonResult = resultingBundle.ToJson();
@@ -50,7 +46,7 @@ namespace XliffLib.Integration
             JObject result = JObject.Parse(jsonResult);
 
 
-            Assert.IsTrue(JToken.DeepEquals(expected, result), "The two bundles are different:\r\nExpected {0}\r\nResult {1}", bundle, jsonResult);
+            Assert.IsTrue(JToken.DeepEquals(expected, result), "The two bundles are different:\r\nExpected {0}\r\nResult {1}", bundleString, jsonResult);
         }
     }
 }

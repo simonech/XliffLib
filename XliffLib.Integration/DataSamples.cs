@@ -25,5 +25,18 @@ namespace XliffLib.Integration
                 yield return new TestCaseData("HtmlMarkupInProperty");
             }
         }
+
+        public static IEnumerable BackForthTests
+        {
+            get
+            {
+                yield return new TestCaseData("OnePropertyInRoot");
+                yield return new TestCaseData("OneNestedProperty");
+                yield return new TestCaseData("OnePropertyWithAttributes");
+                yield return new TestCaseData("HtmlMarkupInProperty");
+                yield return new TestCaseData("ULMarkupInProperty");
+                yield return new TestCaseData("ComplexMarkupInProperty");
+            }
+        }
     }
 }
