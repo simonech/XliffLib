@@ -196,22 +196,9 @@ namespace XliffLib
                 }
 
                 var newSegment = new Segment();
-                var source = new Source();
-                var target = new Target();
 
-                var content = RetrieveInnerContent(group);
-
-                if(content.IsHtml())
-                {
-                    target.Text.Add(new CDataTag(content));
-                }
-                else
-                {
-                    target.Text.Add(new PlainText(content.TrimEnd('\r','\n')));
-                }
-
-                newSegment.Source = source;
-                newSegment.Target = target;
+                newSegment.Source = SetSourceValue(group);
+                newSegment.Target = SetTargetValue(group);
                 newUnit.Resources.Add(newSegment);
 
                 var parentFile = group.Parent as File;
@@ -233,18 +220,46 @@ namespace XliffLib
             return document;
         }
 
-        private string RetrieveInnerContent(Group group)
+        private Source SetSourceValue(Group group)
+        {
+            var source = new Source();
+            SetResourceString(source, group, (s => s.Source));
+            return source;
+        }
+
+        private Target SetTargetValue(Group group)
+        {
+            var target = new Target();
+            SetResourceString(target, group, (s => s.Target));
+            return target;
+        }
+
+        private void SetResourceString(ResourceString text, Group group, Func<Segment, ResourceString> selector)
+        {
+            var content = RetrieveInnerContent(group, selector);
+
+            if (content.IsHtml())
+            {
+                text.Text.Add(new CDataTag(content));
+            }
+            else
+            {
+                text.Text.Add(new PlainText(content.TrimEnd('\r', '\n')));
+            }
+        }
+
+        private string RetrieveInnerContent(Group group, Func<Segment, ResourceString> selector)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var container in group.Containers)
             {
                 if(container is Group)
                 {
-                    sb.AppendFormat("<{0}>{1}</{0}>", container.Name, RetrieveInnerContent(container as Group));
+                    sb.AppendFormat("<{0}>{1}</{0}>", container.Name, RetrieveInnerContent(container as Group, selector));
                 }
                 else
                 {
-                    var content = GetTextContent(container as Unit);
+                    var content = GetTextContent(container as Unit, selector);
                     if (content.IsHtml())
                         sb.Append(content);
                     else
@@ -254,14 +269,14 @@ namespace XliffLib
             return sb.ToString();
         }
 
-        private string GetTextContent(Unit nestedUnit)
+        private string GetTextContent(Unit nestedUnit, Func<Segment, ResourceString> selector)
         {
             if(nestedUnit.Resources.Count>1)
                 throw new InvalidOperationException("At this stage I expect only one segment. This unit is invalid: " + nestedUnit.SelectorPath);
             Segment segment = nestedUnit.Resources[0] as Segment;
             if (segment == null) return "";
 
-            ResourceString item = segment.Target;
+            ResourceString item = selector(segment);
             if (item.Text.Count > 1)
                 throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + nestedUnit.SelectorPath);
             var cdata = item.Text[0] as CDataTag;

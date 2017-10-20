@@ -48,14 +48,20 @@ namespace XliffLib
                     var segment = resource as Segment;
                     if (segment != null)
                     {
-                        if (segment.Target.Text.Count == 1 && segment.Target.Text[0] is PlainText) continue;
-                        var html = segment.Target.Text.ConvertToHtml();
-                        segment.Target.Text.Clear();
-                        segment.Target.Text.Add(new CDataTag(html));
+                        ConvertToHtmlAndStore(segment.Source);
+                        ConvertToHtmlAndStore(segment.Target);
                     }
                 }
             }
             return document;
+        }
+
+        private void ConvertToHtmlAndStore(ResourceString resource)
+        {
+            if (resource.Text.Count == 1 && resource.Text[0] is PlainText) return;
+            var html = resource.Text.ConvertToHtml();
+            resource.Text.Clear();
+            resource.Text.Add(new CDataTag(html));
         }
     }
 }
