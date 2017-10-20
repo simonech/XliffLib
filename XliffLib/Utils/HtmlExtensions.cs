@@ -12,7 +12,7 @@ namespace XliffLib.Utils
         };
 
         private static string[] HTMLTAGSTOSPLIT = {
-            "p","ul","ol","li","h1","h2","h3","h4"
+            "p","ul","ol","li","h1","h2","h3","h4","blockquote"
         };
 
 
