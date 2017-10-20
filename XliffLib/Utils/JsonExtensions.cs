@@ -19,7 +19,7 @@ namespace XliffLib.Utils
             {
                 ContractResolver = contractResolver,
                 TypeNameHandling = TypeNameHandling.Auto,
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore                
             });
         }
 

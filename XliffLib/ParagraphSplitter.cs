@@ -89,44 +89,12 @@ namespace XliffLib
             {
                 return unit;
             }
-            else if (paragraphs.Count() == 1)
+            else if(!isCData && paragraphs.Count() == 1)
             {
-                string newContent;
-                if (isCData)
-                {
-                    string containingTag = paragraphs[0].GetContainingTag();
-                    newContent = paragraphs[0].RemoveContainingTag();
-                    if(String.IsNullOrEmpty(unit.Name))
-                    {
-                        unit.Name = containingTag;
-                    }
-                    else
-                    {
-                        unit.Name = unit.Name + "|" + containingTag;
-                    }
-                }
-                else
-                {
-                    newContent = paragraphs[0];
-                }
-
-                var source = new Source();
-                ResourceStringContent content;
-                if (newContent.IsHtml())
-                {
-                    content = new CDataTag(newContent);
-                }
-                else
-                {
-                    content = new PlainText(newContent);
-                }
-                source.Text.Add(content);
-                unit.Resources[0].Source = source;
                 return unit;
             }
             else
             {
-                //TODO: Copy name and other attributes
                 var newGroup = new Group(unit.Id + "-g");
                 newGroup.Name = unit.Name;
                 if (unit.Metadata != null)
@@ -159,7 +127,13 @@ namespace XliffLib
                     ResourceStringContent content;
                     if (isCData)
                     {
-                        content = new CDataTag(para);
+                        string containingTag = para.GetContainingTag();
+                        string newContent = para.RemoveContainingTag();
+                        paraUnit.Name = containingTag;
+                        if(newContent.IsHtml())
+                            content = new CDataTag(newContent);
+                        else
+                            content = new PlainText(newContent);
                     }
                     else
                     {
@@ -194,7 +168,7 @@ namespace XliffLib
 
         public XliffDocument ExecuteMerge(XliffDocument document)
         {
-            var groups = document.CollapseChildren<Group>().Where(g => g.Id.StartsWith("u"));
+            var groups = document.CollapseChildren<Group>().Where(g => g.Id.StartsWith("u") && g.Id.Split('-').Length==2);
 
             foreach (var group in groups)
             {
@@ -225,8 +199,16 @@ namespace XliffLib
                 var source = new Source();
                 var target = new Target();
 
-                //source.Text.Add(MergeBackUnits(group.CollapseChildren<Source>()));
-                target.Text.Add(MergeBackUnits(group.CollapseChildren<Target>()));
+                var content = RetrieveInnerContent(group);
+
+                if(content.IsHtml())
+                {
+                    target.Text.Add(new CDataTag(content));
+                }
+                else
+                {
+                    target.Text.Add(new PlainText(content.TrimEnd('\r','\n')));
+                }
 
                 newSegment.Source = source;
                 newSegment.Target = target;
@@ -248,93 +230,65 @@ namespace XliffLib
                     }
                 }
             }
-
-            var units = document.CollapseChildren<Unit>().Where(u => u.Name!=null && u.Name.Contains("|"));
-
-            foreach (var unit in units)
-            {
-                var nameArray = unit.Name?.Split('|');
-                if (nameArray.Length == 0)
-                {
-                    continue;
-                }
-                unit.Name = nameArray[0];
-                var enclosingTag = nameArray[1];
-
-                var newSegment = new Segment();
-                var source = new Source();
-                var target = new Target();
-
-                //var sourceText = unit.Resources[0].Source.Text[0] as PlainText;
-                //source.Text.Clear();
-                //source.Text.Add(new CDataTag(string.Format("<{0}>{1}</{0}>", enclosingTag, sourceText.Text)));
-
-                var targetCdata = unit.Resources[0].Target.Text[0] as CDataTag;
-                var targetText = unit.Resources[0].Target.Text[0] as PlainText;
-
-                target.Text.Clear();
-                if(targetCdata!=null)
-                {
-                    target.Text.Add(new CDataTag(string.Format("<{0}>{1}</{0}>", enclosingTag, targetCdata.Text)));
-                }
-                else if (targetText != null)
-                {
-                    target.Text.Add(new CDataTag(string.Format("<{0}>{1}</{0}>", enclosingTag, targetText.Text)));
-                }
-
-                newSegment.Source = source;
-                newSegment.Target = target;
-
-                unit.Resources.Clear();
-                unit.Resources.Add(newSegment);
-            }
-
             return document;
         }
 
-        private ResourceStringContent MergeBackUnits<T>(IList<T> list) where T : ResourceString
+        private string RetrieveInnerContent(Group group)
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var item in list)
+            foreach (var container in group.Containers)
             {
-                if(item.Text.Count>1)
-                    throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
-
-                var segment = item.SelectableAncestor as Segment;
-                var unit = segment.Parent as Unit;
-                var unitName = unit.Name;
-
-                var cdata = item.Text[0] as CDataTag;
-                var text = item.Text[0] as PlainText;
-
-                if (string.IsNullOrEmpty(unitName))
+                if(container is Group)
                 {
-                    sb.AppendLine(text.Text);
+                    sb.AppendFormat("<{0}>{1}</{0}>", container.Name, RetrieveInnerContent(container as Group));
                 }
                 else
                 {
-                    if (cdata != null)
-                    {
-                        sb.Append(string.Format("<{0}>{1}</{0}>", unitName, cdata.Text));
-                    }
-                    else if (text != null)
-                    {
-                        sb.Append(string.Format("<{0}>{1}</{0}>", unitName, text.Text));
-                    }
+                    var content = GetTextContent(container as Unit);
+                    if (content.IsHtml())
+                        sb.Append(content);
                     else
-                    {
-                        throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
-                    }
-                }
-
-
+                        sb.AppendLine(content);
+                }   
             }
-
-            var finalText = sb.ToString();
-            if (finalText.IsHtml())
-                return new CDataTag(finalText);
-            else
-                return new PlainText(finalText.TrimEnd('\r','\n'));
+            return sb.ToString();
         }
+
+        private string GetTextContent(Unit nestedUnit)
+        {
+            if(nestedUnit.Resources.Count>1)
+                throw new InvalidOperationException("At this stage I expect only one segment. This unit is invalid: " + nestedUnit.SelectorPath);
+            Segment segment = nestedUnit.Resources[0] as Segment;
+            if (segment == null) return "";
+
+            ResourceString item = segment.Target;
+            if (item.Text.Count > 1)
+                throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + nestedUnit.SelectorPath);
+            var cdata = item.Text[0] as CDataTag;
+            var text = item.Text[0] as PlainText;
+
+            var unitName = nestedUnit.Name;
+
+            if (string.IsNullOrEmpty(unitName))
+            {
+                return text.Text;
+            }
+            else
+            {
+                if (cdata != null)
+                {
+                    return string.Format("<{0}>{1}</{0}>", unitName, cdata.Text);
+                }
+                else if (text != null)
+                {
+                    return string.Format("<{0}>{1}</{0}>", unitName, text.Text);
+                }
+                else
+                {
+                    throw new InvalidOperationException("At this stage I expect only a plain text or a CData. This unit is invalid: " + item.SelectableAncestor.SelectorPath);
+                }
+            }
+        }
+
     }
 }
