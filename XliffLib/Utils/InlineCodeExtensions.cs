@@ -4,6 +4,7 @@ using System.Text;
 using HtmlAgilityPack;
 using Localization.Xliff.OM.Core;
 
+
 namespace XliffLib.Utils
 {
     public static class InlineCodeExtensions
@@ -36,28 +37,37 @@ namespace XliffLib.Utils
                 }
                 if (node.NodeType == HtmlNodeType.Element && node.HasChildNodes)
                 {
-                    tagCounter++;
-                    var startTagId = AddOriginalData(originalData, "<" + node.Name + ">", ref originalDataCounter);
-                    var endTagId = AddOriginalData(originalData, "</" + node.Name + ">", ref originalDataCounter);
-                    var pc = new SpanningCode(tagCounter.ToString());
-                    pc.DataReferenceStart = startTagId;
-                    pc.DataReferenceEnd = endTagId;
-                    pc.Text.Add(new PlainText(node.InnerText));
-                    var inlineCodeType = Map[node.Name];
-                    pc.Type = inlineCodeType.Type;
-                    pc.SubType = inlineCodeType.Subtype;
-                    text.Add(pc);
+                    var inlineCodeType = Map.GetValueOrDefault(node.Name);
+                    if (inlineCodeType.Type == null)
+                    {
+                        text.Add(new PlainText(node.InnerText));
+                    }
+                    else
+                    {
+                        tagCounter++;
+                        var startTagId = AddOriginalData(originalData, "<" + node.Name + ">", ref originalDataCounter);
+                        var endTagId = AddOriginalData(originalData, "</" + node.Name + ">", ref originalDataCounter);
+                        var pc = new SpanningCode(tagCounter.ToString());
+                        pc.DataReferenceStart = startTagId;
+                        pc.DataReferenceEnd = endTagId;
+                        pc.Text.Add(new PlainText(node.InnerText));
+                        pc.Type = inlineCodeType.Type;
+                        pc.SubType = inlineCodeType.Subtype;
+                        text.Add(pc);
+                    }
                 }
                 if (node.NodeType == HtmlNodeType.Element && !node.HasChildNodes)
                 {
+                    var inlineCodeType = Map.GetValueOrDefault(node.Name);
+                    if (inlineCodeType.Type == null) continue;
                     tagCounter++;
                     var tagId = AddOriginalData(originalData, "<" + node.Name + "/>", ref originalDataCounter);
                     var ph = new StandaloneCode(tagCounter.ToString());
                     ph.DataReference = tagId;
-                    var inlineCodeType = Map[node.Name];
                     ph.Type = inlineCodeType.Type;
                     ph.SubType = inlineCodeType.Subtype;
                     text.Add(ph);
+
                 }
 
             }
@@ -108,7 +118,7 @@ namespace XliffLib.Utils
             Type = type;
             Subtype = subtype;
         }
-        public CodeType Type;
+        public CodeType? Type;
         public string Subtype;
 
     }
