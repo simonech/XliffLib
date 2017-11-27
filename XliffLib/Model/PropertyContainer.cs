@@ -14,11 +14,16 @@ namespace XliffLib.Model
 
         public static PropertyContainer FromXliff(TranslationContainer container)
         {
+            PropertyContainer propertyContainer = null;
             if (container is Group)
-                return PropertyGroup.FromXliff(container);
+            {
+                propertyContainer = PropertyGroup.FromXliff(container);
+            }
             if (container is Unit)
-                return Property.FromXliff(container);
-            return null;
+            {
+                propertyContainer = Property.FromXliff(container);
+            }
+            return propertyContainer;
         }
     }
 }

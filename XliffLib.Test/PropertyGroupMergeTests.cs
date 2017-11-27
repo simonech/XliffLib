@@ -37,5 +37,22 @@ namespace XliffLib.Test
 
             Assert.AreEqual(1, propertyGroup.Containers.Count);
         }
+
+        [Test()]
+        public void PropertyWithEmptyCDataTargetDoesntGetAddedToContainersList()
+        {
+            var group = new Group("g1");
+            group.Name = "title";
+            var unit = new Unit("u1");
+
+            var segment = new Segment();
+            segment.Target = new Target();
+            segment.Target.Text.Add(new CDataTag(""));
+            unit.Resources.Add(segment);
+            group.Containers.Add(unit);
+
+            PropertyGroup propertyGroup = PropertyGroup.FromXliff(group) as PropertyGroup;
+            Assert.AreEqual(0, propertyGroup.Containers.Count);
+        }
     }
 }

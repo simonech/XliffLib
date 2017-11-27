@@ -48,5 +48,19 @@ namespace XliffLib.Test
 
             Assert.AreEqual("<p>testo tradotto</p>", property.Value);
         }
+
+        [Test()]
+        public void EmptyXliffCDataContentGivesANullProperty()
+        {
+            var unit = new Unit("u1");
+            var segment = new Segment();
+            segment.Target = new Target();
+            segment.Target.Text.Add(new CDataTag(""));
+            unit.Resources.Add(segment);
+
+            Property property = Property.FromXliff(unit) as Property;
+
+            Assert.IsNull(property);
+        }
     }
 }

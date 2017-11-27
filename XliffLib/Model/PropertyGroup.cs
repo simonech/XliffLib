@@ -27,7 +27,11 @@ namespace XliffLib.Model
 
             foreach (var container in group.Containers)
             {
-                propertyGroup.Containers.Add(PropertyContainer.FromXliff(container));
+                var property = PropertyContainer.FromXliff(container);
+                if (property != null)
+                {
+                    propertyGroup.Containers.Add(property);
+                }
             }
 
             return propertyGroup;

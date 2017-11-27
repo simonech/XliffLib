@@ -49,7 +49,10 @@ namespace XliffLib.Model
             foreach (var container in file.Containers)
             {
                 var propertyContainer = PropertyContainer.FromXliff(container);
-                document.Containers.Add(propertyContainer);
+                if (propertyContainer != null)
+                {
+                    document.Containers.Add(propertyContainer);
+                }
             }
 
             return document;
