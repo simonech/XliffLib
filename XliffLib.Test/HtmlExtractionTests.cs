@@ -58,6 +58,9 @@ namespace XliffLib.Test
             get
             {
                 yield return new TestCaseData("Hello <b>World</b>!").Returns(true);
+                yield return new TestCaseData("Hello <strong>World</strong>!").Returns(true);
+                yield return new TestCaseData("Hello <i>World</i>!").Returns(true);
+                yield return new TestCaseData("Hello <em>World</em>!").Returns(true);
                 yield return new TestCaseData("Hello world!").Returns(false);
                 yield return new TestCaseData("<li>Item</li>").Returns(true);
                 yield return new TestCaseData("<p>Item</p><p>Item</p><p>Item</p>").Returns(true);

@@ -73,7 +73,16 @@ namespace XliffLib.Utils
             if (n.NodeType == HtmlNodeType.Element)
             {
                 if (INLINECODE.Contains(n.Name))
+                {
+                    // Unfortunately both HTML and Xliff have an <em> element
+                    // so if the <em> tag also has an attribute startRef it's an Xliff
+                    if (n.Name.Equals("em") && n.Attributes["startRef"] == null)
+                    {
+                        return false;
+                    }
                     return true;
+                }
+                    
             }
             return false;
         }
