@@ -44,11 +44,13 @@ namespace XliffLib
             {
                 throw new InvalidOperationException("At this stage I expect only a plain text or a CData, not multiple elements. This unit is invalid: " + unit.SelectorPath);
             }
+
             if (segment.Source.Text[0] is CDataTag)
             {
                 var cdata = segment.Source.Text[0] as CDataTag;
-                var nameBefore = unit.Name;
+                var typeBefore = unit.Type;
                 var container = SplitUnit(unit, cdata.Text, true);
+
                 if (container is Group)
                 {
                     var group = container as Group;
@@ -59,7 +61,7 @@ namespace XliffLib
                 }
                 else if(container is Unit)
                 {
-                    if(!container.Name.Equals(nameBefore))
+                    if(!container.Type.Equals(typeBefore))
                     {
                         SplitUnitAndIterate(container as Unit);
                     }
@@ -85,6 +87,7 @@ namespace XliffLib
             {
                 paragraphs = text.SplitPlainText();
             }
+
             if(paragraphs.Count()==0)
             {
                 return unit;
@@ -96,6 +99,7 @@ namespace XliffLib
             else
             {
                 var newGroup = new Group(unit.Id + "-g");
+                newGroup.Type = unit.Type;
                 newGroup.Name = unit.Name;
                 if (unit.Metadata != null)
                 {
@@ -129,7 +133,7 @@ namespace XliffLib
                     {
                         string containingTag = para.GetContainingTag();
                         string newContent = para.RemoveContainingTag();
-                        paraUnit.Name = containingTag;
+                        paraUnit.Type = containingTag.ToXliffHtmlType();
                         if(newContent.IsHtml())
                             content = new CDataTag(newContent);
                         else
@@ -255,7 +259,7 @@ namespace XliffLib
             {
                 if(container is Group)
                 {
-                    sb.AppendFormat("<{0}>{1}</{0}>", container.Name, RetrieveInnerContent(container as Group, selector));
+                    sb.AppendFormat("<{0}>{1}</{0}>", container.Type.FromXliffHtmlType(), RetrieveInnerContent(container as Group, selector));
                 }
                 else
                 {
@@ -282,9 +286,9 @@ namespace XliffLib
             var cdata = item.Text[0] as CDataTag;
             var text = item.Text[0] as PlainText;
 
-            var unitName = nestedUnit.Name;
+            var unitType = nestedUnit.Type;
 
-            if (string.IsNullOrEmpty(unitName))
+            if (string.IsNullOrEmpty(unitType))
             {
                 return text.Text;
             }
@@ -292,11 +296,11 @@ namespace XliffLib
             {
                 if (cdata != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", unitName, cdata.Text);
+                    return string.Format("<{0}>{1}</{0}>", unitType.FromXliffHtmlType(), cdata.Text);
                 }
                 else if (text != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", unitName, text.Text);
+                    return string.Format("<{0}>{1}</{0}>", unitType.FromXliffHtmlType(), text.Text);
                 }
                 else
                 {

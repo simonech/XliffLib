@@ -35,6 +35,7 @@ namespace XliffTester
             {
                 var result = extractor.Write(xliff, true);
                 Console.WriteLine(result);
+                System.IO.File.WriteAllText(Path.Combine(directory, "Samples", "extraction.xlf"),result);
             }
             catch (ValidationException e)
             {

@@ -67,6 +67,16 @@ namespace XliffLib.Utils
             return doc.DocumentNode.ChildNodes[0].Name;
         }
 
+        public static string ToXliffHtmlType(this string htmlTag)
+        {
+            return "html:" + htmlTag;
+        }
+
+        public static string FromXliffHtmlType(this string xliffType)
+        {
+            return xliffType.Substring(5);
+        }
+
         private static bool IsTextOrXliff(HtmlNode n)
         {
             if (n.NodeType == HtmlNodeType.Text) return true;

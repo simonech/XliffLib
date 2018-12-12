@@ -42,7 +42,7 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original"">
-            <unit id=""u1-1"" name=""p"">
+            <unit id=""u1-1"" type=""html:p"">
                 <segment>
                     <source>Hello Word!</source>
                     <target>Hello Word!</target>
@@ -71,20 +71,20 @@ namespace XliffLib.Test
         }
 
         [Test()]
-        public void OrderedListInTheRootWithTwoItemIsWrappedInUL()
+        public void UnorderedListInTheRootWithTwoItemIsWrappedInUL()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original"">
-            <group id=""u1-1-g"" name=""ul"">
-                <unit id=""u1-1-1"" name=""li"">
+            <group id=""u1-1-g"" type=""html:ul"">
+                <unit id=""u1-1-1"" type=""html:li"">
                     <segment>
                             <source>Hello</source>
                             <target>Hello</target>
                     </segment>
                 </unit>
-                <unit id=""u1-1-2"" name=""li"">
+                <unit id=""u1-1-2"" type=""html:li"">
                     <segment>
                             <source>Hello</source>
                             <target>Hello</target>
@@ -114,14 +114,14 @@ namespace XliffLib.Test
         }
 
         [Test()]
-        public void OrderedListInTheRootWithOneItemIsWrappedInUL()
+        public void UnorderedListInTheRootWithOneItemIsWrappedInUL()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original"">
-            <group id=""u1-1-g"" name=""ul"" >
-                <unit id=""u1-1-1"" name=""li"">
+            <group id=""u1-1-g"" type=""html:ul"" >
+                <unit id=""u1-1-1"" type=""html:li"">
                     <segment>
                             <source>Hello</source>
                             <target>Hello</target>
@@ -151,26 +151,26 @@ namespace XliffLib.Test
         }
 
         [Test()]
-        public void OrderedListAsChildWithTwoItemIsWrappedInUL()
+        public void UnorderedListAsChildWithTwoItemIsWrappedInUL()
         {
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
     <group id=""u1-g"" name=""original"">
-      <unit id=""u1-1"" name=""p"" >
+      <unit id=""u1-1"" type=""html:p"" >
         <segment>
           <source>whatever</source>
           <target>whatever</target>
         </segment>
       </unit>
-      <group id=""u1-2-g"" name=""ul"" >
-        <unit id= ""u1-2-1"" name=""li"">
+      <group id=""u1-2-g"" type=""html:ul"" >
+        <unit id= ""u1-2-1"" type=""html:li"">
           <segment>
             <source>Item 1</source>
             <target>Item 1</target>
           </segment>
         </unit>
-        <unit id= ""u1-2-2"" name=""li"" >
+        <unit id= ""u1-2-2"" type=""html:li"" >
           <segment>
             <source>Item 1</source>
             <target>Item 1</target>
@@ -206,7 +206,7 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
     <group id=""u1-g"" name=""original"">
-        <unit id=""u1-1"" name=""p"">
+        <unit id=""u1-1"" type=""html:p"">
             <segment>
                     <source><![CDATA[Hello <b>Word</b>!]]></source>
                     <target><![CDATA[Hello <b>Word</b>!]]></target>
@@ -276,7 +276,7 @@ namespace XliffLib.Test
             Assert.AreEqual(1,unit.Resources[0].Target.Text.Count);
             var text = unit.Resources[0].Target.Text[0] as PlainText;
             Assert.IsNotNull(text);
-            Assert.AreEqual("Hello Word1!\r\nHello Word2!\r\nHello Word3!", text.Text);
+            Assert.AreEqual("Hello Word1!"+ Environment.NewLine + "Hello Word2!" + Environment.NewLine + "Hello Word3!", text.Text);
         }
 
         [Test()]
@@ -286,19 +286,19 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original"">
-            <unit id=""u1-1"" name=""p"">
+            <unit id=""u1-1"" type=""html:p"">
                 <segment>
                     <source>Hello Word1!</source>
                     <target>Hello Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u1-2"" name=""p"">
+            <unit id=""u1-2"" type=""html:p"">
                 <segment>
                     <source>Hello Word2!</source>
                     <target>Hello Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u1-3"" name=""p"">
+            <unit id=""u1-3"" type=""html:p"">
                 <segment>
                     <source><![CDATA[Hello <b>Word3</b>!]]></source>
                     <target><![CDATA[Hello <b>Word3</b>!]]></target>
@@ -331,19 +331,19 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original"">
-            <unit id=""u1-1"" name=""p"">
+            <unit id=""u1-1"" type=""html:p"">
                 <segment>
                     <source>Hello Word1!</source>
                     <target>Hello Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u1-2"" name=""p"">
+            <unit id=""u1-2"" type=""html:p"">
                 <segment>
                     <source>Hello Word2!</source>
                     <target>Hello Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u1-3"" name=""p"">
+            <unit id=""u1-3"" type=""html:p"">
                 <segment>
                     <source>Hello Word3!</source>
                     <target>Hello Word3!</target>
@@ -376,19 +376,19 @@ namespace XliffLib.Test
 <xliff srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
         <group id=""u1-g"" name=""original1"">
-            <unit id=""u1-1"" name=""p"">
+            <unit id=""u1-1"" type=""html:p"">
                 <segment>
                     <source>Hello Word1!</source>
                     <target>Hello Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u1-2"" name=""p"">
+            <unit id=""u1-2"" type=""html:p"">
                 <segment>
                     <source>Hello Word2!</source>
                     <target>Hello Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u1-3"" name=""p"">
+            <unit id=""u1-3"" type=""html:p"">
                 <segment>
                     <source><![CDATA[Hello <b>Word3</b>!]]></source>
                     <target><![CDATA[Hello <b>Word3</b>!]]></target>
@@ -396,19 +396,19 @@ namespace XliffLib.Test
             </unit>
         </group>
         <group id=""u2-g"" name=""original2"">
-            <unit id=""u2-1"" name=""p"">
+            <unit id=""u2-1"" type=""html:p"">
                 <segment>
                     <source>Hello2 Word1!</source>
                     <target>Hello2 Word1!</target>
                 </segment>
             </unit>
-            <unit id=""u2-2"" name=""p"">
+            <unit id=""u2-2"" type=""html:p"">
                 <segment>
                     <source>Hello2 Word2!</source>
                     <target>Hello2 Word2!</target>
                 </segment>
             </unit>
-            <unit id=""u2-3"" name=""p"">
+            <unit id=""u2-3"" type=""html:p"">
                 <segment>
                     <source><![CDATA[Hello2 <b>Word3</b>!]]></source>
                     <target><![CDATA[Hello2 <b>Word3</b>!]]></target>
