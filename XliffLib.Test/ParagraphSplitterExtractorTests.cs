@@ -104,7 +104,7 @@ Hello Word3!</source>
             Assert.AreEqual(1, group.Containers.Count);
             var unit = group.Containers[0] as Unit;
 
-            Assert.AreEqual("p", unit.Name);
+            Assert.AreEqual("html:p", unit.Type);
             Assert.AreEqual("Hello Word!", unit.Resources[0].Source.Text[0].ToString());
         }
 
@@ -136,7 +136,7 @@ Hello Word3!</source>
             Assert.AreEqual(1, group.Containers.Count);
             var unit = group.Containers[0] as Unit;
 
-            Assert.AreEqual("p", unit.Name);
+            Assert.AreEqual("html:p", unit.Type);
             Assert.AreEqual("<![CDATA[Hello <b>Word</b>!]]>", unit.Resources[0].Source.Text[0].ToString());
         }
 
@@ -171,19 +171,19 @@ Hello Word3!</source>
             var unit1 = group.Containers[0] as Unit;
             var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("p", unit1.Name);
+            Assert.AreEqual("html:p", unit1.Type);
             Assert.AreEqual("Hello Word1!", textUnit1);
 
             var unit2 = group.Containers[1] as Unit;
             var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("p", unit2.Name);
+            Assert.AreEqual("html:p", unit2.Type);
             Assert.AreEqual("Hello Word2!", textUnit2);
 
             var unit3 = group.Containers[2] as Unit;
             var textUnit3 = unit3.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("p", unit3.Name);
+            Assert.AreEqual("html:p", unit3.Type);
             Assert.AreEqual("<![CDATA[Hello <b>Word3</b>!]]>", textUnit3);
         }
 
@@ -217,28 +217,28 @@ Hello Word3!</source>
             var pUnit = group.Containers[0] as Unit;
             var pUnitText = pUnit.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("p", pUnit.Name);
+            Assert.AreEqual("html:p", pUnit.Type);
             Assert.AreEqual("Hello World!", pUnitText);
 
             var ulGroup = group.Containers[1] as Group;
-            Assert.AreEqual("ul", ulGroup.Name);
+            Assert.AreEqual("html:ul", ulGroup.Type);
 
             var unit1 = ulGroup.Containers[0] as Unit;
             var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("li", unit1.Name);
+            Assert.AreEqual("html:li", unit1.Type);
             Assert.AreEqual("Hello Word1!", textUnit1);
 
             var unit2 = ulGroup.Containers[1] as Unit;
             var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("li", unit2.Name);
+            Assert.AreEqual("html:li", unit2.Type);
             Assert.AreEqual("Hello Word2!", textUnit2);
 
             var unit3 = ulGroup.Containers[2] as Unit;
             var textUnit3 = unit3.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("li", unit3.Name);
+            Assert.AreEqual("html:li", unit3.Type);
             Assert.AreEqual("Hello Word3!", textUnit3);
         }
 
@@ -271,13 +271,13 @@ Hello Word3!</source>
             Assert.AreEqual(1, group.Containers.Count);
 
             var ulGroup = group.Containers[0] as Group;
-            Assert.AreEqual("ul", ulGroup.Name);
+            Assert.AreEqual("html:ul", ulGroup.Type);
             Assert.AreEqual(1, ulGroup.Containers.Count);
 
             var unit1 = ulGroup.Containers[0] as Unit;
             var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("li", unit1.Name);
+            Assert.AreEqual("html:li", unit1.Type);
             Assert.AreEqual("Hello Word1!", textUnit1);
         }
 
@@ -310,25 +310,25 @@ Hello Word3!</source>
             Assert.AreEqual(1, group.Containers.Count);
 
             var ulGroup = group.Containers[0] as Group;
-            Assert.AreEqual("ul", ulGroup.Name);
+            Assert.AreEqual("html:ul", ulGroup.Type);
             Assert.AreEqual(3, ulGroup.Containers.Count);
 
             var unit1 = ulGroup.Containers[0] as Unit;
             var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("li", unit1.Name);
+            Assert.AreEqual("html:li", unit1.Type);
             Assert.AreEqual("Hello Word1!", textUnit1);
 
             var unit2 = ulGroup.Containers[1] as Unit;
             var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("li", unit2.Name);
+            Assert.AreEqual("html:li", unit2.Type);
             Assert.AreEqual("Hello Word2!", textUnit2);
 
             var unit3 = ulGroup.Containers[2] as Unit;
             var textUnit3 = unit3.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("li", unit3.Name);
+            Assert.AreEqual("html:li", unit3.Type);
             Assert.AreEqual("Hello Word3!", textUnit3);
         }
 
@@ -338,8 +338,8 @@ Hello Word3!</source>
             var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
     <file id=""f1"">
-        <group id=""g1"">
-            <unit id=""u1"">
+        <group id=""g1"" name=""originalGroup"">
+            <unit id=""u1"" name=""originalUnit"">
                 <segment>
                     <source><![CDATA[<p>Hello Word nested!</p><p>Hello Word2!</p>]]></source>
                 </segment>
@@ -363,25 +363,26 @@ Hello Word3!</source>
             var group = newDocument.Files[0].Containers[0] as Group;
             Assert.IsNotNull(group);
             Assert.AreEqual("g1", group.Id);
+            Assert.AreEqual("originalGroup", group.Name);
 
             Assert.AreEqual(1, group.Containers.Count);
 
             var nestedGroup = group.Containers[0] as Group;
 
             Assert.IsNotNull(nestedGroup);
-
+            Assert.AreEqual("originalUnit", nestedGroup.Name);
             Assert.AreEqual(2, nestedGroup.Containers.Count);
 
             var unit1 = nestedGroup.Containers[0] as Unit;
             var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("p", unit1.Name);
+            Assert.AreEqual("html:p", unit1.Type);
             Assert.AreEqual("Hello Word nested!", textUnit1);
 
             var unit2 = nestedGroup.Containers[1] as Unit;
             var textUnit2 = unit2.Resources[0].Source.Text[0].ToString();
 
-            Assert.AreEqual("p", unit2.Name);
+            Assert.AreEqual("html:p", unit2.Type);
             Assert.AreEqual("Hello Word2!", textUnit2);
         }
 

@@ -2,7 +2,7 @@
 <xliff srcLang="en-US" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
   <file id="f1">
     <group id="u1-g" name="title">
-      <unit id="u1-1" name="p">
+      <unit id="u1-1" type="html:p">
         <originalData>
           <data id="d1">&lt;strong&gt;</data>
           <data id="d2">&lt;/strong&gt;</data>
