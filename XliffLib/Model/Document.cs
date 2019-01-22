@@ -7,6 +7,9 @@ using Localization.Xliff.OM.Core;
 
 namespace XliffLib.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Document : ContentElement
     {
         public Document() : base()
@@ -14,9 +17,19 @@ namespace XliffLib.Model
             Containers = new List<PropertyContainer>();
         }
 
+        /// <summary>
+        /// Gets or sets the identifier for the document in the source system.
+        /// It could, for example, be the ID or a guid in the CMS from which the document is exported from and imported to.
+        /// </summary>
+        /// <value>The source identifier.</value>
         public string SourceIdentifier { get; set; }
 
+        /// <summary>
+        /// Gets the containers.
+        /// </summary>
+        /// <value>The containers.</value>
         public IList<PropertyContainer> Containers { get; private set; }
+
 
         public override XliffElement ToXliff(IdCounter idCounter)
         {
