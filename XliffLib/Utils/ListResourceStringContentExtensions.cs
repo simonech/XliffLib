@@ -49,6 +49,12 @@ namespace XliffLib.Utils
                             case "xlf:u":
                                 tag = "u";
                                 break;
+                            case "x-xlf:sup":
+                                tag = "sup";
+                                break;
+                            case "x-xlf:sub":
+                                tag = "sub";
+                                break;
                             default:
                                 tag = string.Empty;
                                 break;

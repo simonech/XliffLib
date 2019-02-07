@@ -146,6 +146,34 @@ namespace XliffLib.Test
             Assert.AreEqual("xlf:u", pc.SubType);
         }
 
+        [Test()]
+        public void SuperscriptCodeGetsRightTypeSubType()
+        {
+            string original = "<sup>formatted</sup>";
+
+            var result = original.ConvertHtmlTagsInInLineCodes();
+
+            Assert.AreEqual(1, result.Text.Count);
+            var pc = result.Text[0] as SpanningCode;
+            Assert.IsNotNull(pc);
+            Assert.AreEqual(CodeType.Formatting, pc.Type);
+            Assert.AreEqual("x-xlf:sup", pc.SubType);
+        }
+
+        [Test()]
+        public void SubscriptCodeGetsRightTypeSubType()
+        {
+            string original = "<sub>formatted</sub>";
+
+            var result = original.ConvertHtmlTagsInInLineCodes();
+
+            Assert.AreEqual(1, result.Text.Count);
+            var pc = result.Text[0] as SpanningCode;
+            Assert.IsNotNull(pc);
+            Assert.AreEqual(CodeType.Formatting, pc.Type);
+            Assert.AreEqual("x-xlf:sub", pc.SubType);
+        }
+
 
         [Test]
         public void PlainTextInXliffIsNotChanged()
@@ -162,7 +190,7 @@ namespace XliffLib.Test
 
 
         [Test]
-        public void PcWithBoldTypeGetsBackToHtmlStrongTag()
+        public void PcWithBoldSubtypeGetsBackToHtmlStrongTag()
         {
             var xliffCode = new List<ResourceStringContent>();
             
@@ -177,7 +205,7 @@ namespace XliffLib.Test
         }
 
         [Test]
-        public void PcWithItalicTypeGetsBackToHtmlEmTag()
+        public void PcWithItalicSubtypeGetsBackToHtmlEmTag()
         {
             var xliffCode = new List<ResourceStringContent>();
 
@@ -192,7 +220,7 @@ namespace XliffLib.Test
         }
 
         [Test]
-        public void PcWithUnderlineTypeGetsBackToHtmlUTag()
+        public void PcWithUnderlineSubtypeGetsBackToHtmlUTag()
         {
             var xliffCode = new List<ResourceStringContent>();
 
@@ -204,6 +232,36 @@ namespace XliffLib.Test
             var htmlString = xliffCode.ConvertToHtml();
 
             Assert.AreEqual("<u>text</u>", htmlString);
+        }
+
+        [Test]
+        public void PcWithCustomSubscriptSubtypeGetsBackToHtmlUTag()
+        {
+            var xliffCode = new List<ResourceStringContent>();
+
+            var pc = new SpanningCode("1", "text");
+            pc.Type = CodeType.Formatting;
+            pc.SubType = "x-xlf:sub";
+            xliffCode.Add(pc);
+
+            var htmlString = xliffCode.ConvertToHtml();
+
+            Assert.AreEqual("<sub>text</sub>", htmlString);
+        }
+
+        [Test]
+        public void PcWithCustomSuperscriptSubtypeGetsBackToHtmlUTag()
+        {
+            var xliffCode = new List<ResourceStringContent>();
+
+            var pc = new SpanningCode("1", "text");
+            pc.Type = CodeType.Formatting;
+            pc.SubType = "x-xlf:sup";
+            xliffCode.Add(pc);
+
+            var htmlString = xliffCode.ConvertToHtml();
+
+            Assert.AreEqual("<sup>text</sup>", htmlString);
         }
 
         [Test]
