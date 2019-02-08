@@ -18,8 +18,8 @@ namespace XliffLib.Utils
             {"em", new InlineCodeType(CodeType.Formatting, "xlf:i")},
             {"u", new InlineCodeType(CodeType.Formatting, "xlf:u")},
             {"br", new InlineCodeType(CodeType.Formatting, "xlf:lb")},
-            {"sup", new InlineCodeType(CodeType.Formatting, "x-xlf:sup")},
-            {"sub", new InlineCodeType(CodeType.Formatting, "x-xlf:sub")},
+            {"sup", new InlineCodeType(CodeType.Formatting, "html:sup")},
+            {"sub", new InlineCodeType(CodeType.Formatting, "html:sub")},
         };
 
 

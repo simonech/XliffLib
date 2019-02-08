@@ -49,10 +49,10 @@ namespace XliffLib.Utils
                             case "xlf:u":
                                 tag = "u";
                                 break;
-                            case "x-xlf:sup":
+                            case "html:sup":
                                 tag = "sup";
                                 break;
-                            case "x-xlf:sub":
+                            case "html:sub":
                                 tag = "sub";
                                 break;
                             default:

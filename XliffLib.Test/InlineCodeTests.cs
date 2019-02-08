@@ -157,7 +157,7 @@ namespace XliffLib.Test
             var pc = result.Text[0] as SpanningCode;
             Assert.IsNotNull(pc);
             Assert.AreEqual(CodeType.Formatting, pc.Type);
-            Assert.AreEqual("x-xlf:sup", pc.SubType);
+            Assert.AreEqual("html:sup", pc.SubType);
         }
 
         [Test()]
@@ -171,7 +171,7 @@ namespace XliffLib.Test
             var pc = result.Text[0] as SpanningCode;
             Assert.IsNotNull(pc);
             Assert.AreEqual(CodeType.Formatting, pc.Type);
-            Assert.AreEqual("x-xlf:sub", pc.SubType);
+            Assert.AreEqual("html:sub", pc.SubType);
         }
 
 
@@ -241,7 +241,7 @@ namespace XliffLib.Test
 
             var pc = new SpanningCode("1", "text");
             pc.Type = CodeType.Formatting;
-            pc.SubType = "x-xlf:sub";
+            pc.SubType = "html:sub";
             xliffCode.Add(pc);
 
             var htmlString = xliffCode.ConvertToHtml();
@@ -256,7 +256,7 @@ namespace XliffLib.Test
 
             var pc = new SpanningCode("1", "text");
             pc.Type = CodeType.Formatting;
-            pc.SubType = "x-xlf:sup";
+            pc.SubType = "html:sup";
             xliffCode.Add(pc);
 
             var htmlString = xliffCode.ConvertToHtml();
