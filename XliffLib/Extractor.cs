@@ -10,8 +10,7 @@ namespace XliffLib
 {
     public abstract class Extractor
     {
-        //TODO: Change to a custom collection
-        public IList<IProcessingStep> ProcessingSteps
+        public LinkedList<IProcessingStep> ProcessingSteps
         {
             get;
             private set;
@@ -26,7 +25,7 @@ namespace XliffLib
         public Extractor(ISourceExtractor sourceExtractor)
         {
             SourceExtractor = sourceExtractor;
-            ProcessingSteps = new List<IProcessingStep>();
+            ProcessingSteps = new LinkedList<IProcessingStep>();
         }
 
         public string Write(XliffDocument document, bool indent = false)

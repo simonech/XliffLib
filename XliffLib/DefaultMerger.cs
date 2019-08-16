@@ -10,8 +10,8 @@ namespace XliffLib
     {
         public DefaultMerger() : base(new MergerToBundle())
         {
-            ProcessingSteps.Add(new InlineCodeProcessing());
-            ProcessingSteps.Add(new ParagraphSplitter());
+            ProcessingSteps.AddLast(new InlineCodeProcessing());
+            ProcessingSteps.AddLast(new ParagraphSplitter());
         }
     }
 }

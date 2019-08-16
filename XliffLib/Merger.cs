@@ -10,7 +10,7 @@ namespace XliffLib
     public class Merger
     {
 
-        public IList<IProcessingStep> ProcessingSteps
+        public LinkedList<IProcessingStep> ProcessingSteps
         {
             get;
             private set;
@@ -25,7 +25,7 @@ namespace XliffLib
         public Merger(IMergerToSource sourceMerger)
         {
             SourceMerger = sourceMerger;
-            ProcessingSteps = new List<IProcessingStep>();
+            ProcessingSteps = new LinkedList<IProcessingStep>();
         }
 
         public XliffDocument Read(string xliff)
