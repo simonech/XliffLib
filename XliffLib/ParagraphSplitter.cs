@@ -5,13 +5,17 @@ using XliffLib.Utils;
 using System.Linq;
 using Localization.Xliff.OM.Modules.Metadata;
 using System.Text;
+using XliffLib.HtmlProcessing;
 
 namespace XliffLib
 {
     public class ParagraphSplitter : IProcessingStep
     {
-        public ParagraphSplitter()
+        private IHtmlParser _htmlParser;
+
+        public ParagraphSplitter(IHtmlParser htmlParser)
         {
+            _htmlParser = htmlParser;
         }
 
         public XliffDocument ExecuteExtraction(XliffDocument document)
@@ -82,10 +86,10 @@ namespace XliffLib
         {
             string[] paragraphs;
             if (isCData)
-                paragraphs = text.SplitByDefaultTags();
+                paragraphs = _htmlParser.SplitByDefaultTags(text);
             else
             {
-                paragraphs = text.SplitPlainText();
+                paragraphs = _htmlParser.SplitPlainText(text);
             }
 
             if(paragraphs.Count()==0)
@@ -131,9 +135,9 @@ namespace XliffLib
                     ResourceStringContent content;
                     if (isCData)
                     {
-                        string containingTag = para.GetContainingTag();
-                        string newContent = para.RemoveContainingTag();
-                        paraUnit.Type = containingTag.ToXliffHtmlType();
+                        string containingTag = _htmlParser.GetContainingTag(para);
+                        string newContent = _htmlParser.RemoveContainingTag(para);
+                        paraUnit.Type = _htmlParser.ToXliffHtmlType(containingTag);
                         if(newContent.IsHtml())
                             content = new CDataTag(newContent);
                         else
@@ -259,7 +263,7 @@ namespace XliffLib
             {
                 if(container is Group)
                 {
-                    sb.AppendFormat("<{0}>{1}</{0}>", container.Type.FromXliffHtmlType(), RetrieveInnerContent(container as Group, selector));
+                    sb.AppendFormat("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(container.Type), RetrieveInnerContent(container as Group, selector));
                 }
                 else
                 {
@@ -296,11 +300,11 @@ namespace XliffLib
             {
                 if (cdata != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", unitType.FromXliffHtmlType(), cdata.Text);
+                    return string.Format("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), cdata.Text);
                 }
                 else if (text != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", unitType.FromXliffHtmlType(), text.Text);
+                    return string.Format("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), text.Text);
                 }
                 else
                 {

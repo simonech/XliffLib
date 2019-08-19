@@ -1,13 +1,21 @@
 ﻿using NUnit.Framework;
 using System;
-using XliffLib.Utils;
+using XliffLib.HtmlProcessing;
 using System.Collections;
 
 namespace XliffLib.Test
 {
     [TestFixture()]
-    public class HtmlExtractionTests
+    public class SimpleHtmlExtractorTests
     {
+        SimpleHtmlParser _htmlParser;
+
+        [OneTimeSetUp()]
+        public void Init()
+        {
+            _htmlParser = new SimpleHtmlParser();
+        }
+
         [Test(), TestCaseSource(typeof(DataSamples), "HtmlIdentification")]
         public bool CanIdentifyHtmlInStrings(string text)
         {
@@ -17,37 +25,37 @@ namespace XliffLib.Test
         [Test(), TestCaseSource(typeof(DataSamples), "SplitParagraphsCount")]
         public int ParagraphsAreRightCount(string text)
         {
-            return text.SplitByParagraphs().Length;
+            return _htmlParser.SplitByParagraphs(text).Length;
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "SplitParagraphsValues")]
         public string[] SplitParagraphsValuesAreCorrect(string text)
         {
-            return text.SplitByParagraphs();
+            return _htmlParser.SplitByParagraphs(text);
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "SplitLIValues")]
         public string[] SplitLIValuesAreCorrect(string text)
         {
-            return text.SplitByTags("ul","li");
+            return _htmlParser.SplitByTags(text,"ul","li");
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "SplitMultipleTags")]
         public string[] SplitMultipleTagsAreCorrect(string text)
         {
-            return text.SplitByDefaultTags();
+            return _htmlParser.SplitByDefaultTags(text);
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "RemoveContainingHtmlTag")]
         public string RemoveContainingHtmlTagAreCorrect(string text)
         {
-            return text.RemoveContainingTag();
+            return _htmlParser.RemoveContainingTag(text);
         }
 
         [Test(), TestCaseSource(typeof(DataSamples), "GetContainingHtmlTag")]
         public string GetContainingHtmlTagAreCorrect(string text)
         {
-            return text.GetContainingTag();
+            return _htmlParser.GetContainingTag(text);
         }
     }
 

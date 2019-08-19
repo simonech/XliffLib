@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Localization.Xliff.OM;
 using Localization.Xliff.OM.Core;
-using XliffLib.Utils;
+using XliffLib.HtmlProcessing;
 
 namespace XliffLib.Model
 {
