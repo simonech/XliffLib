@@ -10,20 +10,12 @@ namespace XliffLib.HtmlProcessing
             "p","ul","ol","li","h1","h2","h3","h4","blockquote"
         };
 
-        public override String[] SplitByDefaultTags(string text)
+        public override SimplifiedHtmlContentItem[] SplitHtml(string text)
         {
             return SplitByTags(text, HTMLTAGSTOSPLIT);
         }
 
-        public override String[] SplitPlainText(string text)
-        {
-            if (text.IsHtml())
-                throw new InvalidOperationException(@"The text supplied is not plain text: {text}");
-            else
-                return text.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        public String[] SplitByParagraphs(string text)
+        public SimplifiedHtmlContentItem[] SplitByParagraphs(string text)
         {
             if (text.IsHtml())
                 return SplitByTags(text,"p");
@@ -31,18 +23,13 @@ namespace XliffLib.HtmlProcessing
                 return SplitPlainText(text);
         }
 
-        public String[] SplitByTags(string htmlText, params string[] tags)
+        public SimplifiedHtmlContentItem[] SplitByTags(string htmlText, params string[] tags)
         {
             if (!htmlText.IsHtml())
                 throw new InvalidOperationException(@"The text supplied is not HTML: {htmlText}");
             var doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
-            return doc.DocumentNode.ChildNodes.Where(e => tags.Contains(e.Name)).Select(e => e.OuterHtml).ToArray();
+            return doc.DocumentNode.ChildNodes.Where(e => tags.Contains(e.Name)).Select(e => new SimplifiedHtmlContentItem() { Name = e.Name, Content = e.InnerHtml }).ToArray();
         }
-
-
-
-
-
     }
 }

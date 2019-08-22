@@ -4,10 +4,8 @@ namespace XliffLib.HtmlProcessing
 {
     public interface IHtmlParser
     {
-        String[] SplitByDefaultTags(string text);
-        String[] SplitPlainText(string text);
-        string GetContainingTag(string htmlText);
-        string RemoveContainingTag(string htmlText);
+        SimplifiedHtmlContentItem[] SplitHtml(string text);
+        SimplifiedHtmlContentItem[] SplitPlainText(string text);
         string ToXliffHtmlType(string htmlTag);
         string FromXliffHtmlType(string xliffType);
 

@@ -52,8 +52,10 @@
     <Compile Include="BasicSegmenter.cs" />
     <Compile Include="DefaultMerger.cs" />
     <Compile Include="HtmlProcessing\BaseHtmlParser.cs" />
+    <Compile Include="HtmlProcessing\HierarchicHtmlParser.cs" />
     <Compile Include="HtmlProcessing\IHtmlParser.cs" />
     <Compile Include="HtmlProcessing\SimpleHtmlParser.cs" />
+    <Compile Include="HtmlProcessing\SimplifiedHtmlContentItem.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\PropertyContainer.cs" />

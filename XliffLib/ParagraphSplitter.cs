@@ -65,7 +65,7 @@ namespace XliffLib
                 }
                 else if(container is Unit)
                 {
-                    if(!container.Type.Equals(typeBefore))
+                    if(typeBefore!=null && container.Type != null && !container.Type.Equals(typeBefore))
                     {
                         SplitUnitAndIterate(container as Unit);
                     }
@@ -84,9 +84,9 @@ namespace XliffLib
 
         private TranslationContainer SplitUnit(Unit unit, string text, bool isCData=true)
         {
-            string[] paragraphs;
+            SimplifiedHtmlContentItem[] paragraphs;
             if (isCData)
-                paragraphs = _htmlParser.SplitByDefaultTags(text);
+                paragraphs = _htmlParser.SplitHtml(text);
             else
             {
                 paragraphs = _htmlParser.SplitPlainText(text);
@@ -135,9 +135,12 @@ namespace XliffLib
                     ResourceStringContent content;
                     if (isCData)
                     {
-                        string containingTag = _htmlParser.GetContainingTag(para);
-                        string newContent = _htmlParser.RemoveContainingTag(para);
-                        paraUnit.Type = _htmlParser.ToXliffHtmlType(containingTag);
+                        string containingTag = para.Name;
+                        string newContent = para.InnerContent();
+                        if (!string.IsNullOrWhiteSpace(containingTag))
+                        {
+                            paraUnit.Type = _htmlParser.ToXliffHtmlType(containingTag);
+                        }
                         if(newContent.IsHtml())
                             content = new CDataTag(newContent);
                         else
@@ -145,7 +148,7 @@ namespace XliffLib
                     }
                     else
                     {
-                        content = new PlainText(para);
+                        content = new PlainText(para.Content);
                     }
                     source.Text.Add(content);
                     newSegment.Source = source;
@@ -294,7 +297,14 @@ namespace XliffLib
 
             if (string.IsNullOrEmpty(unitType))
             {
-                return text.Text;
+                if (cdata != null)
+                {
+                    return cdata.Text;
+                }
+                else
+                {
+                    return text.Text;
+                }
             }
             else
             {

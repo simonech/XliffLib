@@ -7,9 +7,17 @@ using XliffLib.HtmlProcessing;
 
 namespace XliffLib.Test
 {
-    [TestFixture()]
-    public class ParagraphSplitterMergerWithSimpleHtmlExtractorTests
+    [TestFixture(typeof(SimpleHtmlParser))]
+    [TestFixture(typeof(HierarchicHtmlParser))]
+    public class ParagraphSplitterMergerTests<TParser> where TParser : IHtmlParser, new()
     {
+        IHtmlParser _htmlParser;
+
+        [SetUp()]
+        public void Init()
+        {
+            _htmlParser = new TParser();
+        }
 
         [Test()]
         public void SingleParagraphPlainTextUnitIsLeftUntouched()
@@ -27,7 +35,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -54,7 +62,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -97,7 +105,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -134,7 +142,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -183,7 +191,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -218,7 +226,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -265,7 +273,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -310,7 +318,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -355,7 +363,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 
@@ -420,7 +428,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter(new SimpleHtmlParser());
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteMerge(document);
 

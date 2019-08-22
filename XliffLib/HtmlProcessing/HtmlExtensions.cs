@@ -11,11 +11,37 @@ namespace XliffLib.HtmlProcessing
             "cp","ph","pc","sc","ec","mrk","sm","em"
         };
 
+        private static string[] HTML_INLINE_ELEMENTS = {
+            "a","abbr","acronym","audio","b","bdi","bdo","big","br",
+            "button","canvas","cite","code","data","datalist","del",
+            "dfn","em","embed","i","iframe","img","input","ins","kbd",
+            "label","map","mark","meter","noscript","object","output",
+            "picture","progress","q","ruby","s","samp","script","select",
+            "slot","small","span","strong","sub","sup","svg","template",
+            "textarea","time","u","tt","var","video","wbr"
+        };
+
         public static bool IsHtml(this string text)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(text);
             return !doc.DocumentNode.ChildNodes.All(n => IsTextOrXliff(n));
+        }
+
+        private static bool IsInlineElement(HtmlNode node)
+        {
+            return HTML_INLINE_ELEMENTS.Contains(node.Name.ToLowerInvariant());
+        }
+
+        public static bool IsTextOrInline(this HtmlNode node)
+        {
+            return node.NodeType == HtmlNodeType.Element && IsInlineElement(node)
+                    || node.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(node.InnerText);
+        }
+
+        public static bool IsBlock(this HtmlNode node)
+        {
+            return node.NodeType == HtmlNodeType.Element && !IsInlineElement(node);
         }
 
         private static bool IsTextOrXliff(HtmlNode n)

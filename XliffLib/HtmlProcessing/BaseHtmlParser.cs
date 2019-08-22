@@ -1,24 +1,22 @@
-﻿using HtmlAgilityPack;
+﻿using System;
+using HtmlAgilityPack;
+using System.Linq;
 
 namespace XliffLib.HtmlProcessing
 {
     public abstract class BaseHtmlParser: IHtmlParser
     {
-        public abstract string[] SplitByDefaultTags(string text);
-        public abstract string[] SplitPlainText(string text);
+        public abstract SimplifiedHtmlContentItem[] SplitHtml(string text);
 
-        public string RemoveContainingTag(string htmlText)
+        public SimplifiedHtmlContentItem[] SplitPlainText(string text)
         {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(htmlText);
-            return doc.DocumentNode.ChildNodes[0].InnerHtml;
-        }
-
-        public string GetContainingTag(string htmlText)
-        {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(htmlText);
-            return doc.DocumentNode.ChildNodes[0].Name;
+            if (text.IsHtml())
+                throw new InvalidOperationException(@"The text supplied is not plain text: {text}");
+            else
+            {
+                var list = text.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                return list.Select(e => new SimplifiedHtmlContentItem() { Content = e }).ToArray();
+            }
         }
 
         public string ToXliffHtmlType(string htmlTag)

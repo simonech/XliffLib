@@ -1,65 +1,9 @@
 ﻿using NUnit.Framework;
-using System;
-using XliffLib.HtmlProcessing;
 using System.Collections;
 
 namespace XliffLib.Test
 {
-    [TestFixture()]
-    public class SimpleHtmlExtractorTests
-    {
-        SimpleHtmlParser _htmlParser;
-
-        [OneTimeSetUp()]
-        public void Init()
-        {
-            _htmlParser = new SimpleHtmlParser();
-        }
-
-        [Test(), TestCaseSource(typeof(DataSamples), "HtmlIdentification")]
-        public bool CanIdentifyHtmlInStrings(string text)
-        {
-            return text.IsHtml();
-        }
-
-        [Test(), TestCaseSource(typeof(DataSamples), "SplitParagraphsCount")]
-        public int ParagraphsAreRightCount(string text)
-        {
-            return _htmlParser.SplitByParagraphs(text).Length;
-        }
-
-        [Test(), TestCaseSource(typeof(DataSamples), "SplitParagraphsValues")]
-        public string[] SplitParagraphsValuesAreCorrect(string text)
-        {
-            return _htmlParser.SplitByParagraphs(text);
-        }
-
-        [Test(), TestCaseSource(typeof(DataSamples), "SplitLIValues")]
-        public string[] SplitLIValuesAreCorrect(string text)
-        {
-            return _htmlParser.SplitByTags(text,"ul","li");
-        }
-
-        [Test(), TestCaseSource(typeof(DataSamples), "SplitMultipleTags")]
-        public string[] SplitMultipleTagsAreCorrect(string text)
-        {
-            return _htmlParser.SplitByDefaultTags(text);
-        }
-
-        [Test(), TestCaseSource(typeof(DataSamples), "RemoveContainingHtmlTag")]
-        public string RemoveContainingHtmlTagAreCorrect(string text)
-        {
-            return _htmlParser.RemoveContainingTag(text);
-        }
-
-        [Test(), TestCaseSource(typeof(DataSamples), "GetContainingHtmlTag")]
-        public string GetContainingHtmlTagAreCorrect(string text)
-        {
-            return _htmlParser.GetContainingTag(text);
-        }
-    }
-
-    public class DataSamples
+    public class HtmlExtrationDataSamples
     {
         public static IEnumerable HtmlIdentification
         {
@@ -112,6 +56,7 @@ namespace XliffLib.Test
             {
                 yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<ul><li>Item1</li><li>Item2</li></ul>" });
                 yield return new TestCaseData("<li>Item1</li><li>Item2</li>").Returns(new string[] { "<li>Item1</li>","<li>Item2</li>" });
+                yield return new TestCaseData("Text<ul><li>Item1</li><li>Item2</li></ul>").Returns(new string[] { "Text", "<ul><li>Item1</li><li>Item2</li></ul>" });
             }
         }
 
@@ -121,27 +66,6 @@ namespace XliffLib.Test
             {
                 yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>", "<ul><li>Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
                 yield return new TestCaseData("<h1>Para1</h1><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<h1>Para1</h1>", "<ul><li>Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
-            }
-        }
-
-        public static IEnumerable RemoveContainingHtmlTag
-        {
-            get
-            {
-                yield return new TestCaseData("<p>Item</p>").Returns("Item");
-                yield return new TestCaseData("<li>Item1</li>").Returns("Item1");
-                yield return new TestCaseData("<p>This is text with some <b>formatting</b> inside</p>").Returns("This is text with some <b>formatting</b> inside");
-            }
-        }
-
-        public static IEnumerable GetContainingHtmlTag
-        {
-            get
-            {
-                yield return new TestCaseData("<p>Item</p>").Returns("p");
-                yield return new TestCaseData("<li>Item1</li>").Returns("li");
-                yield return new TestCaseData("<p>This is text with some <b>formatting</b> inside</p>").Returns("p");
-                yield return new TestCaseData("<ul><li>Item1</li><li>Item2</li></ul>").Returns("ul");
             }
         }
     }

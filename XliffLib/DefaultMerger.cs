@@ -9,10 +9,13 @@ namespace XliffLib
 {
     public class DefaultMerger : Merger
     {
-        public DefaultMerger() : base(new MergerToBundle())
+        public DefaultMerger() : this(new HierarchicHtmlParser())
+        { }
+
+        public DefaultMerger(IHtmlParser htmlParser) : base(new MergerToBundle())
         {
             ProcessingSteps.AddLast(new InlineCodeProcessing());
-            ProcessingSteps.AddLast(new ParagraphSplitter(new SimpleHtmlParser()));
+            ProcessingSteps.AddLast(new ParagraphSplitter(htmlParser));
         }
     }
 }
