@@ -51,13 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlProcessing\HtmlExtrationDataSamples.cs" />
+    <Compile Include="HtmlProcessing\HtmlExtensionsTest.cs" />
     <Compile Include="ParagraphSplitterMergerTests.cs" />
     <Compile Include="InlineCodeMergerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HtmlProcessing\HierarchicHtmlParserTests.cs" />
+    <Compile Include="HtmlProcessing\BaseHtmlParserTests.cs" />
     <Compile Include="SourceExtractorTests.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="JsonTests.cs" />
-    <Compile Include="HtmlExtractionTests.cs" />
+    <Compile Include="HtmlProcessing\SimpleHtmlParserTests.cs" />
     <Compile Include="ParagraphSplitterExtractorTests.cs" />
     <Compile Include="MetaDataTests.cs" />
     <Compile Include="PropertyExtractionTests.cs" />

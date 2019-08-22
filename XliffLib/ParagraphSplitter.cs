@@ -5,13 +5,17 @@ using XliffLib.Utils;
 using System.Linq;
 using Localization.Xliff.OM.Modules.Metadata;
 using System.Text;
+using XliffLib.HtmlProcessing;
 
 namespace XliffLib
 {
     public class ParagraphSplitter : IProcessingStep
     {
-        public ParagraphSplitter()
+        private IHtmlParser _htmlParser;
+
+        public ParagraphSplitter(IHtmlParser htmlParser)
         {
+            _htmlParser = htmlParser;
         }
 
         public XliffDocument ExecuteExtraction(XliffDocument document)
@@ -61,7 +65,7 @@ namespace XliffLib
                 }
                 else if(container is Unit)
                 {
-                    if(!container.Type.Equals(typeBefore))
+                    if(typeBefore!=null && container.Type != null && !container.Type.Equals(typeBefore))
                     {
                         SplitUnitAndIterate(container as Unit);
                     }
@@ -80,12 +84,12 @@ namespace XliffLib
 
         private TranslationContainer SplitUnit(Unit unit, string text, bool isCData=true)
         {
-            string[] paragraphs;
+            SimplifiedHtmlContentItem[] paragraphs;
             if (isCData)
-                paragraphs = text.SplitByDefaultTags();
+                paragraphs = _htmlParser.SplitHtml(text);
             else
             {
-                paragraphs = text.SplitPlainText();
+                paragraphs = _htmlParser.SplitPlainText(text);
             }
 
             if(paragraphs.Count()==0)
@@ -131,9 +135,12 @@ namespace XliffLib
                     ResourceStringContent content;
                     if (isCData)
                     {
-                        string containingTag = para.GetContainingTag();
-                        string newContent = para.RemoveContainingTag();
-                        paraUnit.Type = containingTag.ToXliffHtmlType();
+                        string containingTag = para.Name;
+                        string newContent = para.InnerContent();
+                        if (!string.IsNullOrWhiteSpace(containingTag))
+                        {
+                            paraUnit.Type = _htmlParser.ToXliffHtmlType(containingTag);
+                        }
                         if(newContent.IsHtml())
                             content = new CDataTag(newContent);
                         else
@@ -141,7 +148,7 @@ namespace XliffLib
                     }
                     else
                     {
-                        content = new PlainText(para);
+                        content = new PlainText(para.Content);
                     }
                     source.Text.Add(content);
                     newSegment.Source = source;
@@ -259,7 +266,7 @@ namespace XliffLib
             {
                 if(container is Group)
                 {
-                    sb.AppendFormat("<{0}>{1}</{0}>", container.Type.FromXliffHtmlType(), RetrieveInnerContent(container as Group, selector));
+                    sb.AppendFormat("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(container.Type), RetrieveInnerContent(container as Group, selector));
                 }
                 else
                 {
@@ -290,17 +297,24 @@ namespace XliffLib
 
             if (string.IsNullOrEmpty(unitType))
             {
-                return text.Text;
+                if (cdata != null)
+                {
+                    return cdata.Text;
+                }
+                else
+                {
+                    return text.Text;
+                }
             }
             else
             {
                 if (cdata != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", unitType.FromXliffHtmlType(), cdata.Text);
+                    return string.Format("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), cdata.Text);
                 }
                 else if (text != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", unitType.FromXliffHtmlType(), text.Text);
+                    return string.Format("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), text.Text);
                 }
                 else
                 {

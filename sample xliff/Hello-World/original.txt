@@ -1,1 +1,17 @@
-<p>content in <strong>bold</strong></p>
+<h2>A Nested List</h2>
+<p>List can be nested (lists <b>inside</b> lists):</p>
+
+<ul>
+    <li>Coffee</li>
+    <li>
+        Many <i>varieties</i> of Tea
+        <ul>
+            <li>Black tea</li>
+            <li>Green tea</li>
+        </ul>
+        Many <i>varieties</i> of Tea
+    </li>
+    <li>Milk</li>
+</ul>
+
+<p>That was it!</p>

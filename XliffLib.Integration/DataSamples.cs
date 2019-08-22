@@ -36,6 +36,7 @@ namespace XliffLib.Integration
                 yield return new TestCaseData("HtmlMarkupInProperty");
                 yield return new TestCaseData("ULMarkupInProperty");
                 yield return new TestCaseData("ComplexMarkupInProperty");
+                yield return new TestCaseData("NestedULInProperty");
             }
         }
     }

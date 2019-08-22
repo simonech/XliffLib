@@ -31,11 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.8.8.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +51,11 @@
   <ItemGroup>
     <Compile Include="BasicSegmenter.cs" />
     <Compile Include="DefaultMerger.cs" />
+    <Compile Include="HtmlProcessing\BaseHtmlParser.cs" />
+    <Compile Include="HtmlProcessing\HierarchicHtmlParser.cs" />
+    <Compile Include="HtmlProcessing\IHtmlParser.cs" />
+    <Compile Include="HtmlProcessing\SimpleHtmlParser.cs" />
+    <Compile Include="HtmlProcessing\SimplifiedHtmlContentItem.cs" />
     <Compile Include="Model\Bundle.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\PropertyContainer.cs" />
@@ -58,10 +63,10 @@
     <Compile Include="Model\PropertyGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleMerger.cs" />
+    <Compile Include="HtmlProcessing\HtmlExtensions.cs" />
     <Compile Include="Utils\ListExtensions.cs" />
     <Compile Include="Extractor.cs" />
     <Compile Include="Utils\JsonExtensions.cs" />
-    <Compile Include="Utils\HtmlExtensions.cs" />
     <Compile Include="SimpleExtractor.cs" />
     <Compile Include="SourceExtractorFromBundle.cs" />
     <Compile Include="IProcessingStep.cs" />

@@ -3,12 +3,22 @@ using System;
 using Localization.Xliff.OM.Serialization;
 using System.IO;
 using Localization.Xliff.OM.Core;
+using XliffLib.HtmlProcessing;
 
 namespace XliffLib.Test
 {
-    [TestFixture()]
-    public class ParagraphSplitterExtractorTests
+    [TestFixture(typeof(SimpleHtmlParser))]
+    [TestFixture(typeof(HierarchicHtmlParser))]
+    public class ParagraphSplitterExtractorTests<TParser> where TParser: IHtmlParser, new()
     {
+        IHtmlParser _htmlParser;
+
+        [SetUp()]
+        public void Init()
+        {
+            _htmlParser = new TParser();
+        }
+
         [Test()]
         public void SingleParagraphPlainTextUnitIsNotSplit()
         {
@@ -24,7 +34,7 @@ namespace XliffLib.Test
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -49,7 +59,7 @@ Hello Word3!</source>
     </file>
 </xliff>";
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -92,7 +102,7 @@ Hello Word3!</source>
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -124,7 +134,7 @@ Hello Word3!</source>
 </xliff>";
 
             XliffDocument document = LoadXliff(xliff);
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -157,7 +167,7 @@ Hello Word3!</source>
             XliffDocument document = LoadXliff(xliff);
 
 
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -203,7 +213,7 @@ Hello Word3!</source>
 
             XliffDocument document = LoadXliff(xliff);
 
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -258,7 +268,7 @@ Hello Word3!</source>
 
             XliffDocument document = LoadXliff(xliff);
 
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -297,7 +307,7 @@ Hello Word3!</source>
 
             XliffDocument document = LoadXliff(xliff);
 
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
@@ -355,7 +365,7 @@ Hello Word3!</source>
 
             XliffDocument document = LoadXliff(xliff);
 
-            var splitter = new ParagraphSplitter();
+            var splitter = new ParagraphSplitter(_htmlParser);
 
             var newDocument = splitter.ExecuteExtraction(document);
 
