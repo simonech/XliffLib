@@ -38,11 +38,24 @@ namespace XliffLib.HtmlProcessing
             {
                 return Content;
             }
+
+            var attributeList = string.Empty;
+            if (Attributes.Count > 0)
+            {
+                foreach (var attribute in Attributes)
+                {
+                    attributeList += string.Format(" {0}=\"{1}\"", attribute.Key, attribute.Value);
+                }
+            }
+
+            var content = Content;
+
             if (withChildElements)
             {
-                return string.Format("<{0}>{1}</{0}>", Name, InnerContent());
+                content = InnerContent();
             }
-            return string.Format("<{0}>{1}</{0}>", Name, Content);
+
+            return string.Format("<{0}{2}>{1}</{0}>", Name, content, attributeList);
         }
     }
 }

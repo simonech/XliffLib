@@ -9,5 +9,7 @@ namespace XliffLib.HtmlProcessing
         string ToXliffHtmlType(string htmlTag);
         string FromXliffHtmlType(string xliffType);
 
+        bool SupportsAttributes { get; }
+
     }
 }

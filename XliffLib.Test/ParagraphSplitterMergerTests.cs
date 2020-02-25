@@ -451,9 +451,51 @@ namespace XliffLib.Test
             Assert.AreEqual("<p>Hello2 Word1!</p><p>Hello2 Word2!</p><p>Hello2 <b>Word3</b>!</p>", cdata2.Text);
         }
 
+        [Test()]
+        public void ClassAttributeInsideNestedHtmlElementIsReadFromXliff()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff xmlns:mda=""urn:oasis:names:tc:xliff:metadata:2.0"" srcLang=""en-GB"" trgLang=""it-IT"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+  <file id=""f1"">
+    <group id=""u1-g"" name=""original"">
+      <group id=""u1-1-g"" type=""html:ul"">
+        <unit id=""u1-1-1"" type=""html:li"">
+          <mda:metadata>
+            <mda:metaGroup id=""originalAttributes"">
+              <mda:meta type=""class"">even</mda:meta>
+            </mda:metaGroup>
+          </mda:metadata>
+          <segment>
+            <source>Hello Word1!</source>
+            <target>Hello Word1!</target>
+          </segment>
+        </unit>
+      </group>
+    </group>
+  </file>
+</xliff>";
 
-        //Move to actual XliffReader
-        private static XliffDocument LoadXliff(string xliff)
+            XliffDocument document = LoadXliff(xliff);
+            var splitter = new ParagraphSplitter(_htmlParser);
+
+            var newDocument = splitter.ExecuteMerge(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+
+            Assert.AreEqual("u1", unit.Id);
+            Assert.AreEqual("original", unit.Name);
+
+            Assert.AreEqual(1, unit.Resources[0].Target.Text.Count);
+            var text = unit.Resources[0].Target.Text[0] as CDataTag;
+            Assert.IsNotNull(text);
+            Assert.AreEqual("<ul><li class=\"even\">Hello Word1!</li></ul>", text.Text);
+
+        }
+
+            //Move to actual XliffReader
+            private static XliffDocument LoadXliff(string xliff)
         {
             XliffDocument document = null;
             using (Stream stream = GenerateStreamFromString(xliff))

@@ -6,8 +6,8 @@
     <li>
         Many <i>varieties</i> of Tea
         <ul>
-            <li>Black tea</li>
-            <li>Green tea</li>
+            <li class="even">Black tea</li>
+            <li class="odd">Green tea</li>
         </ul>
         Many <i>varieties</i> of Tea
     </li>

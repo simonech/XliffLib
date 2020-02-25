@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff srcLang="en-GB" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+<xliff srcLang="en-US" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
   <file id="f1">
-    <unit id="u1" name="title|p">
-      <originalData>
-        <data id="d1">&lt;b&gt;</data>
-        <data id="d2">&lt;/b&gt;</data>
-      </originalData>
-      <segment>
-        <source>content in <pc id="1" dataRefStart="d1" dataRefEnd="d2">bold</pc></source>
-        <target>content in <pc id="1" dataRefStart="d1" dataRefEnd="d2">bold</pc></target>
-      </segment>
-    </unit>
+    <group id="u1-g" name="title">
+      <unit id="u1-1" type="html:p">
+        <originalData>
+          <data id="d1">&lt;strong&gt;</data>
+          <data id="d2">&lt;/strong&gt;</data>
+        </originalData>
+        <segment>
+          <source>content in <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">bold</pc></source>
+          <target>content in <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">bold</pc></target>
+        </segment>
+      </unit>
+    </group>
   </file>
 </xliff>

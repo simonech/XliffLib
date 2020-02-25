@@ -7,6 +7,8 @@ namespace XliffLib.HtmlProcessing
 {
     public class HierarchicHtmlParser : BaseHtmlParser
     {
+        public override bool SupportsAttributes => true;
+
         public override SimplifiedHtmlContentItem[] SplitHtml(string htmlText)
         {
             var doc = new HtmlDocument();

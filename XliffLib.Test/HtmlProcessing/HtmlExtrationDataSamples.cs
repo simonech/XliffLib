@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections;
 
-namespace XliffLib.Test
+namespace XliffLib.Test.HtmlProcessing
 {
     public class HtmlExtrationDataSamples
     {
@@ -66,6 +66,7 @@ namespace XliffLib.Test
             {
                 yield return new TestCaseData("<p>Para1</p><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<p>Para1</p>", "<ul><li>Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
                 yield return new TestCaseData("<h1>Para1</h1><ul><li>Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<h1>Para1</h1>", "<ul><li>Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
+                yield return new TestCaseData("<h1>Para1</h1><ul><li class=\"odd\">Item1</li><li>Item2</li></ul><p>Para2</p>").Returns(new string[] { "<h1>Para1</h1>", "<ul><li class=\"odd\">Item1</li><li>Item2</li></ul>", "<p>Para2</p>" });
             }
         }
     }

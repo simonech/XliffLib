@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SimpleExtractorTests.cs" />
+    <Compile Include="DefaultMergerTests.cs" />
     <Compile Include="Utils\EmbeddedFilesReader.cs" />
     <Compile Include="SimpleMergerTests.cs" />
     <Compile Include="DataSamples.cs" />
@@ -55,6 +56,14 @@
     <EmbeddedResource Include="TestFiles\ULMarkupInProperty.json" />
     <EmbeddedResource Include="TestFiles\ComplexMarkupInProperty.json" />
     <EmbeddedResource Include="TestFiles\NestedULInProperty.json" />
+    <EmbeddedResource Include="TestFiles\ULMarkupWithAttributesInProperty.json" />
+    <EmbeddedResource Include="TestFiles\ULMarkupInProperty.xlf" />
+    <EmbeddedResource Include="TestFiles\ULMarkupWithAttributesInProperty.xlf" />
+    <EmbeddedResource Include="TestFiles\ULMarkupWithAttributesInProperty.target.xlf" />
+    <EmbeddedResource Include="TestFiles\ULMarkupWithAttributesInRootElementInProperty.json" />
+    <EmbeddedResource Include="TestFiles\ULMarkupWithAttributesInRootElementInProperty.target.xlf" />
+    <EmbeddedResource Include="TestFiles\ULMarkupWithAttributesInRootElementInProperty.xlf" />
+    <EmbeddedResource Include="TestFiles\HtmlTableWithAttributes.json" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -78,6 +87,9 @@
     <EmbeddedResource Include="TestFiles\HtmlMarkupInProperty.json" />
     <EmbeddedResource Include="TestFiles\HtmlMarkupInProperty.xlf" />
     <EmbeddedResource Include="TestFiles\HtmlMarkupInProperty.target.xlf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\ULMarkupInProperty.target.xlf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
