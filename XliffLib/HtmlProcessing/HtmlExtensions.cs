@@ -23,6 +23,7 @@ namespace XliffLib.HtmlProcessing
 
         public static bool IsHtml(this string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return false;
             var doc = new HtmlDocument();
             doc.LoadHtml(text);
             return !doc.DocumentNode.ChildNodes.All(n => IsTextOrXliff(n));

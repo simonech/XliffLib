@@ -23,6 +23,9 @@ namespace XliffLib.Integration
                 yield return new TestCaseData("OneNestedProperty");
                 yield return new TestCaseData("OnePropertyWithAttributes");
                 yield return new TestCaseData("HtmlMarkupInProperty");
+                yield return new TestCaseData("ULMarkupInProperty");
+                yield return new TestCaseData("ULMarkupWithAttributesInProperty");
+                yield return new TestCaseData("ULMarkupWithAttributesInRootElementInProperty");
             }
         }
 
@@ -36,7 +39,10 @@ namespace XliffLib.Integration
                 yield return new TestCaseData("HtmlMarkupInProperty");
                 yield return new TestCaseData("ULMarkupInProperty");
                 yield return new TestCaseData("ComplexMarkupInProperty");
+                yield return new TestCaseData("ULMarkupWithAttributesInProperty");
+                yield return new TestCaseData("ULMarkupWithAttributesInRootElementInProperty");
                 yield return new TestCaseData("NestedULInProperty");
+                yield return new TestCaseData("HtmlTableWithAttributes");
             }
         }
     }

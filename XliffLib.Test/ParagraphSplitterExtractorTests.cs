@@ -4,6 +4,7 @@ using Localization.Xliff.OM.Serialization;
 using System.IO;
 using Localization.Xliff.OM.Core;
 using XliffLib.HtmlProcessing;
+using Localization.Xliff.OM.Modules.Metadata;
 
 namespace XliffLib.Test
 {
@@ -394,6 +395,116 @@ Hello Word3!</source>
 
             Assert.AreEqual("html:p", unit2.Type);
             Assert.AreEqual("Hello Word2!", textUnit2);
+        }
+
+        [Test()]
+        public void ClassAttributeInsideRootHtmlElementIsStoredInXliff()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"" name=""original"">
+            <segment>
+                <source><![CDATA[<ul class=""even""><li>Hello Word1!</li></ul>]]></source>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+
+            var splitter = new ParagraphSplitter(_htmlParser);
+
+            var newDocument = splitter.ExecuteExtraction(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var group = newDocument.Files[0].Containers[0] as Group;
+            Assert.IsNotNull(group, "Didn't get a Group, but a {0}", newDocument.Files[0].Containers[0].GetType().Name);
+            Assert.AreEqual("u1-g", group.Id);
+
+            Assert.AreEqual("original", group.Name);
+            Assert.AreEqual(1, group.Containers.Count);
+
+            var ulGroup = group.Containers[0] as Group;
+            Assert.AreEqual("html:ul", ulGroup.Type);
+            Assert.AreEqual(1, ulGroup.Containers.Count);
+
+            if (!_htmlParser.SupportsAttributes) return;
+
+            Assert.IsNotNull(ulGroup.Metadata);
+            Assert.AreEqual(1, ulGroup.Metadata.Groups.Count);
+
+            var originalAttributesGroup = ulGroup.Metadata.Groups[0];
+
+            Assert.AreEqual("originalAttributes", originalAttributesGroup.Id);
+            Assert.AreEqual(1, originalAttributesGroup.Containers.Count);
+
+            var classAttribute = originalAttributesGroup.Containers[0] as Meta;
+
+            Assert.AreEqual("class", classAttribute.Type);
+            Assert.AreEqual("even", classAttribute.NonTranslatableText);
+
+            var unit1 = ulGroup.Containers[0] as Unit;
+            var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("html:li", unit1.Type);
+            Assert.AreEqual("Hello Word1!", textUnit1);
+            Assert.IsNull(unit1.Metadata);
+        }
+
+        [Test()]
+        public void ClassAttributeInsideNestedHtmlElementIsStoredInXliff()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <unit id=""u1"" name=""original"">
+            <segment>
+                <source><![CDATA[<ul><li class=""even"">Hello Word1!</li></ul>]]></source>
+            </segment>
+        </unit>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+
+            var splitter = new ParagraphSplitter(_htmlParser);
+
+            var newDocument = splitter.ExecuteExtraction(document);
+
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var group = newDocument.Files[0].Containers[0] as Group;
+            Assert.IsNotNull(group, "Didn't get a Group, but a {0}", newDocument.Files[0].Containers[0].GetType().Name);
+            Assert.AreEqual("u1-g", group.Id);
+
+            Assert.AreEqual("original", group.Name);
+            Assert.AreEqual(1, group.Containers.Count);
+
+            var ulGroup = group.Containers[0] as Group;
+            Assert.AreEqual("html:ul", ulGroup.Type);
+            Assert.AreEqual(1, ulGroup.Containers.Count);
+            Assert.IsNull(ulGroup.Metadata);
+
+            var unit1 = ulGroup.Containers[0] as Unit;
+            var textUnit1 = unit1.Resources[0].Source.Text[0].ToString();
+
+            Assert.AreEqual("html:li", unit1.Type);
+            Assert.AreEqual("Hello Word1!", textUnit1);
+
+            if (!_htmlParser.SupportsAttributes) return;
+
+            Assert.IsNotNull(unit1.Metadata);
+            Assert.AreEqual(1, unit1.Metadata.Groups.Count);
+
+            var originalAttributesGroup = unit1.Metadata.Groups[0];
+
+            Assert.AreEqual("originalAttributes", originalAttributesGroup.Id);
+            Assert.AreEqual(1, originalAttributesGroup.Containers.Count);
+
+            var classAttribute = originalAttributesGroup.Containers[0] as Meta;
+
+            Assert.AreEqual("class", classAttribute.Type);
+            Assert.AreEqual("even", classAttribute.NonTranslatableText);
         }
 
 

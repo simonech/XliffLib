@@ -6,11 +6,13 @@ using System.Linq;
 using Localization.Xliff.OM.Modules.Metadata;
 using System.Text;
 using XliffLib.HtmlProcessing;
+using Localization.Xliff.OM.Extensibility;
 
 namespace XliffLib
 {
     public class ParagraphSplitter : IProcessingStep
     {
+        private const string ORIGINALATTRIBUTES = "originalAttributes";
         private IHtmlParser _htmlParser;
 
         public ParagraphSplitter(IHtmlParser htmlParser)
@@ -130,6 +132,21 @@ namespace XliffLib
                     var paraUnit = new Unit(unit.Id + "-" + i);
 
                     var newSegment = new Segment();
+
+                    if (para.Attributes.Count() > 0)
+                    {
+                        var newMetadataContainer = new MetadataContainer();
+                        var attributeMetaGroup = new MetaGroup();
+                        attributeMetaGroup.Id = ORIGINALATTRIBUTES;
+
+                        foreach (var attribute in para.Attributes)
+                        {
+                            var newElement = new Meta(attribute.Key, attribute.Value);
+                            attributeMetaGroup.Containers.Add(newElement);
+                        }
+                        newMetadataContainer.Groups.Add(attributeMetaGroup);
+                        paraUnit.Metadata = newMetadataContainer;
+                    }
 
                     var source = new Source();
                     ResourceStringContent content;
@@ -264,13 +281,26 @@ namespace XliffLib
             StringBuilder sb = new StringBuilder();
             foreach (var container in group.Containers)
             {
-                if(container is Group)
+                var attributeList = string.Empty;
+                if (container.Metadata != null && container.Metadata.HasGroups)
                 {
-                    sb.AppendFormat("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(container.Type), RetrieveInnerContent(container as Group, selector));
+                    var attributeMetaGroup = container.Metadata.Groups.Single(g => g.Id.Equals(ORIGINALATTRIBUTES));
+                    if (attributeMetaGroup != null)
+                    {
+                        foreach (Meta meta in attributeMetaGroup.Containers)
+                        {
+                            attributeList += string.Format(" {0}=\"{1}\"", meta.Type, meta.NonTranslatableText);
+                        }
+                    }
+                }
+
+                if (container is Group)
+                {
+                    sb.AppendFormat("<{0}{2}>{1}</{0}>", _htmlParser.FromXliffHtmlType(container.Type), RetrieveInnerContent(container as Group, selector), attributeList);
                 }
                 else
                 {
-                    var content = GetTextContent(container as Unit, selector);
+                    var content = GetTextContent(container as Unit, selector, attributeList);
                     if (content.IsHtml())
                         sb.Append(content);
                     else
@@ -280,7 +310,7 @@ namespace XliffLib
             return sb.ToString();
         }
 
-        private string GetTextContent(Unit nestedUnit, Func<Segment, ResourceString> selector)
+        private string GetTextContent(Unit nestedUnit, Func<Segment, ResourceString> selector, string attributeList)
         {
             if(nestedUnit.Resources.Count>1)
                 throw new InvalidOperationException("At this stage I expect only one segment. This unit is invalid: " + nestedUnit.SelectorPath);
@@ -310,11 +340,11 @@ namespace XliffLib
             {
                 if (cdata != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), cdata.Text);
+                    return string.Format("<{0}{2}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), cdata.Text, attributeList);
                 }
                 else if (text != null)
                 {
-                    return string.Format("<{0}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), text.Text);
+                    return string.Format("<{0}{2}>{1}</{0}>", _htmlParser.FromXliffHtmlType(unitType), text.Text, attributeList);
                 }
                 else
                 {

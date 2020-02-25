@@ -4,11 +4,13 @@ using HtmlAgilityPack;
 
 namespace XliffLib.HtmlProcessing
 {
-    public class SimpleHtmlParser: BaseHtmlParser
+    public class SimpleHtmlParser : BaseHtmlParser
     {
         private static string[] HTMLTAGSTOSPLIT = {
             "p","ul","ol","li","h1","h2","h3","h4","blockquote"
         };
+
+        public override bool SupportsAttributes => false;
 
         public override SimplifiedHtmlContentItem[] SplitHtml(string text)
         {

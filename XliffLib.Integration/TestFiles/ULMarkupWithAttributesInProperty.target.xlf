@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" srcLang="en-US" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="f1">
+    <group id="u1-g" name="title">
+      <group id="u1-1-g" type="html:ul">
+        <unit id="u1-1-1" type="html:li">
+          <mda:metadata>
+            <mda:metaGroup id="originalAttributes">
+              <mda:meta type="class">even</mda:meta>
+            </mda:metaGroup>
+          </mda:metadata>
+          <segment>
+            <source>One item</source>
+            <target>One item</target>
+          </segment>
+        </unit>
+        <unit id="u1-1-2" type="html:li">
+          <mda:metadata>
+            <mda:metaGroup id="originalAttributes">
+              <mda:meta type="class">odd</mda:meta>
+            </mda:metaGroup>
+          </mda:metadata>
+          <segment>
+            <source>Two item</source>
+            <target>Two item</target>
+        </segment>
+        </unit>
+      </group>
+    </group>
+  </file>
+</xliff>

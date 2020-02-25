@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="HtmlProcessing\HtmlExtrationDataSamples.cs" />
     <Compile Include="HtmlProcessing\HtmlExtensionsTest.cs" />
+    <Compile Include="HtmlProcessing\SimplifiedHtmlContentItemTest.cs" />
     <Compile Include="ParagraphSplitterMergerTests.cs" />
     <Compile Include="InlineCodeMergerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

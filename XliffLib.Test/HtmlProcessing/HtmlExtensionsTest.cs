@@ -3,7 +3,7 @@ using System;
 using XliffLib.HtmlProcessing;
 using System.Linq;
 
-namespace XliffLib.Test
+namespace XliffLib.Test.HtmlProcessing
 {
     [TestFixture()]
     public class HtmlExtensionsTest
