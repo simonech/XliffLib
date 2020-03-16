@@ -20,8 +20,15 @@ namespace XliffLib.Utils
             {"br", new InlineCodeType(CodeType.Formatting, "xlf:lb")},
             {"sup", new InlineCodeType(CodeType.Formatting, "html:sup")},
             {"sub", new InlineCodeType(CodeType.Formatting, "html:sub")},
+            {"a", new InlineCodeType(CodeType.Link, "")},
+            {"img", new InlineCodeType(CodeType.Image, "")},
         };
 
+        private static InlineCodeType ExtractInlineCodeType(string tagName)
+        {
+            var inlineCodeType = Map.GetValueOrDefault(tagName);
+            return inlineCodeType;
+        }
 
         public static InlineCodeExtractionResult ConvertHtmlTagsInInLineCodes(this string htmlText)
         {
@@ -39,7 +46,7 @@ namespace XliffLib.Utils
                 }
                 if (node.NodeType == HtmlNodeType.Element && node.HasChildNodes)
                 {
-                    var inlineCodeType = Map.GetValueOrDefault(node.Name);
+                    var inlineCodeType = ExtractInlineCodeType(node.Name);
                     if (inlineCodeType.Type == null)
                     {
                         text.Add(new PlainText(node.InnerText));
@@ -60,7 +67,7 @@ namespace XliffLib.Utils
                 }
                 if (node.NodeType == HtmlNodeType.Element && !node.HasChildNodes)
                 {
-                    var inlineCodeType = Map.GetValueOrDefault(node.Name);
+                    var inlineCodeType = ExtractInlineCodeType(node.Name);
                     if (inlineCodeType.Type == null) continue;
                     tagCounter++;
                     var tagId = AddOriginalData(originalData, "<" + node.Name + "/>", ref originalDataCounter);

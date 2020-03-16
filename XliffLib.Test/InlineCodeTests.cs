@@ -159,6 +159,19 @@ namespace XliffLib.Test
             Assert.AreEqual(CodeType.Formatting, pc.Type);
             Assert.AreEqual("html:sup", pc.SubType);
         }
+        [Test()]
+        public void AnchorCodeGetsRightTypeSubType()
+        {
+            string original = "<a href=\"http://council.eu\">Link</a>";
+
+            var result = original.ConvertHtmlTagsInInLineCodes();
+
+            Assert.AreEqual(1, result.Text.Count);
+            var pc = result.Text[0] as SpanningCode;
+            Assert.IsNotNull(pc);
+            Assert.AreEqual(CodeType.Link, pc.Type);
+            Assert.AreEqual("html:a", pc.SubType);
+        }
 
         [Test()]
         public void SubscriptCodeGetsRightTypeSubType()
