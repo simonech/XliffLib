@@ -26,6 +26,7 @@ namespace XliffLib.Integration
                 yield return new TestCaseData("ULMarkupInProperty");
                 yield return new TestCaseData("ULMarkupWithAttributesInProperty");
                 yield return new TestCaseData("ULMarkupWithAttributesInRootElementInProperty");
+                yield return new TestCaseData("InlineLink");
             }
         }
 
@@ -43,6 +44,7 @@ namespace XliffLib.Integration
                 yield return new TestCaseData("ULMarkupWithAttributesInRootElementInProperty");
                 yield return new TestCaseData("NestedULInProperty");
                 yield return new TestCaseData("HtmlTableWithAttributes");
+                yield return new TestCaseData("InlineLink");
             }
         }
     }

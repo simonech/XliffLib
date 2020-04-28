@@ -6,8 +6,8 @@
     <li>
         Many <i>varieties</i> of Tea
         <ul>
-            <li class="even">Black tea</li>
-            <li class="odd">Green tea</li>
+            <li class="odd">Black <a href="http://allteas.com">tea</a></li>
+            <li class="even">Green tea</li>
         </ul>
         Many <i>varieties</i> of Tea
     </li>
@@ -15,3 +15,10 @@
 </ul>
 
 <p>That was it!</p>
+
+<table>
+<tr class="odd"><td>1</td><td>2</td></tr>
+<tr class="even"><td>2</td><td>1</td></tr>
+</table>
+
+Hi mate, see <i>what's new</i> in the <a href="https://daily.digest" title="Digest">digest</a>.

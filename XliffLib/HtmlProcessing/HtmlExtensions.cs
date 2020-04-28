@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 
@@ -38,6 +39,37 @@ namespace XliffLib.HtmlProcessing
         {
             return node.NodeType == HtmlNodeType.Element && IsInlineElement(node)
                     || node.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(node.InnerText);
+        }
+
+        public static Dictionary<string, string> ExtractAttributes(this HtmlNode node)
+        {
+            var list = new Dictionary<string, string>();
+            foreach (var attribute in node.Attributes)
+            {
+                list.Add(attribute.Name, attribute.Value);
+            }
+            return list;
+        }
+
+
+        public static string FormatAsHtmlAttributeString(this IEnumerable<KeyValuePair<string, string>> htmlAttributeList, bool cleanAttributeName = false)
+        {
+            var attributeList = string.Empty;
+            if (htmlAttributeList.Count() > 0)
+            {
+                foreach (var attribute in htmlAttributeList)
+                {
+                    var attributeName = attribute.Key;
+                    if (cleanAttributeName)
+                    {
+                        var parts = attributeName.Split('-');
+                        attributeName = parts[parts.Length - 1];
+                    }
+                    attributeList += string.Format(" {0}=\"{1}\"", attributeName, attribute.Value);
+                }
+            }
+
+            return attributeList;
         }
 
         public static bool IsBlock(this HtmlNode node)
