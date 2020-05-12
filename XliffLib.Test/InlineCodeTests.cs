@@ -3,6 +3,7 @@ using Localization.Xliff.OM.Core;
 using NUnit.Framework;
 using XliffLib.Utils;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace XliffLib.Test
 {
@@ -255,7 +256,7 @@ namespace XliffLib.Test
         }
 
         [Test()]
-        public void MultipleAnchorsWithGetsSubflowWithAttributes()
+        public void MultipleAnchorsGetsSubflowWithAttributes()
         {
             string original = "<a href=\"http://council.eu\">Council</a> and <a href=\"http://microsoft.com\">Microsoft</a>";
 
@@ -476,7 +477,7 @@ namespace XliffLib.Test
                 { "u1-5-1-href", "http://council.eu" }
             };
 
-            var htmlString = xliffCode.ConvertToHtml(subflows);
+            var htmlString = xliffCode.ConvertToHtml(s => SearchSubflowsInDictionary(s,subflows));
 
             Assert.AreEqual("<a href=\"http://council.eu\">text</a>", htmlString);
         }
@@ -497,9 +498,14 @@ namespace XliffLib.Test
                 { "u1-5-1-title", "title" }
             };
 
-            var htmlString = xliffCode.ConvertToHtml(subflows);
+            var htmlString = xliffCode.ConvertToHtml(s => SearchSubflowsInDictionary(s, subflows));
 
             Assert.AreEqual("<a href=\"http://council.eu\" title=\"title\">text</a>", htmlString);
+        }
+
+        private IEnumerable<KeyValuePair<string, string>> SearchSubflowsInDictionary(string subflowsStringList, Dictionary<string, string> subflows)
+        {
+            return subflows.Where(s => subflowsStringList.Split(' ').Contains(s.Key));
         }
 
         [Test]
@@ -518,7 +524,7 @@ namespace XliffLib.Test
                 { "u1-5-2-href", "http://microsoft.com" }
             };
 
-            var htmlString = xliffCode.ConvertToHtml(subflows);
+            var htmlString = xliffCode.ConvertToHtml(s => SearchSubflowsInDictionary(s, subflows));
 
             Assert.AreEqual("<a href=\"http://council.eu\">text</a>", htmlString);
         }
@@ -568,7 +574,7 @@ namespace XliffLib.Test
                 { "u1-5-1-src", "media\\12345\\image.jpg" }
             };
 
-            var htmlString = xliffCode.ConvertToHtml(subflows);
+            var htmlString = xliffCode.ConvertToHtml(s => SearchSubflowsInDictionary(s, subflows));
 
             Assert.AreEqual("<img src=\"media\\12345\\image.jpg\"/>", htmlString);
         }
@@ -590,7 +596,7 @@ namespace XliffLib.Test
                 { "u1-5-1-title", "title" },
             };
 
-            var htmlString = xliffCode.ConvertToHtml(subflows);
+            var htmlString = xliffCode.ConvertToHtml(s => SearchSubflowsInDictionary(s, subflows));
 
             Assert.AreEqual("<img src=\"media\\12345\\image.jpg\" title=\"title\"/>", htmlString);
         }
@@ -612,7 +618,7 @@ namespace XliffLib.Test
                 { "u1-5-2-src", "media\\12345\\image2.jpg" }
             };
 
-            var htmlString = xliffCode.ConvertToHtml(subflows);
+            var htmlString = xliffCode.ConvertToHtml(s => SearchSubflowsInDictionary(s, subflows));
 
             Assert.AreEqual("<img src=\"media\\12345\\image.jpg\"/>", htmlString);
         }

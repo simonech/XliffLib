@@ -182,6 +182,90 @@ namespace XliffLib.Test
             Assert.AreEqual("Hello <strong>World 2</strong>!", segment2.Text);
         }
 
+        [Test()]
+        public void TargetWithHrefAndSubflowsConvertedToCDataWithATagWithAttribute()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" trgLang=""it-IT"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <group id=""u1-g"">
+            <unit id=""u1-1-href"">
+                <segment>
+                    <source>http://consilium.eu/en</source>
+                    <target>http://consilium.eu/it</target>
+                </segment>
+            </unit>
+            <unit id=""u1"">
+                <segment>
+                    <source>Link to <pc subFlowsStart=""u1-1-href"" id=""1"" type=""link"">Council site in English</pc>!</source>
+                    <target>Link to <pc subFlowsStart=""u1-1-href"" id=""1"" type=""link"">Council site in Italian</pc>!</target>
+                </segment>
+            </unit>
+        </group>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var inlineprocessing = new InlineCodeProcessing();
+
+            var newDocument = inlineprocessing.ExecuteMerge(document);
+
+            var xliffString = new DefaultExtractor().Write(newDocument, true);
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+
+            Assert.AreEqual(1, unit.CollapseChildren<Target>()[0].Text.Count);
+            var segment = unit.CollapseChildren<Target>()[0].Text[0] as CDataTag;
+            Assert.IsNotNull(segment);
+            Assert.AreEqual("Link to <a href=\"http://consilium.eu/it\">Council site in Italian</a>!", segment.Text);
+        }
+
+        [Test()]
+        public void TargetWithImgSrcAndSubflowsConvertedToCDataWithImgTagWithAttribute()
+        {
+            var xliff = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<xliff srcLang=""en-GB"" version=""2.0"" trgLang=""it-IT"" xmlns=""urn:oasis:names:tc:xliff:document:2.0"">
+    <file id=""f1"">
+        <group id=""u1-g"">
+            <unit id=""u1-1-src"">
+                <segment>
+                    <source>http://consilium.eu/en/logo.jpg</source>
+                    <target>http://consilium.eu/it/logo.jpg</target>
+                </segment>
+            </unit>
+            <unit id=""u1-1-title"">
+                <segment>
+                    <source>Council Logo</source>
+                    <target>Council Logo Ita</target>
+                </segment>
+            </unit>
+            <unit id=""u1"">
+                <segment>
+                    <source>Link to <ph subFlows=""u1-1-src u1-1-title"" id=""1"" type=""image""/>Council site in English!</source>
+                    <target>Link to <ph subFlows=""u1-1-src u1-1-title"" id=""1"" type=""image""/>Council site in Italian!</target>
+                </segment>
+            </unit>
+        </group>
+    </file>
+</xliff>";
+
+            XliffDocument document = LoadXliff(xliff);
+            var inlineprocessing = new InlineCodeProcessing();
+
+            var newDocument = inlineprocessing.ExecuteMerge(document);
+
+            var xliffString = new DefaultExtractor().Write(newDocument, true);
+            Assert.AreEqual(1, newDocument.Files[0].Containers.Count);
+            var unit = newDocument.Files[0].Containers[0] as Unit;
+            Assert.IsNotNull(unit);
+
+            Assert.AreEqual(1, unit.CollapseChildren<Target>()[0].Text.Count);
+            var segment = unit.CollapseChildren<Target>()[0].Text[0] as CDataTag;
+            Assert.IsNotNull(segment);
+            Assert.AreEqual("Link to <img src=\"http://consilium.eu/it/logo.jpg\" title=\"Council Logo Ita\"/>Council site in Italian!", segment.Text);
+        }
+
         //Move to actual XliffReader
         private static XliffDocument LoadXliff(string xliff)
         {

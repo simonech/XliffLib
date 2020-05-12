@@ -66,6 +66,9 @@
     <EmbeddedResource Include="TestFiles\HtmlTableWithAttributes.json" />
     <EmbeddedResource Include="TestFiles\InlineLink.json" />
     <EmbeddedResource Include="TestFiles\InlineLink.xlf" />
+    <EmbeddedResource Include="TestFiles\InlineLink.target.xlf" />
+    <EmbeddedResource Include="TestFiles\HtmlTableWithAttributesAndLinks.json" />
+    <EmbeddedResource Include="TestFiles\InlineLinkInUL.json" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

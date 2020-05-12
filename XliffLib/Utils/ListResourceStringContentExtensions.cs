@@ -10,7 +10,20 @@ namespace XliffLib.Utils
 {
     public static class ListResourceStringContentExtensions
     {
-        public static string ConvertToHtml(this IList<ResourceStringContent> xliffValue, Dictionary<string,string> subflows = null)
+
+        public static bool HasSubFlow(this IList<ResourceStringContent> xliffValue)
+        {
+            foreach (var item in xliffValue)
+            {
+                var code = item as CodeBase;
+                if (code != null && code.HasSubFlows)
+                    return true;
+            }
+            return false;
+        }
+
+
+        public static string ConvertToHtml(this IList<ResourceStringContent> xliffValue, Func<string, IEnumerable<KeyValuePair<string, string>>> subflowsSelector = null)
         {
             var sb = new StringBuilder();
             foreach (var item in xliffValue)
@@ -26,7 +39,7 @@ namespace XliffLib.Utils
                         var ph = item as StandaloneCode;
                         if (ph.HasSubFlows)
                         {
-                            attributes = subflows.Where(s => ph.SubFlows.Split(' ').Contains(s.Key)).FormatAsHtmlAttributeString(true);
+                            attributes = subflowsSelector(ph.SubFlows).FormatAsHtmlAttributeString(true);
                         }
                         string autoclosingTag;
                         switch (ph.Type)
@@ -57,7 +70,7 @@ namespace XliffLib.Utils
                         var content = pc.Text.ConvertToHtml();
                         if (pc.HasSubFlows)
                         {
-                            attributes = subflows.Where(s => pc.SubFlowsStart.Split(' ').Contains(s.Key)).FormatAsHtmlAttributeString(true);
+                            attributes = subflowsSelector(pc.SubFlowsStart).FormatAsHtmlAttributeString(true);
                         }
                         string tag;
                         switch (pc.Type)

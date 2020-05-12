@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Localization.Xliff.OM.Core;
+using Localization.Xliff.OM.Modules.Metadata;
 using XliffLib.Utils;
 
 namespace XliffLib
@@ -45,6 +47,27 @@ namespace XliffLib
                     var newGroup = new Group(unit.Id + "-g");
                     newGroup.Type = unit.Type;
                     newGroup.Name = unit.Name;
+                    unit.Type = null;
+
+                    if (unit.Metadata != null)
+                    {
+                        var newMetadataContainer = new MetadataContainer();
+                        foreach (var metaGroup in unit.Metadata.Groups)
+                        {
+                            var newMetaGroup = new MetaGroup();
+                            newMetaGroup.Id = metaGroup.Id;
+
+                            foreach (Meta item in metaGroup.Containers)
+                            {
+                                var newElement = new Meta(item.Type, item.NonTranslatableText);
+                                newMetaGroup.Containers.Add(newElement);
+                            }
+                            newMetadataContainer.Groups.Add(newMetaGroup);
+                        }
+                        newGroup.Metadata = newMetadataContainer;
+                        unit.Metadata = null;
+                    }
+
 
                     foreach (var subflowItem in subflows)
                     {
@@ -82,25 +105,92 @@ namespace XliffLib
         public XliffDocument ExecuteMerge(XliffDocument document)
         {
             var units = document.CollapseChildren<Unit>();
+
             foreach (var unit in units)
             {
-                foreach (var resource in unit.Resources)
+                if (unit.Resources.Count > 1)
+                    throw new InvalidOperationException("At this stage I expect only one segment. This unit is invalid: " + unit.SelectorPath);
+
+                Segment segment = unit.Resources[0] as Segment;
+
+                if (segment != null)
                 {
-                    var segment = resource as Segment;
-                    if (segment != null)
+                    var hasSubFlow = segment.Source.Text.HasSubFlow() || segment.Target.Text.HasSubFlow();
+
+                    ConvertToHtmlAndStore(segment.Source, subflows => SearchSubflowsInDocument(subflows, units, s=>s.Source));
+                    ConvertToHtmlAndStore(segment.Target, subflows => SearchSubflowsInDocument(subflows, units, s=>s.Target));
+                
+
+                    if(hasSubFlow)
                     {
-                        ConvertToHtmlAndStore(segment.Source);
-                        ConvertToHtmlAndStore(segment.Target);
+                        var group = unit.Parent as Group;
+                        var newUnit = new Unit(unit.Id);
+                        newUnit.Name = group.Name;
+                        newUnit.Type = group.Type;
+
+                        if (group.Metadata != null)
+                        {
+                            var newMetadataContainer = new MetadataContainer();
+                            foreach (var metaGroup in group.Metadata.Groups)
+                            {
+                                var newMetaGroup = new MetaGroup();
+                                newMetaGroup.Id = metaGroup.Id;
+
+                                foreach (Meta item in metaGroup.Containers)
+                                {
+                                    var newElement = new Meta(item.Type, item.NonTranslatableText);
+                                    newMetaGroup.Containers.Add(newElement);
+                                }
+
+                                newMetadataContainer.Groups.Add(newMetaGroup);
+                            }
+                            newUnit.Metadata = newMetadataContainer;
+                        }
+
+                        var newSegment = unit.Resources[0];
+                        unit.Resources.Clear();
+                        newUnit.Resources.Add(newSegment);
+
+                        var parentFile = group.Parent as File;
+                        if (parentFile != null)
+                        {
+                            var pos = parentFile.Containers.IndexOf(group);
+                            parentFile.Containers.Insert(pos, newUnit);
+                            parentFile.Containers.Remove(group);
+                        }
+                        else
+                        {
+                            var parentGroup = group.Parent as Group;
+                            if (parentGroup != null)
+                            {
+                                var pos = parentGroup.Containers.IndexOf(group);
+                                parentGroup.Containers.Insert(pos, newUnit);
+                                parentGroup.Containers.Remove(group);
+                            }
+                        }
                     }
                 }
             }
             return document;
         }
 
-        private void ConvertToHtmlAndStore(ResourceString resource)
+        private IEnumerable<KeyValuePair<string, string>> SearchSubflowsInDocument(string subflowsStringList, IList<Unit> units, Func<Segment,ResourceString> resourceSelector)
+        {
+            var subFlowsPairs = new Dictionary<string, string>();
+            var subFlowList = subflowsStringList.Split(' ');
+
+            foreach (var item in subFlowList)
+            {
+                var res = resourceSelector(units.SingleOrDefault(u => u.Id.Equals(item)).Resources[0] as Segment);
+                subFlowsPairs.Add(item, (res.Text[0] as PlainText).Text);
+            }
+            return subFlowsPairs;
+        }
+
+        private void ConvertToHtmlAndStore(ResourceString resource, Func<string, IEnumerable<KeyValuePair<string, string>>> subflowsSelector)
         {
             if (resource.Text.Count == 1 && resource.Text[0] is PlainText) return;
-            var html = resource.Text.ConvertToHtml();
+            var html = resource.Text.ConvertToHtml(subflowsSelector);
             resource.Text.Clear();
             resource.Text.Add(new CDataTag(html));
         }
