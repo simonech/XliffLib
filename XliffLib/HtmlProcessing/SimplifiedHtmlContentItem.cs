@@ -39,14 +39,7 @@ namespace XliffLib.HtmlProcessing
                 return Content;
             }
 
-            var attributeList = string.Empty;
-            if (Attributes.Count > 0)
-            {
-                foreach (var attribute in Attributes)
-                {
-                    attributeList += string.Format(" {0}=\"{1}\"", attribute.Key, attribute.Value);
-                }
-            }
+            var attributeList = Attributes.FormatAsHtmlAttributeString();
 
             var content = Content;
 

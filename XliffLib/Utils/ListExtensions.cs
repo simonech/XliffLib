@@ -16,6 +16,14 @@ namespace XliffLib.Utils
             }
         }
 
+        public static void AddAll<TKey, TValue>(this IDictionary<TKey, TValue> list, IDictionary<TKey, TValue> newValues)
+        {
+            foreach (var item in newValues)
+            {
+                list.Add(item);
+            }
+        }
+
         public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
             TValue ret;

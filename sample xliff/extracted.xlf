@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" srcLang="en-GB" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="f1">
+    <group id="u1-g" name="original">
+      <unit id="u1-1" type="html:h2">
+        <segment>
+          <source>A Nested List</source>
+        </segment>
+      </unit>
+      <unit id="u1-2" type="html:p">
+        <originalData>
+          <data id="d1">&lt;b&gt;</data>
+          <data id="d2">&lt;/b&gt;</data>
+        </originalData>
+        <segment>
+          <source>List can be nested (lists <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">inside</pc> lists):</source>
+        </segment>
+      </unit>
+      <group id="u1-3-g" type="html:ul">
+        <unit id="u1-3-1" type="html:li">
+          <segment>
+            <source>Coffee</source>
+          </segment>
+        </unit>
+        <group id="u1-3-2-g" type="html:li">
+          <unit id="u1-3-2-1">
+            <originalData>
+              <data id="d1">&lt;i&gt;</data>
+              <data id="d2">&lt;/i&gt;</data>
+            </originalData>
+            <segment>
+              <source>
+        Many <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:i" type="fmt">varieties</pc> of Tea
+        </source>
+            </segment>
+          </unit>
+          <group id="u1-3-2-2-g" type="html:ul">
+            <group id="u1-3-2-2-1-g" type="html:li">
+              <unit id="u1-3-2-2-1-1-href">
+                <segment>
+                  <source>http://allteas.com</source>
+                </segment>
+              </unit>
+              <unit id="u1-3-2-2-1" type="html:li">
+                <mda:metadata>
+                  <mda:metaGroup id="originalAttributes">
+                    <mda:meta type="class">odd</mda:meta>
+                  </mda:metaGroup>
+                </mda:metadata>
+                <originalData>
+                  <data id="d1">&lt;a href="http://allteas.com"&gt;</data>
+                  <data id="d2">&lt;/a&gt;</data>
+                </originalData>
+                <segment>
+                  <source>Black <pc dataRefEnd="d2" dataRefStart="d1" subFlowsStart="u1-3-2-2-1-1-href" id="1" type="link">tea</pc></source>
+                </segment>
+              </unit>
+            </group>
+            <unit id="u1-3-2-2-2" type="html:li">
+              <mda:metadata>
+                <mda:metaGroup id="originalAttributes">
+                  <mda:meta type="class">even</mda:meta>
+                </mda:metaGroup>
+              </mda:metadata>
+              <segment>
+                <source>Green tea</source>
+              </segment>
+            </unit>
+          </group>
+          <unit id="u1-3-2-3">
+            <originalData>
+              <data id="d1">&lt;i&gt;</data>
+              <data id="d2">&lt;/i&gt;</data>
+            </originalData>
+            <segment>
+              <source>
+        Many <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:i" type="fmt">varieties</pc> of Tea
+    </source>
+            </segment>
+          </unit>
+        </group>
+        <unit id="u1-3-3" type="html:li">
+          <segment>
+            <source>Milk</source>
+          </segment>
+        </unit>
+      </group>
+      <unit id="u1-4" type="html:p">
+        <segment>
+          <source>That was it!</source>
+        </segment>
+      </unit>
+      <group id="u1-5-g" type="html:table">
+        <group id="u1-5-1-g" type="html:tr">
+          <mda:metadata>
+            <mda:metaGroup id="originalAttributes">
+              <mda:meta type="class">odd</mda:meta>
+            </mda:metaGroup>
+          </mda:metadata>
+          <unit id="u1-5-1-1" type="html:td">
+            <segment>
+              <source>1</source>
+            </segment>
+          </unit>
+          <unit id="u1-5-1-2" type="html:td">
+            <segment>
+              <source>2</source>
+            </segment>
+          </unit>
+        </group>
+        <group id="u1-5-2-g" type="html:tr">
+          <mda:metadata>
+            <mda:metaGroup id="originalAttributes">
+              <mda:meta type="class">even</mda:meta>
+            </mda:metaGroup>
+          </mda:metadata>
+          <unit id="u1-5-2-1" type="html:td">
+            <segment>
+              <source>2</source>
+            </segment>
+          </unit>
+          <unit id="u1-5-2-2" type="html:td">
+            <segment>
+              <source>1</source>
+            </segment>
+          </unit>
+        </group>
+      </group>
+      <group id="u1-6-g">
+        <unit id="u1-6-2-href">
+          <segment>
+            <source>https://daily.digest</source>
+          </segment>
+        </unit>
+        <unit id="u1-6-2-title">
+          <segment>
+            <source>Digest</source>
+          </segment>
+        </unit>
+        <unit id="u1-6">
+          <originalData>
+            <data id="d1">&lt;i&gt;</data>
+            <data id="d2">&lt;/i&gt;</data>
+            <data id="d3">&lt;a href="https://daily.digest" title="Digest"&gt;</data>
+            <data id="d4">&lt;/a&gt;</data>
+          </originalData>
+          <segment>
+            <source>
+
+Hi mate, see <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:i" type="fmt">what's new</pc> in the <pc dataRefEnd="d4" dataRefStart="d3" subFlowsStart="u1-6-2-href u1-6-2-title" id="2" type="link">digest</pc>.</source>
+          </segment>
+        </unit>
+      </group>
+    </group>
+  </file>
+</xliff>
+

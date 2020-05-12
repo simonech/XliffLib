@@ -37,7 +37,7 @@ namespace XliffLib.HtmlProcessing
                         aggregator = null;
                     }
                     contentItem = new SimplifiedHtmlContentItem() { Name = child.Name };
-                    contentItem.Attributes = CopyAttributes(child.Attributes);
+                    contentItem.Attributes = child.ExtractAttributes();
                     contentItem.ChildElements = ExtactContent(child);
                 }
                 else if (child.IsTextOrInline())
@@ -74,16 +74,6 @@ namespace XliffLib.HtmlProcessing
                 newList.Add(newItem);
             }
             return newList;
-        }
-
-        private static Dictionary<string, string> CopyAttributes(HtmlAttributeCollection attributes)
-        {
-            var list = new Dictionary<string, string>();
-            foreach (var attribute in attributes)
-            {
-                list.Add(attribute.Name, attribute.Value);
-            }
-            return list;
         }
     }
 }

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff srcLang="en-US" trgLang="it-IT" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="f1">
+    <group id="u1-g" name="title">
+      <unit id="u1-1-href">
+        <segment>
+          <source>https://daily.digest</source>
+        </segment>
+      </unit>
+      <unit id="u1-1-title">
+        <segment>
+          <source>Digest</source>
+        </segment>
+      </unit>
+      <unit id="u1" name="title">
+        <originalData>
+          <data id="d1">&lt;a href="https://daily.digest" title="Digest"&gt;</data>
+          <data id="d2">&lt;/a&gt;</data>
+        </originalData>
+        <segment>
+          <source>This is a <pc dataRefEnd="d2" dataRefStart="d1" subFlowsStart="u1-1-href u1-1-title" id="1" type="link">digest</pc></source>
+        </segment>
+      </unit>
+    </group>
+  </file>
+</xliff>
